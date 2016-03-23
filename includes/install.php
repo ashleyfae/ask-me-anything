@@ -43,6 +43,8 @@ register_activation_hook( ASK_ME_ANYTHING_PLUGIN_FILE, 'ask_me_anything_install'
  * @return void
  */
 function ask_me_anything_run_install() {
+	global $ask_me_anything_options;
+
 	// Set up Custom Post Type.
 	ask_me_anything_setup_post_types();
 
@@ -59,13 +61,49 @@ function ask_me_anything_run_install() {
 	}
 
 	// Set up our default settings.
-	/*$options         = array();
+	$options         = array();
 	$current_options = get_option( 'ask_me_anything_settings', array() );
+
+	// If we haven't already created our default taxonomy term - let's do it.
+	if ( ! get_option( 'ask_me_anything_created_default_category' ) && ! array_key_exists( 'default_category', $current_options ) ) {
+		$term = wp_insert_term( __( 'Question', 'ask-me-anything' ), 'question_categories' );
+
+		if ( ! is_wp_error( $term ) && is_array( $term ) && array_key_exists( 'term_id', $term ) ) {
+			$options['default_category'] = $term['term_id'];
+
+			update_option( 'ask_me_anything_created_default_category', true );
+		}
+	}
 
 	// Populate default values.
 	foreach ( ask_me_anything_get_registered_settings() as $tab => $sections ) {
+		foreach ( $sections as $section => $settings ) {
 
-	}*/
+			// Check for backwards compatibility
+			$tab_sections = ask_me_anything_get_settings_tab_sections( $tab );
+			if ( ! is_array( $tab_sections ) || ! array_key_exists( $section, $tab_sections ) ) {
+				$section  = 'main';
+				$settings = $sections;
+			}
+
+			foreach ( $settings as $option ) {
+				if ( 'checkbox' == $option['type'] && ! empty( $option['std'] ) ) {
+					$options[ $option['id'] ] = '1';
+				}
+			}
+		}
+	}
+
+	$merged_options          = array_merge( $ask_me_anything_options, $options );
+	$ask_me_anything_options = $merged_options;
+
+	update_option( 'ask_me_anything_settings', $merged_options );
+	update_option( 'ask_me_anything_version', ASK_ME_ANYTHING_VERSION );
+
+	// Create book manager role.
+	$roles = new Ask_Me_Anything_Roles();
+	$roles->add_roles();
+	$roles->add_caps();
 
 	// Add the transient to redirect.
 	set_transient( '_ask_me_anything_activation_redirect', true, 30 );

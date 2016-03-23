@@ -129,10 +129,11 @@ function ask_me_anything_get_settings() {
 
 	if ( empty( $settings ) ) {
 		// Update old settings with new single option
-		$general_settings = is_array( get_option( 'ask_me_anything_settings_general' ) ) ? get_option( 'ask_me_anything_settings_general' ) : array();
-		$styles_settings  = is_array( get_option( 'ask_me_anything_settings_styles' ) ) ? get_option( 'ask_me_anything_settings_styles' ) : array();
-		$tools_settings   = is_array( get_option( 'ask_me_anything_settings_tools' ) ) ? get_option( 'ask_me_anything_settings_tools' ) : array();
-		$settings         = array_merge( $general_settings, $styles_settings, $tools_settings );
+		$general_settings  = is_array( get_option( 'ask_me_anything_settings_general' ) ) ? get_option( 'ask_me_anything_settings_general' ) : array();
+		$question_settings = is_array( get_option( 'ask_me_anything_settings_questions' ) ) ? get_option( 'ask_me_anything_settings_questions' ) : array();
+		$styles_settings   = is_array( get_option( 'ask_me_anything_settings_styles' ) ) ? get_option( 'ask_me_anything_settings_styles' ) : array();
+		$tools_settings    = is_array( get_option( 'ask_me_anything_settings_tools' ) ) ? get_option( 'ask_me_anything_settings_tools' ) : array();
+		$settings          = array_merge( $general_settings, $question_settings, $styles_settings, $tools_settings );
 
 		update_option( 'ask_me_anything_settings', $settings );
 	}
@@ -217,19 +218,85 @@ add_action( 'admin_init', 'ask_me_anything_register_settings' );
 function ask_me_anything_get_registered_settings() {
 
 	$ask_me_anything_settings = array(
-		/* Book Settings */
-		'general' => apply_filters( 'ask-me-anything/settings/general', array(
+		/* General Settings */
+		'general'   => apply_filters( 'ask-me-anything/settings/general', array(
 			'main' => array(
-				'license_key' => array(
+				'license_key'         => array(
 					'id'   => 'license_key',
 					'name' => __( 'License Key', 'ask-me-anything' ),
 					'desc' => __( 'Enter your license key to enable automatic updates. This can be found in your purchase receipt.', 'ask-me-anything' ),
 					'type' => 'license_key'
-				)
+				),
+				'delete_on_uninstall' => array(
+					'id'   => 'delete_on_uninstall',
+					'name' => __( 'Remove Data on Uninstall', 'ask-me-anything' ),
+					'desc' => __( 'Check this box if you would like Ask Me Anything to completely erase all of its data when the plugin is deleted. If checked and the plugin is uninstalled, the data is gone forever!', 'ask-me-anything' ),
+					'type' => 'checkbox'
+				),
 			),
 		) ),
+		/* Question Settings */
+		'questions' => apply_filters( 'ask-me-anything/settings/questions', array(
+			'main'          => array(
+				'display_position' => array(
+					'id'      => 'display_position',
+					'name'    => __( 'Automatic Display', 'ask-me-anything' ),
+					'desc'    => sprintf( __( 'Choose where to automatically display the question form. Choose "Do Not Display" to not automatically add the form to your site. You can still display it manually using the shortcode %s', 'ask-me-anything' ), '<code>[ask-me-anything]</code>' ),
+					'type'    => 'select',
+					'options' => array(
+						'left'         => __( 'Left', 'ask-me-anything' ),
+						'right'        => __( 'Right', 'ask-me-anything' ),
+						'bottom-left'  => __( 'Bottom Left', 'ask-me-anything' ),
+						'bottom-right' => __( 'Bottom Right', 'ask-me-anything' ),
+						'none'         => __( 'Do Not Display', 'ask-me-anything' )
+					),
+					'std'     => 'bottom-right'
+				),
+				'visibility'       => array(
+					'id'      => 'visibility',
+					'name'    => __( 'Visibility', 'ask-me-anything' ),
+					'desc'    => '',
+					'type'    => 'select',
+					'options' => array(
+						'all'      => __( 'Everyone', 'ask-me-anything' ),
+						'loggedin' => __( 'Logged In Users Only', 'ask-me-anything' ),
+					),
+					'std'     => 'all'
+				),
+				'show_questions'   => array(
+					'id'   => 'show_questions',
+					'name' => __( 'Show Questions on Front-End', 'ask-me-anything' ),
+					'desc' => __( 'Check this to display the questions publicly. This allows your viewers to read through questions submitted by others.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => '1'
+				),
+				'default_category' => array(
+					'id'      => 'default_category',
+					'name'    => __( 'Default Category', 'ask-me-anything' ),
+					'desc'    => __( 'This is the category all questions will be added to if no category is selected.', 'ask-me-anything' ),
+					'type'    => 'select',
+					'options' => ask_me_anything_get_categories(),
+					'std'     => ''
+				),
+			),
+			'notifications' => array(
+				'admin_notifications' => array(
+					'id'   => 'admin_notifications',
+					'name' => __( 'Notify Admin', 'ask-me-anything' ),
+					'desc' => __( 'Check this to email the site administrator whenever a new question is submitted.', 'ask-me-anything' ),
+					'type' => 'checkbox'
+				),
+				'admin_email'         => array(
+					'id'   => 'admin_email',
+					'name' => __( 'Notify Email Addresses', 'ask-me-anything' ),
+					'desc' => __( 'Enter a comma-separated list of emails. These are the email addresses we\'ll notify when a new question is submitted' ),
+					'type' => 'text',
+					'std'  => get_option( 'admin_email' )
+				)
+			)
+		) ),
 		/* Styles */
-		'styles'  => apply_filters( 'ask-me-anything/settings/styles', array(
+		'styles'    => apply_filters( 'ask-me-anything/settings/styles', array(
 			'main' => array(
 				'disable_styles' => array(
 					'id'   => 'disable_styles',
@@ -319,9 +386,10 @@ function ask_me_anything_settings_sanitize( $input = array() ) {
  * @return array $tabs
  */
 function ask_me_anything_get_settings_tabs() {
-	$tabs            = array();
-	$tabs['general'] = __( 'General', 'ask-me-anything' );
-	$tabs['styles']  = __( 'Styles', 'ask-me-anything' );
+	$tabs              = array();
+	$tabs['general']   = __( 'General', 'ask-me-anything' );
+	$tabs['questions'] = __( 'Questions', 'ask-me-anything' );
+	$tabs['styles']    = __( 'Styles', 'ask-me-anything' );
 
 	//$tabs['tools'] = __( 'Tools', 'ask-me-anything' );
 
@@ -363,13 +431,17 @@ function ask_me_anything_get_registered_settings_sections() {
 	}
 
 	$sections = array(
-		'general' => apply_filters( 'ask-me-anything/settings/sections/general', array(
+		'general'   => apply_filters( 'ask-me-anything/settings/sections/general', array(
 			'main' => __( 'General', 'ask-me-anything' )
 		) ),
-		'styles'  => apply_filters( 'ask-me-anything/settings/sections/styles', array(
+		'questions' => apply_filters( 'ask-me-anything/settings/sections/questions', array(
+			'main'          => __( 'Questions', 'ask-me-anything' ),
+			'notifications' => __( 'Notifications', 'ask-me-anything' )
+		) ),
+		'styles'    => apply_filters( 'ask-me-anything/settings/sections/styles', array(
 			'main' => __( 'Styles', 'ask-me-anything' )
 		) ),
-		'tools'   => apply_filters( 'ask-me-anything/settings/sections/tools', array(
+		'tools'     => apply_filters( 'ask-me-anything/settings/sections/tools', array(
 			'main' => __( 'Tools', 'ask-me-anything' ),
 		) )
 	);
@@ -476,4 +548,51 @@ function ask_me_anything_checkbox_callback( $args ) {
 	<input type="checkbox" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" value="1" <?php echo $checked; ?>>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
+}
+
+/**
+ * Select Callback
+ *
+ * Renders select fields.
+ *
+ * @param array  $args                    Arguments passed by the setting
+ *
+ * @global array $ask_me_anything_options Array of all the Ask Me Anything Options
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_select_callback( $args ) {
+
+	global $ask_me_anything_options;
+
+	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
+		$value = $ask_me_anything_options[ $args['id'] ];
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+	if ( isset( $args['placeholder'] ) ) {
+		$placeholder = $args['placeholder'];
+	} else {
+		$placeholder = '';
+	}
+
+	if ( isset( $args['chosen'] ) ) {
+		$chosen = 'class="ask-me-anything-chosen"';
+	} else {
+		$chosen = '';
+	}
+
+	$html = '<select id="ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']" name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']" ' . $chosen . 'data-placeholder="' . esc_html( $placeholder ) . '">';
+
+	foreach ( $args['options'] as $option => $name ) {
+		$selected = selected( $option, $value, false );
+		$html .= '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
+	}
+
+	$html .= '</select>';
+	$html .= '<label for="ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']"> ' . wp_kses_post( $args['desc'] ) . '</label>';
+
+	echo $html;
 }

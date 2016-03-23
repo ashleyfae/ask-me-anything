@@ -49,6 +49,14 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 		private static $instance;
 
 		/**
+		 * Roles Object
+		 *
+		 * @var Ask_Me_Anything_Roles
+		 * @since 1.0.0
+		 */
+		public $roles;
+
+		/**
 		 * Ask_Me_Anything instance.
 		 *
 		 * Insures that only one instance of Ask_Me_Anything exists at any one time.
@@ -70,6 +78,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
 
 				self::$instance->includes();
+				self::$instance->roles = new Ask_Me_Anything_Roles();
 			}
 
 			return self::$instance;
@@ -151,7 +160,14 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				$ask_me_anything_options = ask_me_anything_get_settings();
 			}
 
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-roles.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-types.php';
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/question-functions.php';
+
+			if ( is_admin() ) {
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/admin-pages.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
+			}
 
 			// Install
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/install.php';
