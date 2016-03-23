@@ -141,6 +141,11 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				define( 'ASK_ME_ANYTHING_PLUGIN_FILE', __FILE__ );
 			}
 
+			// Store URL where plugin was purchased.
+			if ( ! defined( 'NOSE_GRAZE_STORE_URL' ) ) {
+				define( 'NOSE_GRAZE_STORE_URL', 'https://shop.nosegraze.com' );
+			}
+
 		}
 
 		/**
@@ -166,6 +171,8 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 
 			if ( is_admin() ) {
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/admin-pages.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/EDD_SL_Plugin_Updater.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/class-ask-me-anything-updater.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 			}
 

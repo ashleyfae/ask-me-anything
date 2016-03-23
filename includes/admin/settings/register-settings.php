@@ -222,10 +222,14 @@ function ask_me_anything_get_registered_settings() {
 		'general'   => apply_filters( 'ask-me-anything/settings/general', array(
 			'main' => array(
 				'license_key'         => array(
-					'id'   => 'license_key',
-					'name' => __( 'License Key', 'ask-me-anything' ),
-					'desc' => __( 'Enter your license key to enable automatic updates. This can be found in your purchase receipt.', 'ask-me-anything' ),
-					'type' => 'license_key'
+					'id'      => 'license_key',
+					'name'    => __( 'License Key', 'ask-me-anything' ),
+					'desc'    => __( 'Enter your license key to enable automatic updates. This can be found in your purchase receipt.', 'ask-me-anything' ),
+					'type'    => 'license_key',
+					'std'     => '',
+					'options' => array(
+						'item_name' => 'Ask Me Anything Plugin'
+					)
 				),
 				'delete_on_uninstall' => array(
 					'id'   => 'delete_on_uninstall',
@@ -524,7 +528,73 @@ function ask_me_anything_text_callback( $args ) {
 	$size     = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 	?>
 	<input type="text" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>"<?php echo $readonly; ?>>
-	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+	<?php
+}
+
+/**
+ * License Key Callback
+ *
+ * Renders license key fields.
+ *
+ * @param array  $args                    Arguments passed by the setting
+ *
+ * @global array $ask_me_anything_options Array of all the Ask Me Anything settings
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_license_key_callback( $args ) {
+	global $ask_me_anything_options;
+
+	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
+		$value = $ask_me_anything_options[ $args['id'] ];
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+	if ( isset( $args['faux'] ) && true === $args['faux'] ) {
+		$args['readonly'] = true;
+		$value            = isset( $args['std'] ) ? $args['std'] : '';
+		$name             = '';
+	} else {
+		$name = 'name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']"';
+	}
+
+	$status    = get_option( 'ask_me_anything_' . ask_me_anything_sanitize_key( $args['id'] ) . '_status' );
+	$item_name = isset( $args['options']['item_name'] ) ? trim( $args['options']['item_name'] ) : '';
+
+	if ( is_object( $status ) && $status->license == 'valid' ) {
+		$label  = __( 'Deactivate', 'ask-me-anything' );
+		$action = 'deactivate_license';
+	} else {
+		$label  = __( 'Activate', 'ask-me-anything' );
+		$action = 'activate_license';
+	}
+	?>
+	<input type="text" class="regular-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>">
+
+	<button type="button" class="button button-secondary ama-validate-license" data-field-id="<?php echo esc_attr( 'ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']' ); ?>" data-option-name="<?php echo esc_attr( $args['id'] ); ?>" data-status-name="<?php echo esc_attr( 'ask_me_anything_' . ask_me_anything_sanitize_key( $args['id'] ) . '_status' ); ?>" data-product-name="<?php echo esc_attr( $item_name ); ?>" data-action="<?php echo esc_attr( $action ); ?>"><?php echo $label; ?></button>
+
+	<div class="ask-me-anything-license-key-status">
+		<?php
+		if (is_object( $status ) && $status->license == 'valid') {
+			printf(
+				__('Valid until %s', 'ask-me-anything'),
+				date_i18n( get_option( 'date_format' ), strtotime( $status->expires, current_time( 'timestamp' ) ) )
+			);
+		}
+		?>
+	</div>
+
+	<?php
+	if ( ! empty( $value ) && is_object( $status ) ) {
+		if ( false === $status->success ) {
+
+		}
+	}
+	?>
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
 
@@ -546,7 +616,7 @@ function ask_me_anything_checkbox_callback( $args ) {
 	$checked = isset( $ask_me_anything_options[ $args['id'] ] ) ? checked( 1, $ask_me_anything_options[ $args['id'] ], false ) : '';
 	?>
 	<input type="checkbox" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" value="1" <?php echo $checked; ?>>
-	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
 
@@ -592,7 +662,7 @@ function ask_me_anything_select_callback( $args ) {
 	}
 
 	$html .= '</select>';
-	$html .= '<label for="ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']"> ' . wp_kses_post( $args['desc'] ) . '</label>';
+	$html .= '<label for="ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']" class="desc"> ' . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo $html;
 }

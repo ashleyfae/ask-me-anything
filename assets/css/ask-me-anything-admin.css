@@ -1,0 +1,31 @@
+/*--------------------------------------------------------------
+x.0 Base Settings Panel
+--------------------------------------------------------------*/
+.question_page_ask-me-anything-settings .form-table .desc {
+  color: #666;
+  display: block;
+  font-size: 14px;
+  font-style: italic;
+  margin: 2px 0 5px; }
+.question_page_ask-me-anything-settings .form-table input[type="checkbox"] + label {
+  display: inline; }
+
+/*--------------------------------------------------------------
+x.x License Key
+--------------------------------------------------------------*/
+#ama-updater-response,
+.ask-me-anything-license-key-status {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 5px; }
+  #ama-updater-response.ask-me-anything-updater-true,
+  .ask-me-anything-license-key-status.ask-me-anything-updater-true {
+    color: green; }
+  #ama-updater-response.ask-me-anything-updater-false,
+  .ask-me-anything-license-key-status.ask-me-anything-updater-false {
+    color: red; }
+
+.ask-me-anything-license-key-status {
+  color: green; }
+
+/*# sourceMappingURL=ask-me-anything-admin.css.map */
