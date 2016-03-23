@@ -143,7 +143,13 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 		 */
 		private function includes() {
 
+			global $ask_me_anything_options;
+
 			// Settings
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/register-settings.php';
+			if ( empty( $ask_me_anything_options ) ) {
+				$ask_me_anything_options = ask_me_anything_get_settings();
+			}
 
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-types.php';
 
