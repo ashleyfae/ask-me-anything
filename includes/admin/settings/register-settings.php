@@ -282,6 +282,14 @@ function ask_me_anything_get_registered_settings() {
 					'options' => ask_me_anything_get_categories(),
 					'std'     => ''
 				),
+				'statuses'         => array(
+					'id'      => 'statuses',
+					'name'    => __( 'Statuses', 'ask-me-anything' ),
+					'desc'    => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything' ),
+					'type'    => 'textarea',
+					'options' => ask_me_anything_get_categories(),
+					'std'     => "Pending\nIn Progress\nCompleted"
+				),
 			),
 			'notifications' => array(
 				'admin_notifications' => array(
@@ -533,6 +541,32 @@ function ask_me_anything_text_callback( $args ) {
 }
 
 /**
+ * Textarea Callback
+ *
+ * Renders textarea fields.
+ *
+ * @param array  $args                    Arguments passed by the setting
+ *
+ * @global array $ask_me_anything_options Array of all the Ask Me Anything settings
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_textarea_callback( $args ) {
+	global $ask_me_anything_options;
+
+	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
+		$value = $ask_me_anything_options[ $args['id'] ];
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+	?>
+	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+	<?php
+}
+
+/**
  * License Key Callback
  *
  * Renders license key fields.
@@ -578,9 +612,9 @@ function ask_me_anything_license_key_callback( $args ) {
 
 	<div class="ask-me-anything-license-key-status">
 		<?php
-		if (is_object( $status ) && $status->license == 'valid') {
+		if ( is_object( $status ) && $status->license == 'valid' ) {
 			printf(
-				__('Valid until %s', 'ask-me-anything'),
+				__( 'Valid until %s', 'ask-me-anything' ),
 				date_i18n( get_option( 'date_format' ), strtotime( $status->expires, current_time( 'timestamp' ) ) )
 			);
 		}
