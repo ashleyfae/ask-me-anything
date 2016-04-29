@@ -221,7 +221,7 @@ function ask_me_anything_get_registered_settings() {
 		/* General Settings */
 		'general'   => apply_filters( 'ask-me-anything/settings/general', array(
 			'main' => array(
-				'license_key'         => array(
+				/*'license_key'         => array(
 					'id'      => 'license_key',
 					'name'    => __( 'License Key', 'ask-me-anything' ),
 					'desc'    => __( 'Enter your license key to enable automatic updates. This can be found in your purchase receipt.', 'ask-me-anything' ),
@@ -230,7 +230,7 @@ function ask_me_anything_get_registered_settings() {
 					'options' => array(
 						'item_name' => 'Ask Me Anything Plugin'
 					)
-				),
+				),*/
 				'delete_on_uninstall' => array(
 					'id'   => 'delete_on_uninstall',
 					'name' => __( 'Remove Data on Uninstall', 'ask-me-anything' ),
@@ -356,10 +356,8 @@ function ask_me_anything_get_registered_settings() {
 				)
 			)
 		) ),
-		/* Tools */
-		/*'tools' => apply_filters( 'ask-me-anything/settings/tools', array(
-			'main' => array()
-		) )*/
+		/* Licenses */
+		'licenses'  => apply_filters( 'ask-me-anything/settings/licenses', array() )
 	);
 
 	return apply_filters( 'ask-me-anything/settings/registered-settings', $ask_me_anything_settings );
@@ -440,8 +438,7 @@ function ask_me_anything_get_settings_tabs() {
 	$tabs['general']   = __( 'General', 'ask-me-anything' );
 	$tabs['questions'] = __( 'Questions', 'ask-me-anything' );
 	$tabs['styles']    = __( 'Styles', 'ask-me-anything' );
-
-	//$tabs['tools'] = __( 'Tools', 'ask-me-anything' );
+	$tabs['licenses']  = __( 'Licenses', 'ask-me-anything' );
 
 	return apply_filters( 'ask-me-anything/settings/tabs', $tabs );
 }
@@ -493,8 +490,8 @@ function ask_me_anything_get_registered_settings_sections() {
 		'styles'    => apply_filters( 'ask-me-anything/settings/sections/styles', array(
 			'main' => __( 'Styles', 'ask-me-anything' )
 		) ),
-		'tools'     => apply_filters( 'ask-me-anything/settings/sections/tools', array(
-			'main' => __( 'Tools', 'ask-me-anything' ),
+		'licenses'  => apply_filters( 'ask-me-anything/settings/sections/licenses', array(
+			'main' => __( 'Licenses', 'ask-me-anything' ),
 		) )
 	);
 
@@ -572,7 +569,7 @@ function ask_me_anything_text_callback( $args ) {
 		$name = 'name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']"';
 	}
 
-	$readonly = $args['readonly'] === true ? ' readonly="readonly"' : '';
+	$readonly = ( array_key_exists( 'readonly', $args ) && $args['readonly'] ) === true ? ' readonly="readonly"' : '';
 	$size     = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 	?>
 	<input type="text" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>"<?php echo $readonly; ?>>
@@ -601,7 +598,7 @@ function ask_me_anything_textarea_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 	?>
-	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo esc_attr( $args['id'] ) ; ?>]" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
+	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo esc_attr( $args['id'] ); ?>]" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
@@ -621,54 +618,157 @@ function ask_me_anything_textarea_callback( $args ) {
 function ask_me_anything_license_key_callback( $args ) {
 	global $ask_me_anything_options;
 
+	$messages = array();
+	$class    = '';
+	$license  = get_option( $args['options']['is_valid_license_option'] );
+
 	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
 		$value = $ask_me_anything_options[ $args['id'] ];
 	} else {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 
-	if ( isset( $args['faux'] ) && true === $args['faux'] ) {
-		$args['readonly'] = true;
-		$value            = isset( $args['std'] ) ? $args['std'] : '';
-		$name             = '';
-	} else {
-		$name = 'name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']"';
-	}
+	if ( ! empty( $license ) && is_object( $license ) ) {
 
-	$status    = get_option( 'ask_me_anything_' . ask_me_anything_sanitize_key( $args['id'] ) . '_status' );
-	$item_name = isset( $args['options']['item_name'] ) ? trim( $args['options']['item_name'] ) : '';
+		if ( false === $license->success ) {
 
-	if ( is_object( $status ) && $status->license == 'valid' ) {
-		$label  = __( 'Deactivate', 'ask-me-anything' );
-		$action = 'deactivate_license';
-	} else {
-		$label  = __( 'Activate', 'ask-me-anything' );
-		$action = 'activate_license';
-	}
-	?>
-	<input type="text" class="regular-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>">
+			switch ( $license->error ) {
 
-	<button type="button" class="button button-secondary ama-validate-license" data-field-id="<?php echo esc_attr( 'ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']' ); ?>" data-option-name="<?php echo esc_attr( $args['id'] ); ?>" data-status-name="<?php echo esc_attr( 'ask_me_anything_' . ask_me_anything_sanitize_key( $args['id'] ) . '_status' ); ?>" data-product-name="<?php echo esc_attr( $item_name ); ?>" data-action="<?php echo esc_attr( $action ); ?>"><?php echo $label; ?></button>
+				case 'expired' :
 
-	<div class="ask-me-anything-license-key-status">
-		<?php
-		if ( is_object( $status ) && $status->license == 'valid' ) {
-			printf(
-				__( 'Valid until %s', 'ask-me-anything' ),
-				date_i18n( get_option( 'date_format' ), strtotime( $status->expires, current_time( 'timestamp' ) ) )
-			);
+					$class      = 'error';
+					$messages[] = sprintf(
+						__( 'Your license key expired on %1$s. Please <a href="%2$s" target="_blank" title="Renew your license key">renew your license key</a>.', 'ask-me-anything' ),
+						date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+						'https://shop.nosegraze.com/checkout/?edd_license_key=' . urlencode( $value ) . '&utm_campaign=admin&utm_source=licenses&utm_medium=expired'
+					);
+
+					$license_status = 'license-' . $class . '-notice';
+
+					break;
+
+				case 'missing' :
+
+					$class      = 'error';
+					$messages[] = sprintf(
+						__( 'Invalid license. Please <a href="%s" target="_blank" title="Visit account page">visit your account page</a> and verify it.', 'ask-me-anything' ),
+						'https://shop.nosegraze.com/my-account/?utm_campaign=admin&utm_source=licenses&utm_medium=missing'
+					);
+
+					$license_status = 'license-' . $class . '-notice';
+
+					break;
+
+				case 'invalid' :
+				case 'site_inactive' :
+
+					$class      = 'error';
+					$messages[] = sprintf(
+						__( 'Your %1$s is not active for this URL. Please <a href="%2$s" target="_blank" title="Visit account page">visit your account page</a> to manage your license key URLs.', 'ask-me-anything' ),
+						$args['name'],
+						'https://shop.nosegraze.com/my-account/?utm_campaign=admin&utm_source=licenses&utm_medium=invalid'
+					);
+
+					$license_status = 'license-' . $class . '-notice';
+
+					break;
+
+				case 'item_name_mismatch' :
+
+					$class      = 'error';
+					$messages[] = sprintf(
+						__( 'This is not a %s.', 'ask-me-anything' ),
+						$args['name']
+					);
+
+					$license_status = 'license-' . $class . '-notice';
+
+					break;
+
+				case 'no_activations_left' :
+
+					$class      = 'error';
+					$messages[] = sprintf(
+						__( 'Your license key has reached its activation limit. <a href="%s" target="_blank" title="View upgrades">View possible upgrades.</a>', 'ask-me-anything' ),
+						'https://shop.nosegraze.com/my-account/?utm_campaign=admin&utm_source=licenses&utm_medium=no_activations_left'
+					);
+
+					$license_status = 'license-' . $class . '-notice';
+
+					break;
+
+			}
+
+		} else {
+
+			$class      = 'valid';
+			$now        = current_time( 'timestamp' );
+			$expiration = strtotime( $license->expires, current_time( 'timestamp' ) );
+
+			if ( 'lifetime' === $license->expires ) {
+
+				$messages[]     = __( 'License key never expires.', 'ask-me-anything' );
+				$license_status = 'license-lifetime-notice';
+
+			} elseif ( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
+
+				$messages[] = sprintf(
+					__( 'Your license key is about to expire! It expires on %1$s. <a href="%2$s" target="_blank" title="Renew license key">Renew your license key</a> to continue getting updates and support.', 'ask-me-anything' ),
+					date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) ),
+					'https://shop.nosegraze.com/checkout/?edd_license_key=' . urlencode( $value ) . '&utm_campaign=admin&utm_source=licenses&utm_medium=renew'
+				);
+
+				$license_status = 'license-expires-soon-notice';
+
+			} else {
+
+				$messages[] = sprintf(
+					__( 'Your license key expires on %s.', 'ask-me-anything' ),
+					date_i18n( get_option( 'date_format' ), strtotime( $license->expires, current_time( 'timestamp' ) ) )
+				);
+
+				$license_status = 'license-expiration-date-notice';
+
+			}
+
 		}
+
+	} else {
+		$license_status = null;
+	}
+
+	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+
+	$wrapper_class = isset( $license_status ) ? $license_status : 'license-null';
+	?>
+	<div class="<?php echo sanitize_html_class( $wrapper_class ); ?>">
+		<input type="text" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" value="<?php echo esc_attr( $value ); ?>">
+		<?php
+
+		// License key is valid, so let's show a deactivate button.
+		if ( ( is_object( $license ) && 'valid' == $license->license ) || 'valid' == $license ) {
+			?>
+			<input type="submit" class="button-secondary" name="<?php echo esc_attr( $args['id'] ); ?>_deactivate" value="<?php _e( 'Deactivate License', 'ask-me-anything' ); ?>">
+			<?php
+		}
+
+		?>
+		<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+		<?php
+
+		if ( ! empty( $messages ) && is_array( $messages ) ) {
+			foreach ( $messages as $message ) {
+				?>
+				<div class="ask-me-anything-license-data ask-me-anything-license-<?php echo sanitize_html_class( $class ); ?> desc">
+					<p><?php echo $message; ?></p>
+				</div>
+				<?php
+			}
+		}
+
+		wp_nonce_field( ask_me_anything_sanitize_key( $args['id'] ) . '-nonce', ask_me_anything_sanitize_key( $args['id'] ) . '-nonce' );
 		?>
 	</div>
-
-	<?php
-	if ( ! empty( $value ) && is_object( $status ) ) {
-		if ( false === $status->success ) {
-
-		}
-	}
-	?>
-	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
 

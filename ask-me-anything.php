@@ -79,6 +79,8 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 
 				self::$instance->includes();
 				self::$instance->roles = new Ask_Me_Anything_Roles();
+
+				add_action( 'init', array( self::$instance, 'license' ) );
 			}
 
 			return self::$instance;
@@ -165,6 +167,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				$ask_me_anything_options = ask_me_anything_get_settings();
 			}
 
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-license.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-roles.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-statuses.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-types.php';
@@ -174,7 +177,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 			if ( is_admin() ) {
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/admin-pages.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/EDD_SL_Plugin_Updater.php';
-				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/class-ask-me-anything-updater.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/class-ask-me-anything-notices.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 			}
 
@@ -195,6 +198,23 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 			$lang_dir = dirname( plugin_basename( ASK_ME_ANYTHING_PLUGIN_FILE ) ) . '/languages/';
 			$lang_dir = apply_filters( 'ask-me-anything/languages-directory', $lang_dir );
 			load_plugin_textdomain( 'ask-me-anything', false, $lang_dir );
+
+		}
+
+		/**
+		 * Set Up License
+		 *
+		 * @access public
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function license() {
+
+			if ( ! class_exists( 'Ask_Me_Anything_License' ) ) {
+				return;
+			}
+
+			$ama_license = new Ask_Me_Anything_License( __FILE__, 'Ask Me Anything', ASK_ME_ANYTHING_VERSION, 'Nose Graze', 'ask_me_anything_license_key' );
 
 		}
 
