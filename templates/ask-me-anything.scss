@@ -126,7 +126,7 @@
             color: #333;
         }
 
-        &:hover {
+        &:hover, &:focus, &:active, &.ama-active {
             background: #dcdcdc;
             color: #333;
             text-decoration: none;

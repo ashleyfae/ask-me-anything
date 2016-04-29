@@ -28,4 +28,13 @@ x.x License Key
 .ask-me-anything-license-key-status {
   color: green; }
 
+#ama_question_submit .inside {
+  margin: 0;
+  padding: 0; }
+
+#ama_status {
+  display: block;
+  margin: 0 auto 10px;
+  width: 100%; }
+
 /*# sourceMappingURL=ask-me-anything-admin.css.map */

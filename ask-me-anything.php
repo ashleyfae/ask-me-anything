@@ -181,6 +181,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/EDD_SL_Plugin_Updater.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/class-ask-me-anything-notices.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/meta-box.php';
 			}
 
 			// Install

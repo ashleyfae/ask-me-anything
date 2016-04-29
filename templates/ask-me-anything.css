@@ -100,7 +100,7 @@
     text-decoration: none; }
     .ask-me-anything-questions-list a, .ask-me-anything-questions-list a h4 {
       color: #333; }
-    .ask-me-anything-questions-list a:hover {
+    .ask-me-anything-questions-list a:hover, .ask-me-anything-questions-list a:focus, .ask-me-anything-questions-list a:active, .ask-me-anything-questions-list a.ama-active {
       background: #dcdcdc;
       color: #333;
       text-decoration: none; }

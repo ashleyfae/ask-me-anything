@@ -17,7 +17,15 @@
 
 		<?php ask_me_anything_get_template_part( 'questions' ); ?>
 
-		<?php ask_me_anything_get_template_part( 'submit-question', 'form' ); ?>
+		<div class="ask-me-anything-submit-question">
+			<?php
+			/*
+			 * @see submit-question-form.php
+			 * That template gets pulled inside here automatically.
+			 */
+			?>
+			<?php //ask_me_anything_get_template_part( 'submit-question', 'form' ); ?>
+		</div>
 
 	</div>
 

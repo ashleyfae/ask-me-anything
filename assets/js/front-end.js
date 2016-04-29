@@ -103,9 +103,36 @@ jQuery(document).ready(function ($) {
         $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
             if (response.success == true) {
                 questionsList.empty().append(amaQuestionTemplate({questions: response.data}));
+                AskMeAnythingRenderQuestion();
             } else {
                 console.log(response);
             }
+        });
+    }
+
+    /**
+     * Render Question
+     *
+     * When a single question is clicked on, we render the actual question content
+     * on the left-hand side.
+     *
+     * @constructor
+     */
+    function AskMeAnythingRenderQuestion() {
+        $('.ama-question-item').click(function (e) {
+            e.preventDefault();
+
+            var questionID = $(this).data('postid');
+
+            $('.ama-question-item').each(function () {
+                $(this).removeClass('ama-active');
+
+                if ($(this).data('postid') == questionID) {
+                    $(this).addClass('ama-active');
+                }
+            });
+
+            
         });
     }
 
