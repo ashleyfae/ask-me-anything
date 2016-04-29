@@ -167,6 +167,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				$ask_me_anything_options = ask_me_anything_get_settings();
 			}
 
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/ajax.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/assets.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-license.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-roles.php';

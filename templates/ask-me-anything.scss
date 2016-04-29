@@ -91,7 +91,6 @@
     background: white;
     -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
     box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    padding: 1em;
     position: relative;
     -webkit-transform: translate(0,0);
     -ms-transform: translate(0,0);
@@ -99,11 +98,52 @@
     transform: translate(0,0);
 
     @media (min-width: 768px) {
+        display: flex;
         max-width: 80%;
         margin: 30px auto;
+
+        .admin-bar & {
+            margin-top: 60px;
+        }
     }
 
     @media (min-width: 1200px) {
         max-width: 1000px;
+    }
+}
+
+/* Questions List */
+.ask-me-anything-questions-list {
+    background: #f4f4f4;
+
+    a {
+        border-top: 1px solid #dcdcdc;
+        display: block;
+        padding: 1em;
+        text-decoration: none;
+
+        &, h4 {
+            color: #333;
+        }
+
+        &:hover {
+            background: #dcdcdc;
+            color: #333;
+            text-decoration: none;
+        }
+    }
+
+    @media (min-width: 768px) {
+        border-right: 1px solid #dcdcdc;
+        width: 30%;
+    }
+}
+
+/* Submit a Question */
+.ask-me-anything-submit-question {
+    padding: 1em;
+
+    @media (min-width: 768px) {
+        width: 70%;
     }
 }

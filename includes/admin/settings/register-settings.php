@@ -221,16 +221,6 @@ function ask_me_anything_get_registered_settings() {
 		/* General Settings */
 		'general'   => apply_filters( 'ask-me-anything/settings/general', array(
 			'main' => array(
-				/*'license_key'         => array(
-					'id'      => 'license_key',
-					'name'    => __( 'License Key', 'ask-me-anything' ),
-					'desc'    => __( 'Enter your license key to enable automatic updates. This can be found in your purchase receipt.', 'ask-me-anything' ),
-					'type'    => 'license_key',
-					'std'     => '',
-					'options' => array(
-						'item_name' => 'Ask Me Anything Plugin'
-					)
-				),*/
 				'delete_on_uninstall' => array(
 					'id'   => 'delete_on_uninstall',
 					'name' => __( 'Remove Data on Uninstall', 'ask-me-anything' ),
@@ -242,7 +232,7 @@ function ask_me_anything_get_registered_settings() {
 		/* Question Settings */
 		'questions' => apply_filters( 'ask-me-anything/settings/questions', array(
 			'main'          => array(
-				'display_position' => array(
+				'display_position'      => array(
 					'id'      => 'display_position',
 					'name'    => __( 'Automatic Display', 'ask-me-anything' ),
 					'desc'    => sprintf( __( 'Choose where to automatically display the question form. Choose "Do Not Display" to not automatically add the form to your site. You can still display it manually using the shortcode %s', 'ask-me-anything' ), '<code>[ask-me-anything]</code>' ),
@@ -256,7 +246,7 @@ function ask_me_anything_get_registered_settings() {
 					),
 					'std'     => 'bottom-right'
 				),
-				'visibility'       => array(
+				'visibility'            => array(
 					'id'      => 'visibility',
 					'name'    => __( 'Visibility', 'ask-me-anything' ),
 					'desc'    => '',
@@ -267,14 +257,42 @@ function ask_me_anything_get_registered_settings() {
 					),
 					'std'     => 'all'
 				),
-				'show_questions'   => array(
+				'show_questions'        => array(
 					'id'   => 'show_questions',
 					'name' => __( 'Show Questions on Front-End', 'ask-me-anything' ),
 					'desc' => __( 'Check this to display the questions publicly. This allows your viewers to read through questions submitted by others.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => '1'
 				),
-				'default_category' => array(
+				'questions_per_page'    => array(
+					'id'         => 'questions_per_page',
+					'name'       => __( 'Questions Per Page', 'ask-me-anything' ),
+					'desc'       => __( 'Only applies on the front-end if questions are displayed. This number of questions will be shown on each page.', 'ask-me-anything' ),
+					'type'       => 'text',
+					'input-type' => 'number',
+					'std'        => '5'
+				),
+				'comments_on_questions' => array(
+					'id'   => 'comments_on_questions',
+					'name' => __( 'Allow Comments on Questions', 'ask-me-anything' ),
+					'desc' => __( 'Check this to allow readers to post comments on questions.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => '1'
+				),
+				'voting'                => array(
+					'id'      => 'voting',
+					'name'    => __( 'Voting', 'ask-me-anything' ),
+					'desc'    => '',
+					'type'    => 'select',
+					'options' => array(
+						'all'  => __( 'Allow Up Vote and Down Vote', 'ask-me-anything' ),
+						'up'   => __( 'Up Vote Only', 'ask-me-anything' ),
+						'down' => __( 'Down Vote Only', 'ask-me-anything' ),
+						'none' => __( 'No Voting', 'ask-me-anything' )
+					),
+					'std'     => 'all'
+				),
+				'default_category'      => array(
 					'id'      => 'default_category',
 					'name'    => __( 'Default Category', 'ask-me-anything' ),
 					'desc'    => __( 'This is the category all questions will be added to if no category is selected.', 'ask-me-anything' ),
@@ -282,7 +300,7 @@ function ask_me_anything_get_registered_settings() {
 					'options' => ask_me_anything_get_categories(),
 					'std'     => ''
 				),
-				'statuses'         => array(
+				'statuses'              => array(
 					'id'      => 'statuses',
 					'name'    => __( 'Statuses', 'ask-me-anything' ),
 					'desc'    => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything', 'ask-me-anything' ),
@@ -576,10 +594,12 @@ function ask_me_anything_text_callback( $args ) {
 		$name = 'name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']"';
 	}
 
+	$type = array_key_exists( 'input-type', $args ) ? $args['input-type'] : 'text';
+
 	$readonly = ( array_key_exists( 'readonly', $args ) && $args['readonly'] ) === true ? ' readonly="readonly"' : '';
 	$size     = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
 	?>
-	<input type="text" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>"<?php echo $readonly; ?>>
+	<input type="<?php echo esc_attr( $type ); ?>" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>"<?php echo $readonly; ?>>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }

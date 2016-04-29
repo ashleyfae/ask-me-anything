@@ -29,12 +29,16 @@ function ask_me_anything_load_scripts() {
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	wp_register_script( 'ask-me-anything', $js_dir . 'front-end' . $suffix . '.js', array( 'jquery' ), ASK_ME_ANYTHING_VERSION );
+	wp_register_script( 'ask-me-anything', $js_dir . 'front-end' . $suffix . '.js', array(
+		'jquery',
+		'wp-util'
+	), ASK_ME_ANYTHING_VERSION, true );
 	wp_enqueue_script( 'ask-me-anything' );
 
 	wp_localize_script( 'ask-me-anything', 'ASK_ME_ANYTHING', apply_filters( 'ask-me-anything/javascript-vars', array(
-		'ajaxurl' => admin_url( 'wp-ajax.php' ),
-		'nonce'   => wp_create_nonce( 'ama_submit_question' )
+		'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+		'display_questions' => ask_me_anything_get_option( 'show_questions', true ),
+		'nonce'             => wp_create_nonce( 'ask_me_anything_nonce' )
 	) ) );
 
 }
@@ -102,3 +106,15 @@ function ask_me_anything_load_css() {
 }
 
 add_action( 'wp_enqueue_scripts', 'ask_me_anything_load_css' );
+
+/**
+ * Load Underscore.js Templates
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_underscores_templates() {
+	ask_me_anything_get_template_part( 'single', 'question' );
+}
+
+add_action( 'wp_footer', 'ask_me_anything_underscores_templates' );

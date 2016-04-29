@@ -13,3 +13,15 @@
 if ( ! ask_me_anything_get_option( 'show_questions', true ) ) {
 	return;
 }
+
+?>
+<div class="ask-me-anything-questions-list">
+
+	<?php
+	/*
+	 * @see single-question.php
+	 * That template gets pulled inside here and repeated for each individual question.
+	 */
+	?>
+
+</div>

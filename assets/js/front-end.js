@@ -53,6 +53,11 @@ jQuery(document).ready(function ($) {
         // Show the modal
         $(targetID).show().addClass('ama-in');
 
+        // Insert the questions
+        if (ASK_ME_ANYTHING.display_questions == true) {
+            AskMeAnythingGetQuestions(1);
+        }
+
     }
 
     /**
@@ -75,6 +80,33 @@ jQuery(document).ready(function ($) {
         // Remove the backdrop
         $('#ask-me-anything-backdrop').remove();
 
+    }
+
+    /**
+     * Get Questions
+     *
+     * @param page Page number to retrieve
+     * @constructor
+     */
+    function AskMeAnythingGetQuestions(page) {
+        var amaQuestionTemplate = wp.template('ama-question');
+        var questionsList = $('.ask-me-anything-questions-list');
+
+        questionsList.empty().append('<div style="text-align: center; padding: 1em;"><i class="fa fa-spinner fa-spin fa-3x"></i></div>');
+
+        var data = {
+            action: 'ask_me_anything_get_questions',
+            page_number: page,
+            nonce: ASK_ME_ANYTHING.nonce
+        };
+
+        $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+            if (response.success == true) {
+                questionsList.empty().append(amaQuestionTemplate({questions: response.data}));
+            } else {
+                console.log(response);
+            }
+        });
     }
 
 });
