@@ -35,10 +35,17 @@ function ask_me_anything_load_scripts() {
 	), ASK_ME_ANYTHING_VERSION, true );
 	wp_enqueue_script( 'ask-me-anything' );
 
+	$description = ask_me_anything_get_option( 'form_desc', '' );
+
 	wp_localize_script( 'ask-me-anything', 'ASK_ME_ANYTHING', apply_filters( 'ask-me-anything/javascript-vars', array(
-		'ajaxurl'           => admin_url( 'admin-ajax.php' ),
-		'display_questions' => ask_me_anything_get_option( 'show_questions', true ),
-		'nonce'             => wp_create_nonce( 'ask_me_anything_nonce' )
+		'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
+		'display_questions'        => ask_me_anything_get_option( 'show_questions', true ),
+		'nonce'                    => wp_create_nonce( 'ask_me_anything_nonce' ),
+		'form_title_text'          => ask_me_anything_get_option( 'form_title', __( 'Ask Me Anything', 'ask-me-anything' ) ),
+		'form_description'         => $description ? wpautop( $description ) : '',
+		'form_require_name'        => ask_me_anything_get_option( 'require_name', false ),
+		'form_require_email'       => ask_me_anything_get_option( 'require_email', false ),
+		'form_question_field_name' => esc_html( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) )
 	) ) );
 
 }
@@ -114,6 +121,8 @@ add_action( 'wp_enqueue_scripts', 'ask_me_anything_load_css' );
  * @return void
  */
 function ask_me_anything_underscores_templates() {
+	ask_me_anything_get_template_part( 'questions' );
+	ask_me_anything_get_template_part( 'submit-question', 'form' );
 	ask_me_anything_get_template_part( 'single', 'question' );
 }
 

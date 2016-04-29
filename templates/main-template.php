@@ -15,8 +15,25 @@
 
 	<div class="ask-me-anything-modal-inner">
 
-		<?php ask_me_anything_get_template_part( 'questions' ); ?>
+		<?php
+		/*
+		 * List of questions on the right.
+		 */
+		if ( ask_me_anything_get_option( 'show_questions', true ) ) : ?>
+			<div class="ask-me-anything-questions-list">
+				<?php
+				/*
+				 * @see questions.php
+				 * That template gets pulled inside here and repeated for each individual question.
+				 */
+				?>
+			</div>
+		<?php endif;
 
+		/*
+		 * Submit a question form.
+		 */
+		?>
 		<div class="ask-me-anything-submit-question">
 			<?php
 			/*
@@ -24,7 +41,6 @@
 			 * That template gets pulled inside here automatically.
 			 */
 			?>
-			<?php //ask_me_anything_get_template_part( 'submit-question', 'form' ); ?>
 		</div>
 
 	</div>
