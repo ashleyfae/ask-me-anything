@@ -166,8 +166,10 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 			}
 
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-roles.php';
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-statuses.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-types.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/question-functions.php';
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/template-functions.php';
 
 			if ( is_admin() ) {
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/admin-pages.php';

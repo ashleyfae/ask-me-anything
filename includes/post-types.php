@@ -161,7 +161,7 @@ function ask_me_anything_setup_taxonomies() {
 	register_taxonomy_for_object_type( 'question_categories', 'question' );
 
 	/* Question Statuses */
-	$category_labels = array(
+	/*$category_labels = array(
 		'name'              => sprintf( _x( '%s Statuses', 'taxonomy general name', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
 		'singular_name'     => sprintf( _x( '%s Status', 'taxonomy singular name', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
 		'search_items'      => sprintf( __( 'Search %s Statuses', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
@@ -183,7 +183,7 @@ function ask_me_anything_setup_taxonomies() {
 		)
 	);
 	register_taxonomy( 'question_statuses', array( 'question' ), $category_args );
-	register_taxonomy_for_object_type( 'question_statuses', 'question' );
+	register_taxonomy_for_object_type( 'question_statuses', 'question' );*/
 
 }
 

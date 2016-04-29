@@ -285,11 +285,49 @@ function ask_me_anything_get_registered_settings() {
 				'statuses'         => array(
 					'id'      => 'statuses',
 					'name'    => __( 'Statuses', 'ask-me-anything' ),
-					'desc'    => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything' ),
+					'desc'    => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything', 'ask-me-anything' ),
 					'type'    => 'textarea',
 					'options' => ask_me_anything_get_categories(),
 					'std'     => "Pending\nIn Progress\nCompleted"
 				),
+			),
+			'fields'        => array(
+				'require_name'        => array(
+					'id'   => 'require_name',
+					'name' => __( 'Require Name', 'ask-me-anything' ),
+					'desc' => __( 'Check this on to require that a name be entered when submitting a question.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => false
+				),
+				'require_email'       => array(
+					'id'   => 'require_email',
+					'name' => __( 'Require Email', 'ask-me-anything' ),
+					'desc' => __( 'Check this on to require that an email address be entered when submitting a question.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => false
+				),
+				'question_field_name' => array(
+					'id'   => 'question_field_name',
+					'name' => __( 'Question Field Name', 'ask-me-anything' ),
+					'desc' => __( 'By default, the main textarea box is called "Question". But you can change this to something else if you\'re using it for something other than questions (i.e. "Request", "Message", etc.).', 'ask-me-anything' ),
+					'type' => 'text',
+					'std'  => __( 'Question', 'ask-me-anything' )
+				)
+			),
+			'labels'        => array(
+				'form_title' => array(
+					'id'   => 'form_title',
+					'name' => __( 'Form Title', 'ask-me-anything' ),
+					'desc' => __( 'Title text displayed above the submission form.', 'ask-me-anything' ),
+					'type' => 'text',
+					'std'  => __( 'Ask Me Anything', 'ask-me-anything' )
+				),
+				'form_desc'  => array(
+					'id'   => 'form_desc',
+					'name' => __( 'Form Description', 'ask-me-anything' ),
+					'desc' => __( 'Appears above the form submission fields.', 'ask-me-anything' ),
+					'type' => 'tinymce'
+				)
 			),
 			'notifications' => array(
 				'admin_notifications' => array(
@@ -301,7 +339,7 @@ function ask_me_anything_get_registered_settings() {
 				'admin_email'         => array(
 					'id'   => 'admin_email',
 					'name' => __( 'Notify Email Addresses', 'ask-me-anything' ),
-					'desc' => __( 'Enter a comma-separated list of emails. These are the email addresses we\'ll notify when a new question is submitted' ),
+					'desc' => __( 'Enter a comma-separated list of emails. These are the email addresses we\'ll notify when a new question is submitted.', 'ask-me-anything' ),
 					'type' => 'text',
 					'std'  => get_option( 'admin_email' )
 				)
@@ -448,6 +486,8 @@ function ask_me_anything_get_registered_settings_sections() {
 		) ),
 		'questions' => apply_filters( 'ask-me-anything/settings/sections/questions', array(
 			'main'          => __( 'Questions', 'ask-me-anything' ),
+			'fields'        => __( 'Fields', 'ask-me-anything' ),
+			'labels'        => __( 'Labels', 'ask-me-anything' ),
 			'notifications' => __( 'Notifications', 'ask-me-anything' )
 		) ),
 		'styles'    => apply_filters( 'ask-me-anything/settings/sections/styles', array(
@@ -561,7 +601,7 @@ function ask_me_anything_textarea_callback( $args ) {
 		$value = isset( $args['std'] ) ? $args['std'] : '';
 	}
 	?>
-	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
+	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo esc_attr( $args['id'] ) ; ?>]" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
@@ -667,7 +707,6 @@ function ask_me_anything_checkbox_callback( $args ) {
  * @return void
  */
 function ask_me_anything_select_callback( $args ) {
-
 	global $ask_me_anything_options;
 
 	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
@@ -699,4 +738,43 @@ function ask_me_anything_select_callback( $args ) {
 	$html .= '<label for="ask_me_anything_settings[' . ask_me_anything_sanitize_key( $args['id'] ) . ']" class="desc"> ' . wp_kses_post( $args['desc'] ) . '</label>';
 
 	echo $html;
+}
+
+/**
+ * TinyMCE Callback
+ *
+ * Renders a rich text editor.
+ *
+ * @param array  $args                    Arguments passed by the setting
+ *
+ * @global array $ask_me_anything_options Array of all the Ask Me Anything Options
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_tinymce_callback( $args ) {
+	global $ask_me_anything_options;
+
+	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
+		$value = $ask_me_anything_options[ $args['id'] ];
+
+		if ( empty( $args['allow_blank'] ) && empty( $value ) ) {
+			$value = isset( $args['std'] ) ? $args['std'] : '';
+		}
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+	$rows = isset( $args['size'] ) ? $args['size'] : 20;
+
+	wp_editor( stripslashes( $value ), 'ask_me_anything_settings' . esc_attr( $args['id'] ), array(
+		'textarea_name' => 'ask_me_anything_settings[' . esc_attr( $args['id'] ) . ']',
+		'textarea_rows' => absint( $rows )
+	) );
+	?>
+	<br>
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc">
+		<?php echo wp_kses_post( $args['desc'] ); ?>
+	</label>
+	<?php
 }
