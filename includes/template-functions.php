@@ -145,13 +145,13 @@ function ask_me_anything_get_theme_template_paths() {
 /**
  * Returns the template directory name.
  *
- * Themes can filter this by using the ask_me_anything_templates_dir filter.
+ * Themes can filter this by using the ask-me-anything/templates-dir filter.
  *
  * @since 1.0.0
  * @return string
  */
 function ask_me_anything_get_theme_template_dir_name() {
-	return trailingslashit( apply_filters( 'ask-me-anything/templates-dir', 'ask_me_anything_templates' ) );
+	return trailingslashit( apply_filters( 'ask-me-anything/templates-dir', 'ask-me-anything' ) );
 }
 
 /**
@@ -176,6 +176,7 @@ function ask_me_anything_maybe_display() {
 
 	do_action( 'ask-me-anything/before-display', $display );
 
+	ask_me_anything_get_template_part( 'button' );
 	ask_me_anything_get_template_part( 'main', 'template' );
 
 	do_action( 'ask-me-anything/after-display', $display );

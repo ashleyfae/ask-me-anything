@@ -9,13 +9,16 @@
  * @license   GPL2+
  */
 
-$position = ask_me_anything_get_option( 'display_position', 'bottom-right' );
 ?>
 
-<div class="ask-me-anything-layout ask-me-anything-<?php echo sanitize_html_class( $position ); ?>">
+<div id="ask-me-anything" class="ask-me-anything-layout ask-me-anything-modal">
 
-	<?php ask_me_anything_get_template_part( 'questions' ); ?>
+	<div class="ask-me-anything-modal-inner">
 
-	<?php ask_me_anything_get_template_part( 'submit-question', 'form' ); ?>
+		<?php ask_me_anything_get_template_part( 'questions' ); ?>
+
+		<?php ask_me_anything_get_template_part( 'submit-question', 'form' ); ?>
+
+	</div>
 
 </div>

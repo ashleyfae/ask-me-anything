@@ -1,0 +1,91 @@
+/* Button */
+.ask-me-anything-button {
+  position: fixed;
+  bottom: 0;
+  right: 75px; }
+  .ask-me-anything-button.ask-me-anything-button-bottom-left {
+    right: auto;
+    left: 75px; }
+  .ask-me-anything-button.ask-me-anything-button-left {
+    bottom: 52%;
+    right: auto;
+    left: 0;
+    -webkit-transform-origin: 0 50%;
+    -moz-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    -o-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transform: rotate(90deg) translate(50%, -50%);
+    -moz-transform: rotate(90deg) translate(50%, -50%);
+    -ms-transform: rotate(90deg) translate(50%, -50%);
+    -o-transform: rotate(90deg) translate(50%, -50%);
+    transform: rotate(90deg) translate(50%, -50%); }
+  .ask-me-anything-button.ask-me-anything-button-right {
+    bottom: 52%;
+    right: 0;
+    -webkit-transform-origin: 100% 100%;
+    -moz-transform-origin: 100% 100%;
+    -ms-transform-origin: 100% 100%;
+    -o-transform-origin: 100% 100%;
+    transform-origin: 100% 100%;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg); }
+
+/* Modal Backdrop */
+#ask-me-anything-backdrop {
+  background-color: black;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  -webkit-transition: opacity .15s linear;
+  -o-transition: opacity .15s linear;
+  transition: opacity .15s linear; }
+  #ask-me-anything-backdrop.ama-in {
+    opacity: .5; }
+
+/* Modal */
+.ask-me-anything-modal {
+  display: none;
+  opacity: 0;
+  outline: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  -webkit-transition: opacity 2.15s linear;
+  -o-transition: opacity 2.15s linear;
+  transition: opacity 2.15s linear;
+  -webkit-overflow-scrolling: touch; }
+  .ask-me-anything-modal.ama-in {
+    opacity: 1; }
+
+.ask-me-anything-modal-inner {
+  background: white;
+  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  padding: 1em;
+  position: relative;
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0); }
+  @media (min-width: 768px) {
+    .ask-me-anything-modal-inner {
+      max-width: 80%;
+      margin: 30px auto; } }
+  @media (min-width: 1200px) {
+    .ask-me-anything-modal-inner {
+      max-width: 1000px; } }
+
+/*# sourceMappingURL=ask-me-anything.css.map */
