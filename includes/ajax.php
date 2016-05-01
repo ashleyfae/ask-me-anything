@@ -82,6 +82,14 @@ function ask_me_anything_load_question() {
 add_action( 'wp_ajax_ask_me_anything_load_question', 'ask_me_anything_load_question' );
 add_action( 'wp_ajax_nopriv_ask_me_anything_load_question', 'ask_me_anything_load_question' );
 
+/**
+ * Submit Question
+ *
+ * @see ask_me_anything_insert_question()
+ *
+ * @since 1.0.0
+ * @return void
+ */
 function ask_me_anything_submit_question() {
 
 	// Security check.

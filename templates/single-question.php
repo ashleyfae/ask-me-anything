@@ -12,7 +12,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 <script id="tmpl-ama-single-question" type="text/html">
 
-	<button class="ama-load-question-form"><?php _e( 'Back to Form', 'ask-me-anything' ); ?></button>
+	<button class="ask-me-anything-button ama-load-question-form"><?php _e( 'Back to Form', 'ask-me-anything' ); ?></button>
 
 	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap">
 
@@ -68,7 +68,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 						<?php _e( 'Notify me of new comments', 'ask-me-anything' ); ?>
 					</label>
 				</div>
-				<button type="submit" class="ama-submit-comment-button"><?php _e( 'Submit Comment', 'ask-me-anything' ); ?></button>
+				<button type="submit" class="ask-me-anything-button ama-submit-comment-button"><?php _e( 'Submit Comment', 'ask-me-anything' ); ?></button>
 			</form>
 		</div>
 	<?php endif; ?>
