@@ -20,10 +20,11 @@
  */
 function ask_me_anything_get_categories() {
 	if ( false === ( $categories = get_transient( 'ask_me_anything_categories' ) ) ) {
-		$categories = get_terms( 'question_categories', array(
+		$categories = get_terms( array(
 			'orderby'    => 'name',
 			'hide_empty' => false,
-			'fields'     => 'id=>name'
+			'fields'     => 'id=>name',
+			'taxonomy'   => 'question_categories'
 		) );
 	}
 
@@ -34,4 +35,35 @@ function ask_me_anything_get_categories() {
 	}
 
 	return $categories;
+}
+
+/**
+ * Get Categories Dropdown
+ *
+ * Returns <option> tags for each available category. If there's only one category then
+ * nothing is returned.
+ *
+ * @param string $selected
+ *
+ * @since 1.0.0
+ * @return bool|string False if there's only one choice or less
+ */
+function ask_me_anything_get_categories_dropdown( $selected = '' ) {
+	if ( empty( $selected ) ) {
+		$selected = ask_me_anything_get_option( 'default_category', '' );
+	}
+
+	$categories = ask_me_anything_get_categories();
+
+	if ( count( $categories ) <= 1 ) {
+		return false;
+	}
+
+	$options = '';
+
+	foreach ( $categories as $id => $name ) {
+		$options .= '<option value="' . esc_attr( $id ) . '"' . selected( $selected, $id, false ) . '>' . esc_html( $name ) . '</option>';
+	}
+
+	return $options;
 }

@@ -139,7 +139,13 @@ function ask_me_anything_insert_question( $fields ) {
 				}
 				break;
 
-			case 'ask-me-anything-subject' :
+			case 'ask-me-anything-category' :
+				$category_id           = ! empty( $field_info['value'] ) ? absint( $field_info['value'] ) : ask_me_anything_get_option( 'default_category' );
+				$question->category_id = is_array( $category_id ) ? $category_id : array( $category_id ); // Exepcting an array
+				break;
+
+			case
+			'ask-me-anything-subject' :
 				if ( empty( $field_info['value'] ) ) {
 					$error->add( 'empty-subject', __( 'The subject field is required.', 'ask-me-anything' ) );
 				} else {

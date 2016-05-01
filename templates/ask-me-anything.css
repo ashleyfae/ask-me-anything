@@ -99,6 +99,7 @@
 #ask-me-anything input[type="email"],
 #ask-me-anything input[type="text"],
 #ask-me-anything input[type="url"],
+#ask-me-anything select,
 #ask-me-anything textarea {
   background: none;
   border: 1px solid #dcdcdc;

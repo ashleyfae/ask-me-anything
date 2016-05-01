@@ -44,6 +44,22 @@ class AMA_Question {
 	private $status_name;
 
 	/**
+	 * Array of category IDs
+	 *
+	 * @var array|bool
+	 * @since 1.0.0
+	 */
+	private $category_id;
+
+	/**
+	 * Array of WP_Term objects
+	 *
+	 * @var array|bool
+	 * @since 1.0.0
+	 */
+	private $category;
+
+	/**
 	 * Name of the person who submitted the question
 	 *
 	 * @var string
@@ -269,6 +285,10 @@ class AMA_Question {
 						$question_args['post_status'] = $this->status;
 						break;
 
+					case 'category_id' :
+						wp_set_post_terms( $this->ID, $this->category_id, 'question_categories', true );
+						break;
+
 					case 'submitter' :
 						$this->update_meta( 'ama_submitter', $this->submitter );
 						break;
@@ -387,6 +407,46 @@ class AMA_Question {
 		$status_name = $this->get_status_name();
 
 		return apply_filters( 'ask-me-anything/question/get/status-class', strtolower( sanitize_html_class( $status_name ) ), $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Category ID
+	 *
+	 * Returns an array of category IDs.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return array|bool False if no category
+	 */
+	public function get_category_id() {
+
+		if ( ! isset( $this->category_id ) ) {
+			$category_id       = wp_get_post_terms( $this->ID, 'question_categories', array( 'fields' => 'ids' ) );
+			$this->category_id = is_array( $category_id ) ? $category_id : false;
+		}
+
+		return apply_filters( 'ask-me-anything/question/get/category_id', $this->category_id, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Category
+	 *
+	 * Returns an array of WP_Term objects.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return array|bool False if no category
+	 */
+	public function get_category() {
+
+		if ( ! isset( $this->category ) ) {
+			$categories     = wp_get_post_terms( $this->ID, 'question_categories' );
+			$this->category = is_array( $categories ) ? $categories : false;
+		}
+
+		return apply_filters( 'ask-me-anything/question/get/category', $this->category, $this->ID, $this );
 
 	}
 

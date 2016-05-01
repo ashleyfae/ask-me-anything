@@ -292,6 +292,13 @@ function ask_me_anything_get_registered_settings() {
 					),
 					'std'     => 'all'
 				),
+				'allow_category_select' => array(
+					'id'   => 'allow_category_select',
+					'name' => __( 'Allow Category Selection', 'ask-me-anything' ),
+					'desc' => __( 'If checked, users will be able to choose a category when submitting their question. If unchecked, categories are only viewable by you.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => '1'
+				),
 				'default_category'      => array(
 					'id'      => 'default_category',
 					'name'    => __( 'Default Category', 'ask-me-anything' ),
