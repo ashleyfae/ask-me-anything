@@ -35,7 +35,7 @@ add_action( 'admin_menu', 'ask_me_anything_add_options_link', 10 );
 function ask_me_anything_is_admin_page() {
 	// @todo
 
-	$screen           = get_current_screen();
+	$screen      = get_current_screen();
 	$is_ama_page = false;
 
 	if ( $screen->base == 'question_page_ask-me-anything-settings' ) {
@@ -69,7 +69,6 @@ function ask_me_anything_load_admin_scripts( $hook ) {
 
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	$suffix = ''; //@todo remove
 
 	/*
 	 * JavaScript
@@ -89,9 +88,7 @@ function ask_me_anything_load_admin_scripts( $hook ) {
 
 	$admin_deps = array(
 		'jquery',
-		//'jquery-ui-draggable',
-		//'jquery-ui-droppable',
-		//'jquery-ui-sortable'
+		'wp-color-picker'
 	);
 
 	wp_register_script( 'ask-me-anything-admin-scripts', $js_dir . 'admin-scripts' . $suffix . '.js', $admin_deps, ASK_ME_ANYTHING_VERSION, true );
@@ -106,8 +103,8 @@ function ask_me_anything_load_admin_scripts( $hook ) {
 	/*
 	 * Stylesheets
 	 */
-	wp_register_style( 'ask-me-anything-admin', $css_dir . 'ask-me-anything-admin' . $suffix . '.css', ASK_ME_ANYTHING_VERSION );
-	wp_enqueue_style( 'ask-me-anything-admin' );
+	wp_enqueue_style( 'ask-me-anything-admin', $css_dir . 'ask-me-anything-admin' . $suffix . '.css', ASK_ME_ANYTHING_VERSION );
+	wp_enqueue_style( 'wp-color-picker' );
 }
 
 add_action( 'admin_enqueue_scripts', 'ask_me_anything_load_admin_scripts', 100 );

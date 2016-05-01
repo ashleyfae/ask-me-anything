@@ -49,6 +49,6 @@
 			<label for="ask-me-anything-question">{{ data.form_question_field_name }}<span class="ask-me-anything-required">*</span></label>
 			<textarea class="ask-me-anything-question" name="ask-me-anything-question" required></textarea>
 		</div>
-		<button type="submit" class="ask-me-anything-submit-question-button"><?php _e('Submit', 'ask-me-anything'); ?></button>
+		<button type="submit" class="ask-me-anything-button ask-me-anything-submit-question-button"><?php _e('Submit', 'ask-me-anything'); ?></button>
 	</form>
 </script>

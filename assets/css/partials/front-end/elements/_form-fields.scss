@@ -1,0 +1,25 @@
+#ask-me-anything {
+    input[type="email"],
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        background: none;
+        border: 1px solid #dcdcdc;
+        display: block;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.ask-me-anything-field {
+    margin-bottom: 15px;
+}
+
+.ask-me-anything-required {
+    color: red;
+    display: inline-block;
+    font: {
+        weight: bold;
+    }
+    margin-left: 3px;
+}

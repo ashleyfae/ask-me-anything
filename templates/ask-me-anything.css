@@ -1,12 +1,51 @@
-/* Button */
+/*
+ * Ask Me Anything CSS
+ *
+ * If you want to override this CSS, then create a new folder in your theme called 'ask-me-anything'
+ * and copy this CSS file to that location. Then you can make any changes you want and AMA will
+ * use the CSS file in your theme instead of this one.
+ *
+ * @package ask-me-anything
+ * @copyright Copyright (c) 2016, Nose Graze Ltd.
+ * @license   GPL2+
+ */
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Elements
+    ## Buttons
+    ## Form Fields
+# Modal
+
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# Buttons
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+## Buttons
+--------------------------------------------------------------*/
+/* AMA Buttons */
 .ask-me-anything-button {
+  background: #e14d43;
+  border: none;
+  border-radius: 0;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0;
+  padding: 10px 20px;
+  text-decoration: none;
+  text-transform: none; }
+
+/* Trigger Button */
+.ask-me-anything-trigger-button {
   position: fixed;
   bottom: 0;
   right: 75px; }
-  .ask-me-anything-button.ask-me-anything-button-bottom-left {
+  .ask-me-anything-trigger-button.ask-me-anything-button-bottom-left {
     right: auto;
     left: 75px; }
-  .ask-me-anything-button.ask-me-anything-button-left {
+  .ask-me-anything-trigger-button.ask-me-anything-button-left {
     bottom: 52%;
     right: auto;
     left: 0;
@@ -20,7 +59,7 @@
     -ms-transform: rotate(90deg) translate(50%, -50%);
     -o-transform: rotate(90deg) translate(50%, -50%);
     transform: rotate(90deg) translate(50%, -50%); }
-  .ask-me-anything-button.ask-me-anything-button-right {
+  .ask-me-anything-trigger-button.ask-me-anything-button-right {
     bottom: 52%;
     right: 0;
     -webkit-transform-origin: 100% 100%;
@@ -34,6 +73,31 @@
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg); }
 
+/*--------------------------------------------------------------
+## Form Fields
+--------------------------------------------------------------*/
+#ask-me-anything input[type="email"],
+#ask-me-anything input[type="text"],
+#ask-me-anything input[type="url"],
+#ask-me-anything textarea {
+  background: none;
+  border: 1px solid #dcdcdc;
+  display: block;
+  margin: 0;
+  width: 100%; }
+
+.ask-me-anything-field {
+  margin-bottom: 15px; }
+
+.ask-me-anything-required {
+  color: red;
+  display: inline-block;
+  font-weight: bold;
+  margin-left: 3px; }
+
+/*--------------------------------------------------------------
+# Modal
+--------------------------------------------------------------*/
 /* Modal Backdrop */
 #ask-me-anything-backdrop {
   background-color: black;
@@ -94,6 +158,7 @@
 .ask-me-anything-questions-list {
   background: #f4f4f4; }
   .ask-me-anything-questions-list a {
+    border: none;
     border-top: 1px solid #dcdcdc;
     display: block;
     padding: 1em;
@@ -102,10 +167,12 @@
       color: #333; }
     .ask-me-anything-questions-list a:hover, .ask-me-anything-questions-list a:focus, .ask-me-anything-questions-list a:active, .ask-me-anything-questions-list a.ama-active {
       background: #dcdcdc;
+      border-top: 1px solid #dcdcdc;
       color: #333;
       text-decoration: none; }
   .ask-me-anything-questions-list h3 {
     font-size: 18px;
+    letter-spacing: 0;
     margin: 0 0 .5em;
     text-align: left;
     text-transform: none; }
@@ -120,31 +187,12 @@
   .ask-me-anything-submit-question h2 {
     color: #333;
     font-size: 28px;
+    letter-spacing: 0;
     margin: 0 0 .5em;
     text-align: left;
     text-transform: none; }
   @media (min-width: 768px) {
     .ask-me-anything-submit-question {
       width: 70%; } }
-
-/* Form Fields */
-#ask-me-anything input[type="email"],
-#ask-me-anything input[type="text"],
-#ask-me-anything input[type="url"],
-#ask-me-anything textarea {
-  background: none;
-  border: 1px solid #dcdcdc;
-  display: block;
-  margin: 0;
-  width: 100%; }
-
-.ask-me-anything-field {
-  margin-bottom: 15px; }
-
-.ask-me-anything-required {
-  color: red;
-  display: inline-block;
-  font-weight: bold;
-  margin-left: 3px; }
 
 /*# sourceMappingURL=ask-me-anything.css.map */

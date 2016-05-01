@@ -373,12 +373,26 @@ function ask_me_anything_get_registered_settings() {
 		/* Styles */
 		'styles'    => apply_filters( 'ask-me-anything/settings/styles', array(
 			'main' => array(
-				'disable_styles' => array(
+				'disable_styles'     => array(
 					'id'   => 'disable_styles',
 					'name' => __( 'Disable Styles', 'ask-me-anything' ),
 					'desc' => __( 'Check this to disable the Ask Me Anything stylesheet from being added to your site.', 'ask-me-anything' ),
 					'type' => 'checkbox'
-				)
+				),
+				'button_bg_colour'   => array(
+					'id'   => 'button_bg_colour',
+					'name' => __( 'Button BG Colour', 'ask-me-anything' ),
+					'desc' => __( 'Background colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
+					'type' => 'color',
+					'std'  => '#e14d43'
+				),
+				'button_text_colour' => array(
+					'id'   => 'button_text_colour',
+					'name' => __( 'Button Text Colour', 'ask-me-anything' ),
+					'desc' => __( 'Ttext colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
+					'type' => 'color',
+					'std'  => '#ffffff'
+				),
 			)
 		) ),
 		/* Licenses */
@@ -543,6 +557,28 @@ function ask_me_anything_sanitize_key( $key ) {
 	return apply_filters( 'ask-me-anything/sanitize-key', $key, $raw_key );
 }
 
+/**
+ * Sanitize: Colour Field
+ *
+ * @param string $value
+ * @param string $key
+ *
+ * @since 1.0.0
+ * @return string
+ */
+function ask_me_anything_sanitize_color_field( $value, $key ) {
+	if ( '' === $value ) {
+		return '';
+	}
+
+	// 3 or 6 hex digits, or the empty string.
+	if ( preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $value ) ) {
+		return $value;
+	}
+}
+
+add_filter( 'ask-me-anything/settings/sanitize/color', 'ask_me_anything_sanitize_color_field', 10, 2 );
+
 
 /*
  * Callbacks
@@ -627,6 +663,34 @@ function ask_me_anything_textarea_callback( $args ) {
 	?>
 	<textarea class="large-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" name="ask_me_anything_settings[<?php echo esc_attr( $args['id'] ); ?>]" rows="10" cols="50"><?php echo esc_textarea( $value ); ?></textarea>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
+	<?php
+}
+
+/**
+ * Color picker Callback
+ *
+ * Renders color picker fields.
+ *
+ * @param array  $args                    Arguments passed by the setting
+ *
+ * @global array $ask_me_anything_options Array of all the EDD Options
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_color_callback( $args ) {
+	global $ask_me_anything_options;
+
+	if ( isset( $ask_me_anything_options[ $args['id'] ] ) ) {
+		$value = $ask_me_anything_options[ $args['id'] ];
+	} else {
+		$value = isset( $args['std'] ) ? $args['std'] : '';
+	}
+
+	$default = isset( $args['std'] ) ? $args['std'] : '';
+	?>
+	<input type="text" class="ama-color-picker" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>" name="ask_me_anything_settings[<?php echo esc_attr( $args['id'] ); ?>]" value="<?php echo esc_attr( $value ); ?>" data-default-color="<?php echo esc_attr( $default ); ?>">
+	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
 }
 

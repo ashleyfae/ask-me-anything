@@ -107,8 +107,8 @@ function ask_me_anything_load_css() {
 		return;
 	}
 
-	wp_register_style( 'ask-me-anything', $url, array(), ASK_ME_ANYTHING_VERSION, 'all' );
-	wp_enqueue_style( 'ask-me-anything' );
+	wp_enqueue_style( 'ask-me-anything', $url, array(), ASK_ME_ANYTHING_VERSION, 'all' );
+	wp_add_inline_style( 'ask-me-anything', ask_me_anything_generated_css() );
 
 }
 
@@ -127,3 +127,25 @@ function ask_me_anything_underscores_templates() {
 }
 
 add_action( 'wp_footer', 'ask_me_anything_underscores_templates' );
+
+/**
+ * Generate CSS based on "Styles" settings.
+ *
+ * @since 1.0.0
+ * @return string
+ */
+function ask_me_anything_generated_css() {
+	$css = '';
+
+	$button_bg = ask_me_anything_get_option( 'button_bg_colour' );
+	if ( $button_bg ) {
+		$css .= '.ask-me-anything-button { background-color: ' . esc_attr( $button_bg ) . '; }';
+	}
+
+	$button_text = ask_me_anything_get_option( 'button_text_colour' );
+	if ( $button_text ) {
+		$css .= '.ask-me-anything-button { color: ' . esc_attr( $button_text ) . '; }';
+	}
+
+	return $css;
+}
