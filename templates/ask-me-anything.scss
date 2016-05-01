@@ -122,7 +122,7 @@
         padding: 1em;
         text-decoration: none;
 
-        &, h4 {
+        &, h3 {
             color: #333;
         }
 
@@ -131,6 +131,15 @@
             color: #333;
             text-decoration: none;
         }
+    }
+
+    h3 {
+        font: {
+            size: 18px;
+        }
+        margin: 0 0 .5em;
+        text-align: left;
+        text-transform: none;
     }
 
     @media (min-width: 768px) {
@@ -143,7 +152,44 @@
 .ask-me-anything-submit-question {
     padding: 1em;
 
+    h2 {
+        color: #333;
+        font: {
+            size: 28px;
+        }
+        margin: 0 0 .5em;
+        text-align: left;
+        text-transform: none;
+    }
+
     @media (min-width: 768px) {
         width: 70%;
     }
+}
+
+/* Form Fields */
+#ask-me-anything {
+    input[type="email"],
+    input[type="text"],
+    input[type="url"],
+    textarea {
+        background: none;
+        border: 1px solid #dcdcdc;
+        display: block;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.ask-me-anything-field {
+    margin-bottom: 15px;
+}
+
+.ask-me-anything-required {
+    color: red;
+    display: inline-block;
+    font: {
+        weight: bold;
+    }
+    margin-left: 3px;
 }

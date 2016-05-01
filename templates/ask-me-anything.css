@@ -98,12 +98,17 @@
     display: block;
     padding: 1em;
     text-decoration: none; }
-    .ask-me-anything-questions-list a, .ask-me-anything-questions-list a h4 {
+    .ask-me-anything-questions-list a, .ask-me-anything-questions-list a h3 {
       color: #333; }
     .ask-me-anything-questions-list a:hover, .ask-me-anything-questions-list a:focus, .ask-me-anything-questions-list a:active, .ask-me-anything-questions-list a.ama-active {
       background: #dcdcdc;
       color: #333;
       text-decoration: none; }
+  .ask-me-anything-questions-list h3 {
+    font-size: 18px;
+    margin: 0 0 .5em;
+    text-align: left;
+    text-transform: none; }
   @media (min-width: 768px) {
     .ask-me-anything-questions-list {
       border-right: 1px solid #dcdcdc;
@@ -112,8 +117,34 @@
 /* Submit a Question */
 .ask-me-anything-submit-question {
   padding: 1em; }
+  .ask-me-anything-submit-question h2 {
+    color: #333;
+    font-size: 28px;
+    margin: 0 0 .5em;
+    text-align: left;
+    text-transform: none; }
   @media (min-width: 768px) {
     .ask-me-anything-submit-question {
       width: 70%; } }
+
+/* Form Fields */
+#ask-me-anything input[type="email"],
+#ask-me-anything input[type="text"],
+#ask-me-anything input[type="url"],
+#ask-me-anything textarea {
+  background: none;
+  border: 1px solid #dcdcdc;
+  display: block;
+  margin: 0;
+  width: 100%; }
+
+.ask-me-anything-field {
+  margin-bottom: 15px; }
+
+.ask-me-anything-required {
+  color: red;
+  display: inline-block;
+  font-weight: bold;
+  margin-left: 3px; }
 
 /*# sourceMappingURL=ask-me-anything.css.map */

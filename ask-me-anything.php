@@ -169,6 +169,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/ajax.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/assets.php';
+			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ama-question.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-license.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/class-ask-me-anything-roles.php';
 			require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/post-statuses.php';

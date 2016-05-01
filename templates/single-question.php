@@ -12,7 +12,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 <script id="tmpl-ama-single-question" type="text/html">
 
-	<button id="ama-load-question-form"><?php _e( 'Back to Form', 'ask-me-anything' ); ?></button>
+	<button class="ama-load-question-form"><?php _e( 'Back to Form', 'ask-me-anything' ); ?></button>
 
 	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap">
 
@@ -26,19 +26,19 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 		<div class="ama-question-actions">
 			<# if (data.question_edit_link) { #>
-				<a href="{{ data.question_edit_link }}" target="_blank" class="ama-question-edit-link"><?php _e('Edit', 'ask-me-anything'); ?></a>
+				<a href="{{{ data.question_edit_link }}}" target="_blank" class="ama-question-edit-link"><?php _e('Edit', 'ask-me-anything'); ?></a>
 			<# } #>
 
 			<?php if ( $voting != 'none' ) : ?>
 				<span class="ama-question-voting">
 					<?php if ( $voting == 'all' || $voting == 'up' ) : ?>
 						<span class="ama-up-vote">
-							<i class="fa fa-thumbs-up"></i> {{ question.number_up }}
+							<i class="fa fa-thumbs-up"></i> {{ data.number_up }}
 						</span>
 					<?php endif; ?>
 					<?php if ( $voting == 'all' || $voting == 'down' ) : ?>
 						<span class="ama-down-vote">
-							<i class="fa fa-thumbs-down"></i> {{ question.number_down }}
+							<i class="fa fa-thumbs-down"></i> {{ data.number_down }}
 						</span>
 					<?php endif; ?>
 				</span>
@@ -68,6 +68,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 						<?php _e( 'Notify me of new comments', 'ask-me-anything' ); ?>
 					</label>
 				</div>
+				<button type="submit" class="ama-submit-comment-button"><?php _e( 'Submit Comment', 'ask-me-anything' ); ?></button>
 			</form>
 		</div>
 	<?php endif; ?>

@@ -88,18 +88,59 @@ jQuery(document).ready(function ($) {
     /**
      * Load Form Template
      *
+     * Also processes question submission.
+     *
      * @constructor
      */
-    function AskMeAnythingLoadFormTemplate() {
+    function AskMeAnythingLoadFormTemplate(message) {
         var amaFormTemplate = wp.template('ama-submit-form');
         var amaSubmitData = {
+            message: typeof message !== 'undefined' ? message : '',
             form_title_text: ASK_ME_ANYTHING.form_title_text,
             form_description: ASK_ME_ANYTHING.form_description,
             form_require_name: ASK_ME_ANYTHING.form_require_name,
-            form_require_email: ASK_ME_ANYTHING.form_require_email
+            form_require_email: ASK_ME_ANYTHING.form_require_email,
+            form_question_field_name: ASK_ME_ANYTHING.form_question_field_name
         };
 
         $('.ask-me-anything-submit-question').empty().append(amaFormTemplate(amaSubmitData));
+
+        $('.ask-me-anything-submit-question-form').submit(function(e) {
+            e.preventDefault();
+
+            var submitForm = $(this);
+
+            submitForm.find('button').attr('disabled', true);
+            submitForm.append('<i class="fa fa-spinner fa-spin"></i>');
+
+            var formData = $(this).serializeArray();
+            var data = {
+                action: 'ask_me_anything_submit_question',
+                formData: formData,
+                nonce: ASK_ME_ANYTHING.nonce
+            };
+
+            $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                //submitForm.append(response);
+                //return false;
+
+                var responseClass = 'ama-error';
+
+                if (response.success == true) {
+                    responseClass = 'ama-success';
+                }
+
+                var finalMessage = '<div class="' + responseClass + '">' + response.data + '</div>';
+
+                if (response.success == true) {
+                    AskMeAnythingLoadFormTemplate(finalMessage);
+                } else {
+                    submitForm.find('.fa-spin').remove();
+                    submitForm.insertBefore(finalMessage);
+                }
+
+            });
+        });
     }
 
     /**
@@ -152,8 +193,61 @@ jQuery(document).ready(function ($) {
                 }
             });
 
+            var questionArea = $('.ask-me-anything-submit-question');
+
+            questionArea.empty().append('<div style="text-align: center;"><i class="fa fa-spinner fa-spin fa-3x"></i></div>');
+
+            var data = {
+                action: 'ask_me_anything_load_question',
+                question_id: questionID,
+                nonce: ASK_ME_ANYTHING.nonce
+            };
+
+            $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                if (response.success == true) {
+                    var amaQuestionTemplate = wp.template('ama-single-question');
+                    questionArea.empty().append(amaQuestionTemplate(response.data));
+
+                    // Initialize voting.
+                    AskMeAnythingInitializeVoting();
+                    
+                    // Initialize comment submission.
+                    AskMeAnythingSubmitComment();
+
+                    // Go back to form.
+                    $('.ama-load-question-form').click(function(e) {
+                        e.preventDefault();
+                        AskMeAnythingLoadFormTemplate();
+                    });
+                } else {
+                    console.log(response);
+                }
+            });
 
         });
     }
+
+    /**
+     * Initialize Voting
+     * 
+     * Processes up/down votes.
+     * 
+     * @constructor
+     */
+    function AskMeAnythingInitializeVoting() {
+        $('.ama-up-vote').click(function (e) {
+            console.log('clicked');
+        });
+    }
+
+    /**
+     * Initialize Comment Submission
+     * 
+     * @constructor
+     */
+    function AskMeAnythingSubmitComment() {
+        
+    }
+
 
 });
