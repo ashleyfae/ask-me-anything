@@ -105,7 +105,7 @@ jQuery(document).ready(function ($) {
 
         $('.ask-me-anything-submit-question').empty().append(amaFormTemplate(amaSubmitData));
 
-        $('.ask-me-anything-submit-question-form').submit(function(e) {
+        $('.ask-me-anything-submit-question-form').submit(function (e) {
             e.preventDefault();
 
             var submitForm = $(this);
@@ -121,8 +121,7 @@ jQuery(document).ready(function ($) {
             };
 
             $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-                //submitForm.append(response);
-                //return false;
+                console.log(response); //@todo remove
 
                 var responseClass = 'ama-error';
 
@@ -135,8 +134,9 @@ jQuery(document).ready(function ($) {
                 if (response.success == true) {
                     AskMeAnythingLoadFormTemplate(finalMessage);
                 } else {
-                    submitForm.find('.fa-spin').remove();
-                    submitForm.insertBefore(finalMessage);
+                    submitForm.find('button').attr('disabled', false);
+                    submitForm.find('.fa-spin, .ama-error').remove();
+                    submitForm.prepend(finalMessage);
                 }
 
             });
@@ -210,12 +210,12 @@ jQuery(document).ready(function ($) {
 
                     // Initialize voting.
                     AskMeAnythingInitializeVoting();
-                    
+
                     // Initialize comment submission.
                     AskMeAnythingSubmitComment();
 
                     // Go back to form.
-                    $('.ama-load-question-form').click(function(e) {
+                    $('.ama-load-question-form').click(function (e) {
                         e.preventDefault();
                         AskMeAnythingLoadFormTemplate();
                     });
@@ -229,9 +229,9 @@ jQuery(document).ready(function ($) {
 
     /**
      * Initialize Voting
-     * 
+     *
      * Processes up/down votes.
-     * 
+     *
      * @constructor
      */
     function AskMeAnythingInitializeVoting() {
@@ -242,11 +242,11 @@ jQuery(document).ready(function ($) {
 
     /**
      * Initialize Comment Submission
-     * 
+     *
      * @constructor
      */
     function AskMeAnythingSubmitComment() {
-        
+
     }
 
 

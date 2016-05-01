@@ -60,12 +60,20 @@ class AMA_Question {
 	private $submitter_email;
 
 	/**
+	 * Whether or not to notify the submitter of new comments
+	 *
+	 * @var bool
+	 * @since 1.0.0
+	 */
+	private $notify_submitter;
+
+	/**
 	 * Number of up votes
 	 *
 	 * @var int
 	 * @since 1.0.0
 	 */
-	private $up_votes = 0;
+	private $up_votes;
 
 	/**
 	 * Number of down votes
@@ -73,7 +81,7 @@ class AMA_Question {
 	 * @var int
 	 * @since 1.0.0
 	 */
-	private $down_votes = 0;
+	private $down_votes;
 
 	/**
 	 * Array of items that have changed since the last save() was run
@@ -269,6 +277,10 @@ class AMA_Question {
 						$this->update_meta( 'ama_submitter_email', $this->submitter_email );
 						break;
 
+					case 'notify_submitter' :
+						$this->update_meta( 'ama_notify_submitter', $this->notify_submitter );
+						break;
+
 					case 'up_votes' :
 						$this->update_meta( 'ama_up_votes', absint( $this->up_votes ) );
 						break;
@@ -375,6 +387,65 @@ class AMA_Question {
 		$status_name = $this->get_status_name();
 
 		return apply_filters( 'ask-me-anything/question/get/status-class', strtolower( sanitize_html_class( $status_name ) ), $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Submitter
+	 *
+	 * Returns the name of the person who submitted the question.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public function get_submitter() {
+
+		if ( ! isset( $this->submitter ) ) {
+			$this->submitter = get_post_meta( $this->ID, 'ama_submitter', true );
+		}
+
+		return apply_filters( 'ask-me-anything/question/get/submitter', $this->submitter, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Submitter Email
+	 *
+	 * Returns the email address of the person who submitted the question.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public function get_submitter_email() {
+
+		if ( ! isset( $this->submitter_email ) ) {
+			$this->submitter_email = get_post_meta( $this->ID, 'ama_submitter_email', true );
+		}
+
+		return apply_filters( 'ask-me-anything/question/get/submitter_email', $this->submitter_email, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Notify Submitter
+	 *
+	 * Whether or not the submitter would like to be notified about new responses
+	 * to their question.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return bool
+	 */
+	public function get_notify_submitter() {
+
+		if ( ! isset( $this->notify_submitter ) ) {
+			$notify                 = get_post_meta( $this->ID, 'ama_notify_submitter', true );
+			$this->notify_submitter = ! empty( $notify ) ? true : false;
+		}
+
+		return apply_filters( 'ask-me-anything/question/get/notify_submitter', $this->notify_submitter, $this->ID, $this );
 
 	}
 

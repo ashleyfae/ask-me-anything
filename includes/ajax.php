@@ -98,13 +98,16 @@ function ask_me_anything_submit_question() {
 
 	exit;
 
-	//wp_send_json_success( '<p>Hi!</p>' );
-
 }
 
 add_action( 'wp_ajax_ask_me_anything_submit_question', 'ask_me_anything_submit_question' );
 add_action( 'wp_ajax_nopriv_ask_me_anything_submit_question', 'ask_me_anything_submit_question' );
 
+/**
+ * Insert Question
+ *
+ * @param array $fields
+ */
 function ask_me_anything_insert_question( $fields ) {
 
 	$question = new AMA_Question();
@@ -120,7 +123,7 @@ function ask_me_anything_insert_question( $fields ) {
 			// Name
 			case 'ask-me-anything-name' :
 				if ( ask_me_anything_get_option( 'require_name', false ) && empty( $field_info['value'] ) ) {
-					$error->add( 'empty-name', __( 'Error: The name field is required.', 'ask-me-anything' ) );
+					$error->add( 'empty-name', __( 'The name field is required.', 'ask-me-anything' ) );
 				} else {
 					$question->submitter = sanitize_text_field( $field_info['value'] );
 				}
@@ -128,7 +131,9 @@ function ask_me_anything_insert_question( $fields ) {
 
 			case 'ask-me-anything-email' :
 				if ( ask_me_anything_get_option( 'require_email', false ) && empty( $field_info['value'] ) ) {
-					$error->add( 'empty-email', __( 'Error: The email field is required.', 'ask-me-anything' ) );
+					$error->add( 'empty-email', __( 'The email field is required.', 'ask-me-anything' ) );
+				} elseif ( ask_me_anything_get_option( 'require_email', false ) && ! is_email( $field_info['value'] ) ) {
+					$error->add( 'empty-email', __( 'Please enter a valid email address.', 'ask-me-anything' ) );
 				} else {
 					$question->submitter_email = sanitize_text_field( $field_info['value'] );
 				}
@@ -136,15 +141,20 @@ function ask_me_anything_insert_question( $fields ) {
 
 			case 'ask-me-anything-subject' :
 				if ( empty( $field_info['value'] ) ) {
-					$error->add( 'empty-subject', __( 'Error: The subject field is required.', 'ask-me-anything' ) );
+					$error->add( 'empty-subject', __( 'The subject field is required.', 'ask-me-anything' ) );
 				} else {
 					$question->title = sanitize_text_field( wp_strip_all_tags( $field_info['value'] ) );
 				}
 				break;
 
-			case 'ask-me-anything-question' :
+			case 'ask-me-anything-notify' :
+				$question->notify_submitter = ! empty( $field_info['value'] ) ? true : false;
+				break;
+
+			case
+			'ask-me-anything-question' :
 				if ( empty( $field_info['value'] ) ) {
-					$error->add( 'empty-message', sprintf( __( 'Error: The %s field is required.', 'ask-me-anything' ), strtolower( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) ) ) );
+					$error->add( 'empty-message', sprintf( __( 'The %s field is required.', 'ask-me-anything' ), strtolower( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) ) ) );
 				} else {
 					$question->post_content = wp_kses_post( $field_info['value'] );
 				}
@@ -153,7 +163,26 @@ function ask_me_anything_insert_question( $fields ) {
 		}
 	}
 
-	$question->save();
+	// Oops, we have errors. Bail.
+	if ( $error->get_error_codes() ) {
+		$output = '<ul>';
+		foreach ( $error->get_error_codes() as $code ) {
+			$output .= '<li><strong>' . __( 'Error:', 'ask-me-anything' ) . '</strong> ' . esc_html( $error->get_error_message( $code ) ) . '</li>';
+		}
+		$output .= '</ul>';
+
+		wp_send_json_error( $output );
+	}
+
+	$result = $question->save();
+
+	if ( false === $result ) {
+		wp_send_json_error( __( 'An unexpected error occurred.', 'ask-me-anything' ) );
+	}
+
+	wp_send_json_success( ask_me_anything_get_option( 'form_success', __( 'Success! Your question has been submitted. I\'ll answer it as soon as I can!', 'ask-me-anything' ) ) );
+
+	exit;
 
 }
 

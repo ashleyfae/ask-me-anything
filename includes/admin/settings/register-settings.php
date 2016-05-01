@@ -333,25 +333,33 @@ function ask_me_anything_get_registered_settings() {
 				)
 			),
 			'labels'        => array(
-				'button_text' => array(
+				'button_text'  => array(
 					'id'   => 'button_text',
 					'name' => __( 'Button Text', 'ask-me-anything' ),
 					'desc' => __( 'Text displayed on the floating button that opens the form.', 'ask-me-anything' ),
 					'type' => 'text',
 					'std'  => __( 'Ask Me a Question', 'ask-me-anything' )
 				),
-				'form_title'  => array(
+				'form_title'   => array(
 					'id'   => 'form_title',
 					'name' => __( 'Form Title', 'ask-me-anything' ),
 					'desc' => __( 'Title text displayed above the submission form.', 'ask-me-anything' ),
 					'type' => 'text',
 					'std'  => __( 'Ask Me Anything', 'ask-me-anything' )
 				),
-				'form_desc'   => array(
+				'form_desc'    => array(
 					'id'   => 'form_desc',
 					'name' => __( 'Form Description', 'ask-me-anything' ),
 					'desc' => __( 'Appears above the form submission fields.', 'ask-me-anything' ),
-					'type' => 'tinymce'
+					'type' => 'tinymce',
+					'std'  => ''
+				),
+				'form_success' => array(
+					'id'   => 'form_success',
+					'name' => __( 'Success Message', 'ask-me-anything' ),
+					'desc' => __( 'This message will appear to the user after successfully submitting a question.', 'ask-me-anything' ),
+					'type' => 'textarea',
+					'std'  => __( 'Success! Your question has been submitted. I\'ll answer it as soon as I can!', 'ask-me-anything' )
 				)
 			),
 			'notifications' => array(

@@ -19,6 +19,9 @@ function ask_me_anything_meta_boxes() {
 
 	// Add new publish meta box.
 	add_meta_box( 'ama_question_submit', esc_html__( 'Save', 'ask-me-anything' ), 'ask_me_anything_render_new_publish_meta_box', 'question', 'side', 'high' );
+
+	// Add new details meta box.
+	add_meta_box( 'ama_question_details', esc_html__( 'Details', 'ask-me-anything' ), 'ask_me_anything_render_details_meta_box', 'question', 'normal', 'high' );
 }
 
 add_action( 'add_meta_boxes', 'ask_me_anything_meta_boxes' );
@@ -36,8 +39,6 @@ function ask_me_anything_render_new_publish_meta_box( $post ) {
 	$post_type_object = get_post_type_object( $post_type );
 	$can_publish      = current_user_can( $post_type_object->cap->publish_posts );
 	$ama_statuses     = ask_me_anything_get_statuses();
-
-	var_dump( $post->post_status );
 	?>
 	<div class="submitbox" id="submitpost">
 		<div id="minor-publishing-actions">
@@ -82,6 +83,66 @@ function ask_me_anything_render_new_publish_meta_box( $post ) {
 }
 
 /**
+ * Render Question Details Meta Box
+ *
+ * @param WP_Post $post
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_render_details_meta_box( $post ) {
+	$question = new AMA_Question( $post->ID );
+	?>
+	<div class="ama-field">
+		<label for="ama_submitter"><?php _e( 'Submitter', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="text" id="ama_submitter" name="ama_submitter" value="<?php echo esc_attr( $question->get_submitter() ); ?>">
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-submitter-field', $post ); ?>
+
+	<div class="ama-field">
+		<label for="ama_submitter_email"><?php _e( 'Submitter\'s Email Address', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="email" id="ama_submitter_email" name="ama_submitter_email" value="<?php echo esc_attr( $question->get_submitter_email() ); ?>">
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-submitter-email-field', $post ); ?>
+
+	<div class="ama-field">
+		<label for="ama_notify_submitter"><?php _e( 'Notify Submitter', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="checkbox" id="ama_notify_submitter" name="ama_notify_submitter" value="1" <?php checked( $question->get_notify_submitter(), true ); ?>>
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-notify-field', $post ); ?>
+
+	<div class="ama-field">
+		<label for="ama_up_votes"><?php _e( 'Up Votes', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="number" id="ama_up_votes" class="text-small" name="ama_up_votes" value="<?php echo esc_attr( $question->get_up_votes() ); ?>" readonly>
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-up-votes-field', $post ); ?>
+
+	<div class="ama-field">
+		<label for="ama_down_votes"><?php _e( 'Down Votes', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="number" id="ama_down_votes" class="text-small" name="ama_down_votes" value="<?php echo esc_attr( $question->get_down_votes() ); ?>" readonly>
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-down-votes-field', $post ); ?>
+
+	<?php
+	wp_nonce_field( 'ama_save_details_meta', 'ask_me_anything_meta_nonce' );
+}
+
+/**
  * Save Post Meta
  *
  * @param int     $post_id
@@ -92,7 +153,46 @@ function ask_me_anything_render_new_publish_meta_box( $post ) {
  */
 function ask_me_anything_save_meta( $post_id, $post ) {
 
-	// @todo
+	/*
+	 * Permission Check
+	 */
+
+	if ( ! isset( $_POST['ask_me_anything_meta_nonce'] ) || ! wp_verify_nonce( $_POST['ask_me_anything_meta_nonce'], 'ama_save_details_meta' ) ) {
+		return;
+	}
+
+	if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || isset( $_REQUEST['bulk_edit'] ) ) {
+		return;
+	}
+
+	if ( isset( $post->post_type ) && 'revision' == $post->post_type ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'edit_question', $post_id ) ) {
+		return;
+	}
+
+	/*
+	 * Okay now we can save.
+	 */
+
+	$fields = array(
+		'ama_submitter',
+		'ama_submitter_email',
+		'ama_notify_submitter'
+	);
+
+	foreach ( apply_filters( 'ask-me-anything/meta-box/saved-fields', $fields ) as $field ) {
+		if ( ! empty( $_POST[ $field ] ) ) {
+			$new = apply_filters( 'ask-me-anything/meta-box/sanitize/' . $field, $_POST[ $field ] );
+			update_post_meta( $post_id, $field, $new );
+		} else {
+			delete_post_meta( $post_id, $field );
+		}
+	}
+
+	do_action( 'ask-me-anything/meta-box/save-question', $post_id, $post );
 }
 
 add_action( 'save_post', 'ask_me_anything_save_meta', 10, 2 );
