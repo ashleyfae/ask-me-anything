@@ -17,6 +17,13 @@
 
 		<?php
 		/*
+		 * Button for closing the modal window.
+		 */
+		?>
+		<button type="button" class="ama-close-modal" aria-hidden="true">&times;</button>
+
+		<?php
+		/*
 		 * List of questions on the right.
 		 */
 		if ( ask_me_anything_get_option( 'show_questions', true ) ) : ?>

@@ -12,7 +12,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 <script id="tmpl-ama-single-question" type="text/html">
 
-	<button class="ask-me-anything-button ama-load-question-form"><?php _e( 'Back to Form', 'ask-me-anything' ); ?></button>
+	<a href="#" class="ama-load-question-form"><?php _e( '&laquo; Back to Form', 'ask-me-anything' ); ?></a>
 
 	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap">
 

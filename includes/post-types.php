@@ -160,31 +160,6 @@ function ask_me_anything_setup_taxonomies() {
 	register_taxonomy( 'question_categories', array( 'question' ), $category_args );
 	register_taxonomy_for_object_type( 'question_categories', 'question' );
 
-	/* Question Statuses */
-	/*$category_labels = array(
-		'name'              => sprintf( _x( '%s Statuses', 'taxonomy general name', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'singular_name'     => sprintf( _x( '%s Status', 'taxonomy singular name', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'search_items'      => sprintf( __( 'Search %s Statuses', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'all_items'         => sprintf( __( 'All %s Statuses', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'parent_item'       => sprintf( __( 'Parent %s Status', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'parent_item_colon' => sprintf( __( 'Parent %s Status:', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'edit_item'         => sprintf( __( 'Edit %s Status', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'update_item'       => sprintf( __( 'Update %s Status', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'add_new_item'      => sprintf( __( 'Add New %s Status', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'new_item_name'     => sprintf( __( 'New %s Status Name', 'ask-me-anything' ), ask_me_anything_get_label_singular() ),
-		'menu_name'         => __( 'Statuses', 'ask-me-anything' ),
-	);
-	$category_args   = apply_filters( 'ask-me-anything/taxonomy/status-args', array(
-			'hierarchical' => true,
-			'labels'       => apply_filters( 'ask-me-anything/taxonomy/status-labels', $category_labels ),
-			'show_ui'      => true,
-			'query_var'    => 'question_statuses',
-			'rewrite'      => array( 'slug' => $slug . '/status', 'with_front' => false, 'hierarchical' => true ),
-		)
-	);
-	register_taxonomy( 'question_statuses', array( 'question' ), $category_args );
-	register_taxonomy_for_object_type( 'question_statuses', 'question' );*/
-
 }
 
 add_action( 'init', 'ask_me_anything_setup_taxonomies', 0 );

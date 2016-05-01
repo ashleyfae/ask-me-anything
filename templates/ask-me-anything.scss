@@ -18,8 +18,14 @@
     ## Buttons
     ## Form Fields
 # Modal
+# Questions
+    ## Questions List
+    ## Single Questions
+    ## Submit Question
 
 --------------------------------------------------------------*/
+
+@import '../assets/css/partials/front-end/variables';
 
 /*--------------------------------------------------------------
 # Buttons
@@ -31,61 +37,7 @@
 --------------------------------------------------------------*/
 @import '../assets/css/partials/front-end/modal';
 
-/* Questions List */
-.ask-me-anything-questions-list {
-    background: #f4f4f4;
-
-    a {
-        border: none;
-        border-top: 1px solid #dcdcdc;
-        display: block;
-        padding: 1em;
-        text-decoration: none;
-
-        &, h3 {
-            color: #333;
-        }
-
-        &:hover, &:focus, &:active, &.ama-active {
-            background: #dcdcdc;
-            border-top: 1px solid #dcdcdc;
-            color: #333;
-            text-decoration: none;
-        }
-    }
-
-    h3 {
-        font: {
-            size: 18px;
-        }
-        letter-spacing: 0;
-        margin: 0 0 .5em;
-        text-align: left;
-        text-transform: none;
-    }
-
-    @media (min-width: 768px) {
-        border-right: 1px solid #dcdcdc;
-        width: 30%;
-    }
-}
-
-/* Submit a Question */
-.ask-me-anything-submit-question {
-    padding: 1em;
-
-    h2 {
-        color: #333;
-        font: {
-            size: 28px;
-        }
-        letter-spacing: 0;
-        margin: 0 0 .5em;
-        text-align: left;
-        text-transform: none;
-    }
-
-    @media (min-width: 768px) {
-        width: 70%;
-    }
-}
+/*--------------------------------------------------------------
+# Questions
+--------------------------------------------------------------*/
+@import '../assets/css/partials/front-end/questions/questions';

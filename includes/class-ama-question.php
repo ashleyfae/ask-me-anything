@@ -566,6 +566,22 @@ class AMA_Question {
 	}
 
 	/**
+	 * Get Question Content
+	 *
+	 * Multiple filters are applied to the content.
+	 * @see /includes/question-functions.php
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return string
+	 */
+	public function get_question() {
+
+		return apply_filters( 'ask-me-anything/question/get/question', $this->post_content, $this->ID, $this );
+
+	}
+
+	/**
 	 * Get Template Data
 	 *
 	 * Returns an array of all the data we need in the Underscore.js templates.
@@ -582,7 +598,7 @@ class AMA_Question {
 			'question_status_class' => $this->get_status_class(),
 			'question_status'       => $this->get_status_name(),
 			'question_title'        => $this->get_title(),
-			'question_content'      => $this->post_content,
+			'question_content'      => $this->get_question(),
 			'question_submitter'    => $this->get_submitter(),
 			'number_comments'       => $this->comment_count,
 			'number_up'             => $this->get_up_votes(),

@@ -7,6 +7,11 @@
  * @license   GPL2+
  */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Sanitize text fields.
  */

@@ -2,16 +2,7 @@ jQuery(document).ready(function ($) {
 
     var Ask_Me_Anything = {
 
-        init : function() {
-            this.launchModal();
-            this.closeModal();
-        },
-
-        /**
-         * Launch Modal
-         */
-        launchModal : function() {
-
+        init: function () {
             $('.ask-me-anything-trigger-button').click(function (e) {
                 e.preventDefault();
                 var targetID = $(this).data('target');
@@ -21,28 +12,36 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
 
-                // Add backdrop
-                $('body').append('<div id="ask-me-anything-backdrop"></div>');
-                $('#ask-me-anything-backdrop').addClass('ama-in');
-
-                // Show the modal
-                $(targetID).show().addClass('ama-in');
-
-                // Insert the question form.
-                Ask_Me_Anything.loadFormTemplate();
-
-                // Insert the questions
-                if (ASK_ME_ANYTHING.display_questions == true) {
-                    Ask_Me_Anything.loadQuestions(1);
-                }
+                Ask_Me_Anything.launchModal(targetID);
             });
+        },
+
+        /**
+         * Launch Modal
+         */
+        launchModal: function (targetID) {
+
+            // Add backdrop
+            $('body').append('<div id="ask-me-anything-backdrop"></div>');
+            $('#ask-me-anything-backdrop').addClass('ama-in');
+
+            // Show the modal
+            $(targetID).show().addClass('ama-in');
+
+            // Insert the question form.
+            Ask_Me_Anything.loadFormTemplate();
+
+            // Insert the questions
+            if (ASK_ME_ANYTHING.display_questions == true) {
+                Ask_Me_Anything.loadQuestions(1);
+            }
 
         },
 
         /**
          * Close Modal
          */
-        closeModal : function() {
+        closeModal: function () {
 
             // Hide the modal
             $('#ask-me-anything').hide();
@@ -57,7 +56,7 @@ jQuery(document).ready(function ($) {
          *
          * @param message
          */
-        loadFormTemplate : function(message) {
+        loadFormTemplate: function (message) {
 
             var amaFormTemplate = wp.template('ama-submit-form');
             var amaSubmitData = {
@@ -115,7 +114,7 @@ jQuery(document).ready(function ($) {
          *
          * @param page Page number to load
          */
-        loadQuestions : function(page) {
+        loadQuestions: function (page) {
 
             var amaQuestionTemplate = wp.template('ama-question');
             var questionsList = $('.ask-me-anything-questions-list');
@@ -145,7 +144,7 @@ jQuery(document).ready(function ($) {
          * When a single question is clicked on, we render the actual question content
          * on the left-hand side.
          */
-        renderQuestion : function() {
+        renderQuestion: function () {
 
             $('.ama-question-item').click(function (e) {
                 e.preventDefault();
@@ -192,7 +191,7 @@ jQuery(document).ready(function ($) {
                     } else {
                         console.log(response); // @todo error
                     }
-                    
+
                 });
 
             });
@@ -204,7 +203,7 @@ jQuery(document).ready(function ($) {
          *
          * @todo
          */
-        initializeVoting : function() {
+        initializeVoting: function () {
 
             $('.ama-up-vote').click(function (e) {
                 console.log('clicked');
@@ -215,7 +214,7 @@ jQuery(document).ready(function ($) {
         /**
          * Handles comment submission
          */
-        submitComment : function() {
+        submitComment: function () {
 
         }
 
@@ -242,6 +241,15 @@ jQuery(document).ready(function ($) {
         if (keyCode === 27) {
             Ask_Me_Anything.closeModal();
         }
+    });
+
+    /**
+     * Close the modal when we click the 'x' button.
+     */
+    $('.ama-close-modal').click(function (e) {
+        e.preventDefault();
+
+        Ask_Me_Anything.closeModal();
     });
 
 

@@ -67,3 +67,19 @@ function ask_me_anything_get_categories_dropdown( $selected = '' ) {
 
 	return $options;
 }
+
+/**
+ * Apply filters to the question content.
+ *
+ * We apply all the same filters that 'the_content' gets, but we don't just want
+ * to apply 'the_content' since plugins typically use this filter to append/preppend
+ * social media links, post signatures, etc.
+ *
+ * @since 1.0.0
+ */
+add_filter( 'ask-me-anything/question/get/question', 'wptexturize' );
+add_filter( 'ask-me-anything/question/get/question', 'convert_smilies' );
+add_filter( 'ask-me-anything/question/get/question', 'convert_chars' );
+add_filter( 'ask-me-anything/question/get/question', 'wpautop' );
+add_filter( 'ask-me-anything/question/get/question', 'shortcode_unautop' );
+add_filter( 'ask-me-anything/question/get/question', 'prepend_attachment' );

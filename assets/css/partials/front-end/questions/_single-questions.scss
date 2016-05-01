@@ -1,0 +1,38 @@
+.ama-single-question-wrap {
+
+    .ama-question-actions {
+        @media (min-width: 768px) {
+            text-align: right;
+        }
+    }
+
+    .ama-question-edit-link,
+    .ama-up-vote,
+    .ama-down-vote {
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 10px;
+
+        .fa {
+            margin-right: 3px;
+        }
+    }
+
+    .ama-up-vote {
+        background: $color-up-vote;
+
+        &:hover, &:active, &:focus {
+            background: darken($color-up-vote, 10);
+        }
+    }
+
+    .ama-down-vote {
+        background: $color-down-vote;
+
+        &:hover, &:active, &:focus {
+            background: darken($color-down-vote, 10);
+        }
+    }
+
+}

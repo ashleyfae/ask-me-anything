@@ -1,0 +1,22 @@
+.ask-me-anything-submit-question {
+    padding: 1em;
+
+    h2 {
+        color: #333;
+        font: {
+            size: 28px;
+        }
+        letter-spacing: 0;
+        margin: 0 0 .5em;
+        text-align: left;
+        text-transform: none;
+    }
+
+    textarea {
+        height: 120px;
+    }
+
+    @media (min-width: 768px) {
+        width: 70%;
+    }
+}

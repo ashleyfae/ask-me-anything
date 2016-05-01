@@ -71,6 +71,13 @@ function ask_me_anything_load_css() {
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+	// Only add Font Awesome if the option is unchecked.
+	if ( ! ask_me_anything_get_option( 'disable_font_awesome', false ) ) {
+		$fa_file = ASK_ME_ANYTHING_PLUGIN_URL . 'assets/css/font-awesome' . $suffix . '.css';
+
+		wp_enqueue_style( 'font-awesome', $fa_file, array(), '4.6.1' );
+	}
+
 	$file         = 'ask-me-anything' . $suffix . '.css';
 	$template_dir = ask_me_anything_get_theme_template_dir_name();
 	$url          = '';

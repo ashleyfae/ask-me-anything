@@ -58,3 +58,25 @@
         transform: rotate(-90deg);
     }
 }
+
+/* Close Modal */
+.ama-close-modal {
+    background: none;
+    border: none;
+    color: #C7C7C7;
+    cursor: pointer;
+    font: {
+        size: 27px;
+        weight: bold;
+    }
+    line-height: 1;
+    padding: 1px 6px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    -webkit-appearance: none;
+
+    &:hover {
+        color: #909090;
+    }
+}

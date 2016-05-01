@@ -292,13 +292,6 @@ function ask_me_anything_get_registered_settings() {
 					),
 					'std'     => 'all'
 				),
-				'allow_category_select' => array(
-					'id'   => 'allow_category_select',
-					'name' => __( 'Allow Category Selection', 'ask-me-anything' ),
-					'desc' => __( 'If checked, users will be able to choose a category when submitting their question. If unchecked, categories are only viewable by you.', 'ask-me-anything' ),
-					'type' => 'checkbox',
-					'std'  => '1'
-				),
 				'default_category'      => array(
 					'id'      => 'default_category',
 					'name'    => __( 'Default Category', 'ask-me-anything' ),
@@ -317,21 +310,28 @@ function ask_me_anything_get_registered_settings() {
 				),
 			),
 			'fields'        => array(
-				'require_name'        => array(
+				'require_name'          => array(
 					'id'   => 'require_name',
 					'name' => __( 'Require Name', 'ask-me-anything' ),
 					'desc' => __( 'Check this on to require that a name be entered when submitting a question.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => false
 				),
-				'require_email'       => array(
+				'require_email'         => array(
 					'id'   => 'require_email',
 					'name' => __( 'Require Email', 'ask-me-anything' ),
 					'desc' => __( 'Check this on to require that an email address be entered when submitting a question.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => false
 				),
-				'question_field_name' => array(
+				'allow_category_select' => array(
+					'id'   => 'allow_category_select',
+					'name' => __( 'Allow Category Selection', 'ask-me-anything' ),
+					'desc' => __( 'If checked, users will be able to choose a category when submitting their question. If unchecked, categories are only viewable by you.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => '1'
+				),
+				'question_field_name'   => array(
 					'id'   => 'question_field_name',
 					'name' => __( 'Question Field Name', 'ask-me-anything' ),
 					'desc' => __( 'By default, the main textarea box is called "Question". But you can change this to something else if you\'re using it for something other than questions (i.e. "Request", "Message", etc.).', 'ask-me-anything' ),
@@ -388,20 +388,26 @@ function ask_me_anything_get_registered_settings() {
 		/* Styles */
 		'styles'    => apply_filters( 'ask-me-anything/settings/styles', array(
 			'main' => array(
-				'disable_styles'     => array(
+				'disable_styles'       => array(
 					'id'   => 'disable_styles',
 					'name' => __( 'Disable Styles', 'ask-me-anything' ),
 					'desc' => __( 'Check this to disable the Ask Me Anything stylesheet from being added to your site.', 'ask-me-anything' ),
 					'type' => 'checkbox'
 				),
-				'button_bg_colour'   => array(
+				'disable_font_awesome' => array(
+					'id'   => 'disable_font_awesome',
+					'name' => __( 'Disable Font Awesome', 'ask-me-anything' ),
+					'desc' => __( 'Check this to stop Ask Me Anything from loading Font Awesome. You only want to check this if Font Awesome is already being loaded by your theme or another plugin.', 'ask-me-anything' ),
+					'type' => 'checkbox'
+				),
+				'button_bg_colour'     => array(
 					'id'   => 'button_bg_colour',
 					'name' => __( 'Button BG Colour', 'ask-me-anything' ),
 					'desc' => __( 'Background colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
 					'type' => 'color',
 					'std'  => '#e14d43'
 				),
-				'button_text_colour' => array(
+				'button_text_colour'   => array(
 					'id'   => 'button_text_colour',
 					'name' => __( 'Button Text Colour', 'ask-me-anything' ),
 					'desc' => __( 'Ttext colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
