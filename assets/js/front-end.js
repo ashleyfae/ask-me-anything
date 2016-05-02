@@ -180,6 +180,9 @@ jQuery(document).ready(function ($) {
                         // Initialize voting.
                         Ask_Me_Anything.initializeVoting();
 
+                        // Load comments.
+                        Ask_Me_Anything.loadCommentsTemplate(questionID);
+
                         // Initialize comment submission.
                         Ask_Me_Anything.submitComment();
 
@@ -212,9 +215,38 @@ jQuery(document).ready(function ($) {
         },
 
         /**
+         * Load Comments Template
+         *
+         * @param questionID
+         */
+        loadCommentsTemplate: function (questionID) {
+
+            var commentArea = $('.ama-comments-list');
+
+            var data = {
+                action: 'ask_me_anything_load_comments',
+                question_id: questionID,
+                nonce: ASK_ME_ANYTHING.nonce
+            };
+
+            $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+
+                if (response.success == true) {
+                    var amaCommentsTemplate = wp.template('ama-comments');
+                    commentArea.empty().append(amaCommentsTemplate({comments: response.data}));
+                } else {
+                    console.log(response); // @todo error
+                }
+
+            });
+
+        },
+
+        /**
          * Handles comment submission
          */
         submitComment: function () {
+
 
         }
 

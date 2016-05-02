@@ -84,6 +84,15 @@ class AMA_Question {
 	private $notify_submitter;
 
 	/**
+	 * Array of people who are subscribed to the question and want
+	 * to be notified of new comments. Array contains email addresses.
+	 *
+	 * @var array
+	 * @since 1.0.0
+	 */
+	private $subscribers;
+
+	/**
 	 * Number of up votes
 	 *
 	 * @var int
@@ -569,7 +578,7 @@ class AMA_Question {
 	 * Get Question Content
 	 *
 	 * Multiple filters are applied to the content.
-	 * @see /includes/question-functions.php
+	 * @see    /includes/question-functions.php
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -578,6 +587,33 @@ class AMA_Question {
 	public function get_question() {
 
 		return apply_filters( 'ask-me-anything/question/get/question', $this->post_content, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Subscribers
+	 *
+	 * Returns an array of email addresses that are subscribed to the question and want to be
+	 * notified when new comments are posted.
+	 *
+	 * @param bool $include_submitter Whether or not to include the submitter
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return array
+	 */
+	public function get_subscribers( $include_submitter = true ) {
+
+		$subscribers = get_post_meta( $this->ID, 'ama_subscribers', true );
+		$subscribers = is_array( $subscribers ) ? $subscribers : array();
+
+		if ( $include_submitter === true && is_email( $this->get_submitter_email() ) && $this->get_notify_submitter() ) {
+			$subscribers[] = $this->get_submitter_email();
+		}
+
+		$this->subscribers = $subscribers;
+
+		return apply_filters( 'ask-me-anything/question/get/subscribers', $this->subscribers, $include_submitter, $this->ID, $this );
 
 	}
 
@@ -592,6 +628,17 @@ class AMA_Question {
 	 */
 	public function get_template_data() {
 
+		// If we have zero comments then we prompt them to leave a comment.
+		$comments_title = __( 'Leave a Comment', 'ask-me-anything' );
+
+		// If we have at least one comment then we change the title to show the number.
+		if ( $this->comment_count > 0 ) {
+			$comments_title = sprintf(
+				esc_html( _nx( 'One Comment', '%1$s Comments', $this->comment_count, 'comments title', 'ask-me-anything' ) ),
+				number_format_i18n( $this->comment_count )
+			);
+		}
+
 		$question_data = array(
 			'question_url'          => get_permalink( $this->ID ),
 			'question_id'           => $this->ID,
@@ -603,10 +650,111 @@ class AMA_Question {
 			'number_comments'       => $this->comment_count,
 			'number_up'             => $this->get_up_votes(),
 			'number_down'           => $this->get_down_votes(),
-			'question_edit_link'    => $this->get_edit_link()
+			'question_edit_link'    => $this->get_edit_link(),
+			'comments_title'        => $comments_title
 		);
 
 		return apply_filters( 'ask-me-anything/question/get/template-data', $question_data, $this->ID, $this );
+
+	}
+
+	/**
+	 * Notify Subscribers
+	 *
+	 * Emails subscribers to notify them of a new comment on the question.
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return bool Whether or not an email was sent
+	 */
+	public function notify_subscribers() {
+
+		$subscriber_array = $this->get_subscribers();
+
+		if ( empty( $subscriber_array ) || ! is_array( $subscriber_array ) || ! count( $subscriber_array ) ) {
+			return false;
+		}
+
+		$headers = array();
+
+		foreach ( $subscriber_array as $email ) {
+			if ( ! is_email( $email ) ) {
+				continue;
+			}
+
+			$headers[] = sprintf( 'Bcc: %s', $email );
+		}
+
+		$subject = ''; // @todo
+		$message = ''; // @todo
+
+		return wp_mail( '', $subject, $message, $headers );
+
+	}
+
+	/**
+	 * Insert Comment
+	 *
+	 * Inserts a new comment for this question.
+	 *
+	 * @param array $comment_data
+	 *
+	 * @uses   AMA_Question::notify_subscribers()
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return int|false ID of the new comment or false on failure
+	 */
+	public function insert_comment( $comment_data = array() ) {
+
+		// Add some extra parameters.
+		$comment_data['comment_post_ID'] = $this->ID;
+
+		return wp_new_comment( $comment_data );
+
+	}
+
+	/**
+	 * Get Comments
+	 *
+	 * Compiles an array of all comments connected to this question. Each comment
+	 * array contains details about the comment. Including:
+	 *      + Comment ID ('ID')
+	 *      + Comment Author Name ('comment_author')
+	 *      + Comment Author Email ('comment_author_email')
+	 *      + Comment Date ('comment_date')
+	 *      + Comment Content ('comment_content')
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return array|false False on failure
+	 */
+	public function get_comments() {
+
+		$comments_data = array();
+		$args          = array(
+			'post_id' => $this->ID
+		);
+
+		$comments = get_comments( apply_filters( 'ask-me-anything/question/comments/query-args', $args ) );
+
+		if ( ! is_array( $comments ) ) {
+			return false;
+		}
+
+		foreach ( $comments as $comment ) {
+			$comments_data[] = apply_filters( 'ask-me-anything/question/comment-data', array(
+				'ID'                   => $comment->comment_ID,
+				'avatar'               => get_avatar( $comment->comment_author, apply_filters( 'ask-me-anything/question/comments/avatar-size', 42 ), '', false, array( 'class' => 'ama-avatar' ) ),
+				'comment_author'       => $comment->comment_author,
+				'comment_author_email' => $comment->comment_author_email,
+				'comment_author_url '  => $comment->comment_author_url,
+				'comment_date'         => $comment->comment_date,
+				'comment_content'      => $comment->comment_content
+			), $comment, $this->ID );
+		}
+
+		return apply_filters( 'ask-me-anything/question/comments/comments-data', $comments_data );
 
 	}
 

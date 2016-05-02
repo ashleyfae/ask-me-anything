@@ -3,6 +3,24 @@
  * Template for displaying a single question as well as any comments.
  * (Underscores JS Template)
  *
+ * The following variables are available:
+ *
+ *  + data.question_id - ID number of the question.
+ *  + data.question_title - Title (subject) of the question.
+ *  + data.question_url - URL to the question.
+ *  + data.question_status - Status (name) of the question.
+ *  + data.question_status_class - Class for the sattus (to be used in a 'class' attribute).
+ *  + data.question_content - Actual content of the question.
+ *  + data.question_submitter - Name of the person who submitted the content. Blank if anonymous.
+ *  + data.number_comments - Number of comments on this question.
+ *  + data.comments_title - Text for the comments title, based on how many comments the question has. Will be
+ *                          "Leave a Comment" for zero comments, "One Comment" for one comment, or "4 Comments"
+ *                          for multiple comments.
+ *  + data.number_up - Number of up votes.
+ *  + data.number_down - Number of down votes.
+ *  + data.question_edit_link - Link to the "Edit Question" page in the admin panl.
+ *                              This is blank if the current user doesn't have permission to edit the question.
+ *
  * @package   ask-me-anything
  * @copyright Copyright (c) 2016, Nose Graze Ltd.
  * @license   GPL2+
@@ -20,9 +38,13 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 		{{{ data.question_content }}}
 
-		<# if (data.question_submitter) { #>
-			<span class="ama-question-submitter">{{ data.question_submitter }}</span>
-		<# } #>
+		<span class="ama-question-submitter">
+			<# if (data.question_submitter) { #>
+				- {{ data.question_submitter }}
+			<# } else { #>
+				- <?php _e('Anonymous', 'ask-me-anything'); ?>
+			<# } #>
+		</span>
 
 		<div class="ama-question-actions">
 			<# if (data.question_edit_link) { #>
@@ -49,17 +71,31 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
 		<div class="ama-single-question-comments">
+
+			<h3>{{ data.comments_title }}</h3>
+
+			<div class="ama-comments-list">
+				<?php
+				/*
+				 * Comments
+				 *
+				 * List of individual comments is inserted here.
+				 * @see comments.php
+				 */
+				?>
+			</div>
+
 			<form id="ama-submit-comment-form" method="POST">
 				<div class="ama-comment-name-field-wrap">
-					<label for="ama-comment-name-field"><?php _e( 'Your Name', 'ask-me-anything' ); ?></label>
+					<label for="ama-comment-name-field" class="screen-reader-text"><?php _e( 'Your Name', 'ask-me-anything' ); ?></label>
 					<input type="text" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name', 'ask-me-anything' ); ?>">
 				</div>
 				<div class="ama-comment-email-field-wrap">
-					<label for="ama-comment-email-field"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
+					<label for="ama-comment-email-field" class="screen-reader-text"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
 					<input type="email" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email', 'ask-me-anything' ); ?>">
 				</div>
 				<div class="ama-comment-message-field-wrap">
-					<label for="ama-comment-message-field"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
+					<label for="ama-comment-message-field" class="screen-reader-text"><?php _e( 'Comment', 'ask-me-anything' ); ?></label>
 					<textarea name="ama_comment" placeholder="<?php esc_attr_e( 'Enter your comment', 'ask-me-anything' ); ?>"></textarea>
 				</div>
 				<div class="ama-comment-notify-field-wrap">

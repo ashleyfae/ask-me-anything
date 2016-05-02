@@ -20,6 +20,7 @@
 # Questions
     ## Questions List
     ## Single Questions
+    ## Comments
     ## Submit Question
 
 --------------------------------------------------------------*/
@@ -280,6 +281,41 @@
   background: #d9534f; }
   .ama-single-question-wrap .ama-down-vote:hover, .ama-single-question-wrap .ama-down-vote:active, .ama-single-question-wrap .ama-down-vote:focus {
     background: #c9302c; }
+
+.ama-question-submitter {
+  display: block;
+  font-style: italic; }
+
+/*--------------------------------------------------------------
+## Comments
+--------------------------------------------------------------*/
+/* Comment List */
+.ama-question-comment {
+  border-bottom: 1px solid #dcdcdc;
+  clear: both;
+  overflow: hidden;
+  margin: 1em 0;
+  padding: 0 0 1em; }
+
+@media (min-width: 768px) {
+  .ama-avatar {
+    float: left; }
+
+  .ama-question-comment-content {
+    margin-left: 60px; }
+    .ama-question-comment-content h4 {
+      clear: none;
+      margin: 0 0 .25em; } }
+/* Comment Submit Form */
+#ama-submit-comment-form > div {
+  margin: 0 0 .7em; }
+@media (min-width: 768px) {
+  #ama-submit-comment-form .ama-comment-name-field-wrap {
+    float: left;
+    width: 49%; }
+  #ama-submit-comment-form .ama-comment-email-field-wrap {
+    float: right;
+    width: 49%; } }
 
 /*--------------------------------------------------------------
 ## Submit Question

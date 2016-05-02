@@ -1,0 +1,43 @@
+/* Comment List */
+
+.ama-question-comment {
+    border-bottom: 1px solid #dcdcdc;
+    clear: both;
+    overflow: hidden;
+    margin: 1em 0;
+    padding: 0 0 1em;
+}
+
+@media (min-width: 768px) {
+    .ama-avatar {
+        float: left;
+    }
+
+    .ama-question-comment-content {
+        margin-left: 60px;
+
+        h4 {
+            clear: none;
+            margin: 0 0 .25em;
+        }
+    }
+}
+
+/* Comment Submit Form */
+#ama-submit-comment-form {
+    > div {
+        margin: 0 0 .7em;
+    }
+
+    @media (min-width: 768px) {
+        .ama-comment-name-field-wrap {
+            float: left;
+            width: 49%;
+        }
+
+        .ama-comment-email-field-wrap {
+            float: right;
+            width: 49%;
+        }
+    }
+}

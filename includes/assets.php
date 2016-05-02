@@ -131,6 +131,7 @@ function ask_me_anything_underscores_templates() {
 	ask_me_anything_get_template_part( 'questions' );
 	ask_me_anything_get_template_part( 'submit-question', 'form' );
 	ask_me_anything_get_template_part( 'single', 'question' );
+	ask_me_anything_get_template_part( 'comments' );
 }
 
 add_action( 'wp_footer', 'ask_me_anything_underscores_templates' );

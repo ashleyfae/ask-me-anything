@@ -85,7 +85,7 @@ add_action( 'wp_ajax_nopriv_ask_me_anything_load_question', 'ask_me_anything_loa
 /**
  * Submit Question
  *
- * @see ask_me_anything_insert_question()
+ * @see   ask_me_anything_insert_question()
  *
  * @since 1.0.0
  * @return void
@@ -201,3 +201,34 @@ function ask_me_anything_insert_question( $fields ) {
 }
 
 add_action( 'ask-me-anything/ajax/submit-question', 'ask_me_anything_insert_question' );
+
+/**
+ * Load Comments
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_load_comments() {
+
+	// Security check.
+	check_ajax_referer( 'ask_me_anything_nonce', 'nonce' );
+
+	$question_id = absint( $_POST['question_id'] );
+	$question    = new AMA_Question( $question_id );
+
+	if ( $question->ID === 0 ) {
+		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
+	}
+
+	$comments = $question->get_comments();
+
+	if ( is_array( $comments ) ) {
+		wp_send_json_success( $comments );
+	}
+
+	wp_send_json_error( __( 'No comments.', 'ask-me-anything' ) );
+
+}
+
+add_action( 'wp_ajax_ask_me_anything_load_comments', 'ask_me_anything_load_comments' );
+add_action( 'wp_ajax_nopriv_ask_me_anything_load_comments', 'ask_me_anything_load_comments' );
