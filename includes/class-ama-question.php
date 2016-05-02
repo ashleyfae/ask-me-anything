@@ -611,9 +611,22 @@ class AMA_Question {
 			$subscribers[] = $this->get_submitter_email();
 		}
 
-		$this->subscribers = $subscribers;
+		$this->subscribers = array_unique( $subscribers );
 
 		return apply_filters( 'ask-me-anything/question/get/subscribers', $this->subscribers, $include_submitter, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get Number of Subscribers
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return int
+	 */
+	public function get_number_subscribers() {
+
+		return apply_filters( 'ask-me-anything/question/get/number_subscribers', count( $this->get_subscribers() ) );
 
 	}
 
@@ -663,11 +676,13 @@ class AMA_Question {
 	 *
 	 * Emails subscribers to notify them of a new comment on the question.
 	 *
+	 * @param array $exclude Array of email addresses to exclude from the notification
+	 *
 	 * @access public
 	 * @since  1.0.0
 	 * @return bool Whether or not an email was sent
 	 */
-	public function notify_subscribers() {
+	public function notify_subscribers( $exclude = array() ) {
 
 		$subscriber_array = $this->get_subscribers();
 
@@ -678,7 +693,7 @@ class AMA_Question {
 		$headers = array();
 
 		foreach ( $subscriber_array as $email ) {
-			if ( ! is_email( $email ) ) {
+			if ( ! is_email( $email ) || in_array( $email, $exclude ) ) {
 				continue;
 			}
 
@@ -689,6 +704,63 @@ class AMA_Question {
 		$message = ''; // @todo
 
 		return wp_mail( '', $subject, $message, $headers );
+
+	}
+
+	/**
+	 * Add Notify Email
+	 *
+	 * Adds a new email address to our array. This is the array of users we need to notify
+	 * when new comments are added.
+	 *
+	 * @param string $email
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return bool Whether or not the list was updated successfully
+	 */
+	public function add_notify_email( $email = '' ) {
+
+		if ( ! is_email( $email ) ) {
+			return false;
+		}
+
+		$subscribers       = $this->get_subscribers();
+		$subscribers       = is_array( $subscribers ) ? $subscribers : array();
+		$subscribers[]     = $email;
+		$this->subscribers = $subscribers;
+
+		return update_post_meta( $this->ID, 'ama_subscribers', $this->subscribers );
+
+	}
+
+	/**
+	 * Remove Notify Email
+	 *
+	 * Removes an email from the notification list.
+	 *
+	 * @param string $email
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return bool Whether or not the list was updated successfully
+	 */
+	public function remove_notify_email( $email = '' ) {
+
+		if ( ! is_email( $email ) ) {
+			return false;
+		}
+
+		$subscribers = $this->get_subscribers();
+		$subscribers = is_array( $subscribers ) ? $subscribers : array();
+
+		if ( ( $key = array_search( $email, $subscribers ) ) !== false ) {
+			unset( $subscribers[ $key ] );
+		}
+
+		$this->subscribers = $subscribers;
+
+		return true;
 
 	}
 
@@ -743,18 +815,49 @@ class AMA_Question {
 		}
 
 		foreach ( $comments as $comment ) {
-			$comments_data[] = apply_filters( 'ask-me-anything/question/comment-data', array(
-				'ID'                   => $comment->comment_ID,
-				'avatar'               => get_avatar( $comment->comment_author, apply_filters( 'ask-me-anything/question/comments/avatar-size', 42 ), '', false, array( 'class' => 'ama-avatar' ) ),
-				'comment_author'       => $comment->comment_author,
-				'comment_author_email' => $comment->comment_author_email,
-				'comment_author_url '  => $comment->comment_author_url,
-				'comment_date'         => $comment->comment_date,
-				'comment_content'      => $comment->comment_content
-			), $comment, $this->ID );
+			$data = $this->get_comment_data( $comment );
+
+			if ( ! is_array( $data ) ) {
+				continue;
+			}
+
+			$comments_data[] = $data;
 		}
 
 		return apply_filters( 'ask-me-anything/question/comments/comments-data', $comments_data );
+
+	}
+
+	/**
+	 * Get Comment Data
+	 *
+	 * @param WP_Comment|int $comment Comment object or ID
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return array|false False on failure
+	 */
+	public function get_comment_data( $comment ) {
+
+		if ( is_numeric( $comment ) ) {
+			$comment = get_comment( $comment );
+		}
+
+		if ( empty( $comment ) || ! is_a( $comment, 'WP_Comment' ) ) {
+			return false;
+		}
+
+		$data = array(
+			'ID'                   => $comment->comment_ID,
+			'avatar'               => get_avatar( $comment->comment_author, apply_filters( 'ask-me-anything/question/comments/avatar-size', 42 ), '', false, array( 'class' => 'ama-avatar' ) ),
+			'comment_author'       => $comment->comment_author,
+			'comment_author_email' => $comment->comment_author_email,
+			'comment_author_url '  => $comment->comment_author_url,
+			'comment_date'         => $comment->comment_date,
+			'comment_content'      => $comment->comment_content
+		);
+
+		return apply_filters( 'ask-me-anything/question/comment-data', $data, $comment, $this->ID );
 
 	}
 

@@ -32,7 +32,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<a href="#" class="ama-load-question-form"><?php _e( '&laquo; Back to Form', 'ask-me-anything' ); ?></a>
 
-	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap">
+	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap" data-question-id="{{ data.question_id }}">
 
 		<h2>{{ data.question_title }}</h2>
 
@@ -88,19 +88,19 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 			<form id="ama-submit-comment-form" method="POST">
 				<div class="ama-comment-name-field-wrap">
 					<label for="ama-comment-name-field" class="screen-reader-text"><?php _e( 'Your Name', 'ask-me-anything' ); ?></label>
-					<input type="text" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name', 'ask-me-anything' ); ?>">
+					<input type="text" id="ama-comment-name-field" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name (required)', 'ask-me-anything' ); ?>" required>
 				</div>
 				<div class="ama-comment-email-field-wrap">
 					<label for="ama-comment-email-field" class="screen-reader-text"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
-					<input type="email" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email', 'ask-me-anything' ); ?>">
+					<input type="email" id="ama-comment-email-field" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email (required)', 'ask-me-anything' ); ?>" required>
 				</div>
 				<div class="ama-comment-message-field-wrap">
 					<label for="ama-comment-message-field" class="screen-reader-text"><?php _e( 'Comment', 'ask-me-anything' ); ?></label>
-					<textarea name="ama_comment" placeholder="<?php esc_attr_e( 'Enter your comment', 'ask-me-anything' ); ?>"></textarea>
+					<textarea id="ama-comment-message-field" name="ama_comment" placeholder="<?php esc_attr_e( 'Enter your comment', 'ask-me-anything' ); ?>" required></textarea>
 				</div>
 				<div class="ama-comment-notify-field-wrap">
 					<label for="ama-comment-notify-field">
-						<input type="checkbox" name="ama_comment_notify" checked>
+						<input type="checkbox" id="ama-comment-notify-field" name="ama_comment_notify" value="1" checked>
 						<?php _e( 'Notify me of new comments', 'ask-me-anything' ); ?>
 					</label>
 				</div>

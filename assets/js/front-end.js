@@ -75,6 +75,7 @@ jQuery(document).ready(function ($) {
 
                 var submitForm = $(this);
 
+                document.body.style.cursor = 'wait';
                 submitForm.find('button').attr('disabled', true);
                 submitForm.append('<i class="fa fa-spinner fa-spin"></i>');
 
@@ -86,8 +87,7 @@ jQuery(document).ready(function ($) {
                 };
 
                 $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-                    console.log(response); //@todo remove
-
+                    document.body.style.cursor = 'default';
                     var responseClass = 'ama-error';
 
                     if (response.success == true) {
@@ -247,6 +247,56 @@ jQuery(document).ready(function ($) {
          */
         submitComment: function () {
 
+            $('#ama-submit-comment-form').submit(function (e) {
+                e.preventDefault();
+
+                var submitForm = $(this);
+
+                document.body.style.cursor = 'wait';
+                submitForm.find('button').attr('disabled', true);
+                submitForm.append('<i class="fa fa-spinner fa-spin"></i>');
+
+                var questionID = $(this).closest('.ask-me-anything-submit-question').find('.ama-single-question-wrap').data('question-id');
+
+                var formData = $(this).serializeArray();
+                var data = {
+                    action: 'ask_me_anything_submit_comment',
+                    formData: formData,
+                    question_id: questionID,
+                    nonce: ASK_ME_ANYTHING.nonce
+                };
+
+                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                    // Remove "waiting" stuff and old error messages.
+                    submitForm.find('button').attr('disabled', false);
+                    submitForm.find('.fa-spin, .ama-error, .ama-success').remove();
+                    document.body.style.cursor = 'default';
+
+                    var responseClass = 'ama-error';
+
+                    if (response.success == true) {
+                        responseClass = 'ama-success';
+                    }
+
+                    // Build response message.
+                    var responseMessage;
+                    if (response.success == true) {
+                        responseMessage = response.data.message;
+                    } else {
+                        responseMessage = response.data;
+                    }
+
+                    // Add success/error messages.
+                    var finalMessage = '<div class="' + responseClass + '">' + responseMessage + '</div>';
+                    submitForm.prepend(finalMessage);
+
+                    if (response.success == true) {
+                        var amaCommentsTemplate = wp.template('ama-comments');
+                        $('.ama-comments-list').append(amaCommentsTemplate({comments: response.data.comment_data}));
+                    }
+
+                });
+            });
 
         }
 

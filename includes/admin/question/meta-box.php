@@ -138,6 +138,15 @@ function ask_me_anything_render_details_meta_box( $post ) {
 
 	<?php do_action( 'ask-me-anything/meta-box/details/after-down-votes-field', $post ); ?>
 
+	<div class="ama-field">
+		<label for="ama_number_subscribers"><?php _e( 'Number of Subscribers', 'ask-me-anything' ); ?></label>
+		<div class="ama-input-wrapper">
+			<input type="number" id="ama_number_subscribers" class="text-small" name="ama_number_subscribers" value="<?php echo esc_attr( $question->get_number_subscribers() ); ?>" readonly>
+		</div>
+	</div>
+
+	<?php do_action( 'ask-me-anything/meta-box/details/after-number-subscribers-field', $post ); ?>
+
 	<?php
 	wp_nonce_field( 'ama_save_details_meta', 'ask_me_anything_meta_nonce' );
 }
@@ -177,18 +186,27 @@ function ask_me_anything_save_meta( $post_id, $post ) {
 	 * Okay now we can save.
 	 */
 
-	$fields = array(
+	$question = new AMA_Question( $post_id );
+	$fields   = array(
 		'ama_submitter',
 		'ama_submitter_email',
 		'ama_notify_submitter'
 	);
 
 	foreach ( apply_filters( 'ask-me-anything/meta-box/saved-fields', $fields ) as $field ) {
-		if ( ! empty( $_POST[ $field ] ) ) {
+		if ( array_key_exists( $field, $_POST ) && ! empty( $_POST[ $field ] ) ) {
 			$new = apply_filters( 'ask-me-anything/meta-box/sanitize/' . $field, $_POST[ $field ] );
 			update_post_meta( $post_id, $field, $new );
 		} else {
 			delete_post_meta( $post_id, $field );
+
+			/*
+			 * If we have no "notify subscriber" field that means it's unchecked and
+			 * we need to remove the person from the list.
+			 */
+			if ( $field == 'ama_notify_submitter' ) {
+				$question->remove_notify_email( $_POST['ama_submitter_email'] );
+			}
 		}
 	}
 

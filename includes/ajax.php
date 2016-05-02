@@ -232,3 +232,121 @@ function ask_me_anything_load_comments() {
 
 add_action( 'wp_ajax_ask_me_anything_load_comments', 'ask_me_anything_load_comments' );
 add_action( 'wp_ajax_nopriv_ask_me_anything_load_comments', 'ask_me_anything_load_comments' );
+
+/**
+ * Submit Comment
+ *
+ * Adds a new comment to a question. Returns comment data so we can inject it into the template.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_submit_comment() {
+
+	// Security check.
+	check_ajax_referer( 'ask_me_anything_nonce', 'nonce' );
+
+	$question_id  = absint( $_POST['question_id'] );
+	$question     = new AMA_Question( $question_id );
+	$error        = new WP_Error();
+	$fields       = $_POST['formData'];
+	$comment_data = array(
+		'comment_post_ID' => $question->ID
+	);
+	$notify_me    = false;
+
+	// No fields - bail.
+	if ( empty( $fields ) || ! is_array( $fields ) ) {
+		wp_send_json_error( __( 'Error: No comment field data.', 'ask-me-anything' ) );
+	}
+
+	if ( $question->ID === 0 ) {
+		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
+	}
+
+	foreach ( $fields as $field_info ) {
+		if ( ! array_key_exists( 'name', $field_info ) || ! array_key_exists( 'value', $field_info ) ) {
+			continue;
+		}
+
+		switch ( $field_info['name'] ) {
+
+			// Name
+			case 'ama_comment_name' :
+				if ( empty( $field_info['value'] ) ) {
+					$error->add( 'empty-name', __( 'The name field is required.', 'ask-me-anything' ) );
+				} else {
+					$comment_data['comment_author'] = sanitize_text_field( $field_info['value'] );
+				}
+				break;
+
+			// Email
+			case 'ama_comment_email' :
+				if ( empty( $field_info['value'] ) ) {
+					$error->add( 'empty-email', __( 'The email field is required.', 'ask-me-anything' ) );
+				} elseif ( ! is_email( $field_info['value'] ) ) {
+					$error->add( 'invalid-email', __( 'Invalid email address.', 'ask-me-anything' ) );
+				} else {
+					$comment_data['comment_author_email'] = sanitize_text_field( $field_info['value'] );
+				}
+				break;
+
+			// Comment
+			case 'ama_comment' :
+				if ( empty( $field_info['value'] ) ) {
+					$error->add( 'empty-comment', __( 'The comment field is required.', 'ask-me-anything' ) );
+				} else {
+					$comment_data['comment_content'] = wp_kses_post( $field_info['value'] );
+				}
+				break;
+
+			// Notify Me
+			case 'ama_comment_notify' :
+				if ( ! empty( $field_info['value'] ) ) {
+					$notify_me = true;
+				}
+				break;
+
+		}
+	}
+
+	// Oops, we have errors. Bail.
+	if ( $error->get_error_codes() ) {
+		$output = '<ul>';
+		foreach ( $error->get_error_codes() as $code ) {
+			$output .= '<li><strong>' . __( 'Error:', 'ask-me-anything' ) . '</strong> ' . esc_html( $error->get_error_message( $code ) ) . '</li>';
+		}
+		$output .= '</ul>';
+
+		wp_send_json_error( $output );
+	}
+
+	// Add the comment.
+	$comment_id = $question->insert_comment( $comment_data );
+
+	if ( empty( $comment_id ) ) {
+		wp_send_json_error( __( 'Error inserting comment.', 'ask-me-anything' ) );
+	}
+
+	$new_comment_data = $question->get_comment_data( $comment_id );
+
+	// Notify people.
+	$question->notify_subscribers( $new_comment_data['comment_author_email'] );
+
+	// Maybe update notify list to add this email.
+	if ( $notify_me === true ) {
+		$question->add_notify_email( $new_comment_data['comment_author_email'] );
+	}
+
+	// Build success message.
+	$output = array(
+		'comment_data' => array( $new_comment_data ),
+		'message'      => __( 'Your comment has been added successfully!', 'ask-me-anything' )
+	);
+
+	wp_send_json_success( apply_filters( 'ask-me-anything/question/comment/successfully-added', $output ) );
+
+}
+
+add_action( 'wp_ajax_ask_me_anything_submit_comment', 'ask_me_anything_submit_comment' );
+add_action( 'wp_ajax_nopriv_ask_me_anything_submit_comment', 'ask_me_anything_submit_comment' );
