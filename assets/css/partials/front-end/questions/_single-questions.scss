@@ -1,4 +1,7 @@
 .ama-single-question-wrap {
+    border-bottom: 1px solid #dcdcdc;
+    margin: 0 -1em 1em;
+    padding: 0 1em 1em;
 
     .ama-question-actions {
         @media (min-width: 768px) {
@@ -35,6 +38,11 @@
         }
     }
 
+}
+
+.ama-load-question-form {
+    display: inline-block;
+    margin-bottom: .5em;
 }
 
 .ama-question-submitter {

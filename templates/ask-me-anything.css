@@ -259,28 +259,36 @@
 /*--------------------------------------------------------------
 ## Single Questions
 --------------------------------------------------------------*/
-@media (min-width: 768px) {
-  .ama-single-question-wrap .ama-question-actions {
-    text-align: right; } }
-.ama-single-question-wrap .ama-question-edit-link,
-.ama-single-question-wrap .ama-up-vote,
-.ama-single-question-wrap .ama-down-vote {
-  color: white;
-  cursor: pointer;
+.ama-single-question-wrap {
+  border-bottom: 1px solid #dcdcdc;
+  margin: 0 -1em 1em;
+  padding: 0 1em 1em; }
+  @media (min-width: 768px) {
+    .ama-single-question-wrap .ama-question-actions {
+      text-align: right; } }
+  .ama-single-question-wrap .ama-question-edit-link,
+  .ama-single-question-wrap .ama-up-vote,
+  .ama-single-question-wrap .ama-down-vote {
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px; }
+    .ama-single-question-wrap .ama-question-edit-link .fa,
+    .ama-single-question-wrap .ama-up-vote .fa,
+    .ama-single-question-wrap .ama-down-vote .fa {
+      margin-right: 3px; }
+  .ama-single-question-wrap .ama-up-vote {
+    background: #5cb85c; }
+    .ama-single-question-wrap .ama-up-vote:hover, .ama-single-question-wrap .ama-up-vote:active, .ama-single-question-wrap .ama-up-vote:focus {
+      background: #449d44; }
+  .ama-single-question-wrap .ama-down-vote {
+    background: #d9534f; }
+    .ama-single-question-wrap .ama-down-vote:hover, .ama-single-question-wrap .ama-down-vote:active, .ama-single-question-wrap .ama-down-vote:focus {
+      background: #c9302c; }
+
+.ama-load-question-form {
   display: inline-block;
-  padding: 5px 10px; }
-  .ama-single-question-wrap .ama-question-edit-link .fa,
-  .ama-single-question-wrap .ama-up-vote .fa,
-  .ama-single-question-wrap .ama-down-vote .fa {
-    margin-right: 3px; }
-.ama-single-question-wrap .ama-up-vote {
-  background: #5cb85c; }
-  .ama-single-question-wrap .ama-up-vote:hover, .ama-single-question-wrap .ama-up-vote:active, .ama-single-question-wrap .ama-up-vote:focus {
-    background: #449d44; }
-.ama-single-question-wrap .ama-down-vote {
-  background: #d9534f; }
-  .ama-single-question-wrap .ama-down-vote:hover, .ama-single-question-wrap .ama-down-vote:active, .ama-single-question-wrap .ama-down-vote:focus {
-    background: #c9302c; }
+  margin-bottom: .5em; }
 
 .ama-question-submitter {
   display: block;

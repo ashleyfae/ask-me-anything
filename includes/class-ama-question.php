@@ -700,10 +700,10 @@ class AMA_Question {
 			$headers[] = sprintf( 'Bcc: %s', $email );
 		}
 
-		$subject = ''; // @todo
-		$message = ''; // @todo
+		$subject = ask_me_anything_get_option( 'notification_subject', sprintf( __( 'New comment on question "%s"', 'ask-me-anything' ), '[subject]' ) );
+		$message = ask_me_anything_get_option( 'notification_message', sprintf( __( 'A new comment has been posted on "%1$s":' . "\n\n" . '%2$s' . "\n\n" . 'Link: %3$s', 'ask-me-anything' ), '[subject]', '[message]', '[link]' ) );
 
-		return wp_mail( '', $subject, $message, $headers );
+		return wp_mail( '', sanitize_text_field( $subject ), wp_strip_all_tags( $message ), $headers );
 
 	}
 

@@ -370,18 +370,32 @@ function ask_me_anything_get_registered_settings() {
 				)
 			),
 			'notifications' => array(
-				'admin_notifications' => array(
+				'admin_notifications'  => array(
 					'id'   => 'admin_notifications',
 					'name' => __( 'Notify Admin', 'ask-me-anything' ),
 					'desc' => __( 'Check this to email the site administrator whenever a new question is submitted.', 'ask-me-anything' ),
 					'type' => 'checkbox'
 				),
-				'admin_email'         => array(
+				'admin_email'          => array(
 					'id'   => 'admin_email',
 					'name' => __( 'Notify Email Addresses', 'ask-me-anything' ),
 					'desc' => __( 'Enter a comma-separated list of emails. These are the email addresses we\'ll notify when a new question is submitted.', 'ask-me-anything' ),
 					'type' => 'text',
 					'std'  => get_option( 'admin_email' )
+				),
+				'notification_subject' => array(
+					'id'   => 'notification_subject',
+					'name' => __( 'Subject', 'ask-me-anything' ),
+					'desc' => sprintf( __( 'Subject for the notification email. You can use the placeholder %s for the question\'s subject.', 'ask-me-anything' ), '<code>[subject]</code>' ),
+					'type' => 'text',
+					'std'  => sprintf( __( 'New comment on question "%s"', 'ask-me-anything' ), '[subject]' )
+				),
+				'notification_message' => array(
+					'id'   => 'notification_message',
+					'name' => __( 'Message', 'ask-me-anything' ),
+					'desc' => sprintf( __( 'Message for the notification email. No HTML allowed. You can use the following placeholders: <br>%1$s - Question subject <br>%2$s - Question message <br>%3$s - Question link', 'ask-me-anything' ), '<code>[subject]</code>', '<code>[message]</code>', '<code>[link]</code>' ),
+					'type' => 'textarea',
+					'std'  => sprintf( __( 'A new comment has been posted on "%1$s":' . "\n\n" . '%2$s' . "\n\n" . 'Link: %3$s', 'ask-me-anything' ), '[subject]', '[message]', '[link]' )
 				)
 			)
 		) ),
