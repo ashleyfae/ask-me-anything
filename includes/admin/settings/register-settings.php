@@ -301,12 +301,11 @@ function ask_me_anything_get_registered_settings() {
 					'std'     => ''
 				),
 				'statuses'              => array(
-					'id'      => 'statuses',
-					'name'    => __( 'Statuses', 'ask-me-anything' ),
-					'desc'    => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything', 'ask-me-anything' ),
-					'type'    => 'textarea',
-					'options' => ask_me_anything_get_categories(),
-					'std'     => "Pending\nIn Progress\nCompleted"
+					'id'   => 'statuses',
+					'name' => __( 'Statuses', 'ask-me-anything' ),
+					'desc' => __( 'Insert the list of statuses you want made available for questions. Put each status on a new line. Your default status should be the first entry. That\'s the one that will be auto assigned to new questions.', 'ask-me-anything', 'ask-me-anything' ),
+					'type' => 'textarea',
+					'std'  => "Pending\nIn Progress\nCompleted"
 				),
 			),
 			'fields'        => array(
@@ -427,6 +426,17 @@ function ask_me_anything_get_registered_settings() {
 					'desc' => __( 'Ttext colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
 					'type' => 'color',
 					'std'  => '#ffffff'
+				),
+				'status_admin_css'     => array(
+					'id'   => 'status_admin_css',
+					'name' => __( 'Status Button CSS (Admin Area)', 'ask-me-anything' ),
+					'desc' => sprintf(
+						__( 'Use this box to add custom CSS for styling the status buttons in Questions > All Questions. Example CSS: %1$s For help on finding the right selector, read <a href="%2$s" target="_blank">this documentation article</a>.', 'ask-me-anything', 'ask-me-anything' ),
+						"<br><br>.ama-status-inprogress a {<br>&nbsp;&nbsp;&nbsp;&nbsp;background: #EFA652; <br>}<br><br>",
+						esc_url( '' )
+					),
+					'type' => 'textarea',
+					'std'  => ''
 				),
 			)
 		) ),
