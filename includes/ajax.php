@@ -46,9 +46,17 @@ function ask_me_anything_get_questions() {
 
 	endwhile;
 
+	$final_output = array(
+		'questions' => $questions
+	);
+
+	// Get next page and previous page.
+	$final_output['next_page']     = ( $question_query->max_num_pages > $page_number ) ? ( $page_number + 1 ) : 0;
+	$final_output['previous_page'] = ( $page_number > 1 ) ? ( $page_number - 1 ) : 0;
+
 	wp_reset_postdata();
 
-	wp_send_json_success( $questions );
+	wp_send_json_success( $final_output );
 
 }
 

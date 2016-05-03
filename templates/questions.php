@@ -47,4 +47,14 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<# }); #>
 
+	<div class="ama-pagination">
+		<# if ( data.previouspage != 0 ) { #>
+			<button type="button" class="ask-me-anything-button ama-previous-questions" data-page="{{ data.previouspage }}"><?php _e( 'Previous', 'ask-me-anything' ); ?></button>
+		<# } #>
+
+		<# if ( data.nextpage != 0 ) { #>
+			<button type="button" class="ask-me-anything-button ama-next-questions" data-page="{{ data.nextpage }}"><?php _e( 'Next', 'ask-me-anything' ); ?></button>
+		<# } #>
+	</div>
+
 </script>

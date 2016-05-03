@@ -129,13 +129,34 @@ jQuery(document).ready(function ($) {
 
             $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
                 if (response.success == true) {
-                    questionsList.empty().append(amaQuestionTemplate({questions: response.data}));
+                    var templateData = {
+                        questions: response.data.questions,
+                        nextpage: response.data.next_page,
+                        previouspage: response.data.previous_page
+                    };
+                    questionsList.empty().append(amaQuestionTemplate(templateData));
                     Ask_Me_Anything.renderQuestion();
                 } else {
                     console.log(response); //@todo error
                 }
+
+                // Load pagination
+                Ask_Me_Anything.pagination();
             });
 
+        },
+
+        /**
+         * Navigate to next/previous pages.
+         */
+        pagination: function() {
+            $('.ama-pagination button').click(function(e) {
+                e.preventDefault();
+
+                var pageToLoad = $(this).data('page');
+
+                Ask_Me_Anything.loadQuestions(pageToLoad);
+            });
         },
 
         /**

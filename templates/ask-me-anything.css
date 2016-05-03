@@ -115,6 +115,24 @@
   .ama-close-modal:hover {
     color: #909090; }
 
+/* Pagination */
+.ama-pagination {
+  border-top: 1px solid #dcdcdc;
+  padding: 1em; }
+  .ama-pagination button {
+    background: #8c8c8c;
+    padding: 5px 10px; }
+    .ama-pagination button:hover {
+      background: #737373; }
+  @media (min-width: 768px) {
+    .ama-pagination {
+      clear: both;
+      overflow: hidden; }
+      .ama-pagination .ama-next-questions {
+        float: right; }
+      .ama-pagination .ama-previous-questions {
+        float: left; } }
+
 /*--------------------------------------------------------------
 ## Form Fields
 --------------------------------------------------------------*/

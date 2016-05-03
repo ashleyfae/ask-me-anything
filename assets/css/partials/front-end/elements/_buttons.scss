@@ -80,3 +80,31 @@
         color: #909090;
     }
 }
+
+/* Pagination */
+.ama-pagination {
+    border-top: 1px solid #dcdcdc;
+    padding: 1em;
+
+    button {
+        background: #8c8c8c;
+        padding: 5px 10px;
+
+        &:hover {
+            background: darken(#8c8c8c, 10);
+        }
+    }
+
+    @media (min-width: 768px) {
+        clear: both;
+        overflow: hidden;
+
+        .ama-next-questions {
+            float: right;
+        }
+
+        .ama-previous-questions {
+            float: left;
+        }
+    }
+}
