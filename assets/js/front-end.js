@@ -149,8 +149,8 @@ jQuery(document).ready(function ($) {
         /**
          * Navigate to next/previous pages.
          */
-        pagination: function() {
-            $('.ama-pagination button').click(function(e) {
+        pagination: function () {
+            $('.ama-pagination button').click(function (e) {
                 e.preventDefault();
 
                 var pageToLoad = $(this).data('page');
@@ -210,6 +210,10 @@ jQuery(document).ready(function ($) {
                         // Go back to form.
                         $('.ama-load-question-form').click(function (e) {
                             e.preventDefault();
+                            // Remove 'active' classes from all questions.
+                            $('.ama-question-item').each(function () {
+                                $(this).removeClass('ama-active');
+                            });
                             Ask_Me_Anything.loadFormTemplate();
                         });
                     } else {

@@ -125,8 +125,13 @@ function ask_me_anything_save_question_status( $data, $post ) {
 		return $data;
 	}
 
+	// If this is an auto draft, let it go through.
+	if ( $data['post_status'] == 'auto-draft' ) {
+		return $data;
+	}
+
 	$allowed_statuses = array_keys( ask_me_anything_get_statuses() );
-	
+
 	if ( isset( $_POST['ama_status'] ) && in_array( $_POST['ama_status'], $allowed_statuses ) ) {
 		$data['post_status'] = $_POST['ama_status'];
 	} elseif ( in_array( $data['post_status'], $allowed_statuses ) ) {
