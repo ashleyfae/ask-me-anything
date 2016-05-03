@@ -179,7 +179,6 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 
 			if ( is_admin() ) {
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/admin-pages.php';
-				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/EDD_SL_Plugin_Updater.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/class-ask-me-anything-notices.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/columns.php';
