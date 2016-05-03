@@ -58,7 +58,7 @@ function ask_me_anything_render_question_columns( $column_name, $post_id ) {
 	switch ( $column_name ) {
 
 		case 'status' :
-			echo '<span class="ask-me-anything-status ama-' . esc_attr( $question->get_status_class() ) . '"><a href="' . esc_url( admin_url( 'edit.php?post_status=' . $question->post_status . '&post_type=question' ) ) . '">' . $question->get_status_name() . '</a></span>';
+			echo '<span class="ask-me-anything-status ' . esc_attr( $question->get_status_class() ) . '"><a href="' . esc_url( admin_url( 'edit.php?post_status=' . $question->post_status . '&post_type=question' ) ) . '">' . $question->get_status_name() . '</a></span>';
 			break;
 
 		case 'up_votes' :

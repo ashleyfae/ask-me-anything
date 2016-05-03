@@ -413,7 +413,7 @@ class AMA_Question {
 	 */
 	public function get_status_class() {
 
-		$status_name = $this->get_status_name();
+		$status_name = 'ama-status-' . $this->get_status_name();
 
 		return apply_filters( 'ask-me-anything/question/get/status-class', strtolower( sanitize_html_class( $status_name ) ), $this->ID, $this );
 

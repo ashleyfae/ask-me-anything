@@ -33,8 +33,6 @@ add_action( 'admin_menu', 'ask_me_anything_add_options_link', 10 );
  * @return bool
  */
 function ask_me_anything_is_admin_page() {
-	// @todo
-
 	$screen      = get_current_screen();
 	$is_ama_page = false;
 
@@ -42,7 +40,7 @@ function ask_me_anything_is_admin_page() {
 		$is_ama_page = true;
 	}
 
-	if ( $screen->base == 'post' && $screen->post_type == 'question' ) {
+	if ( ( $screen->base == 'post' || $screen->base == 'edit' ) && $screen->post_type == 'question' ) {
 		$is_ama_page = true;
 	}
 
