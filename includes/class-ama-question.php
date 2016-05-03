@@ -703,6 +703,21 @@ class AMA_Question {
 		$subject = ask_me_anything_get_option( 'notification_subject', sprintf( __( 'New comment on question "%s"', 'ask-me-anything' ), '[subject]' ) );
 		$message = ask_me_anything_get_option( 'notification_message', sprintf( __( 'A new comment has been posted on "%1$s":' . "\n\n" . '%2$s' . "\n\n" . 'Link: %3$s', 'ask-me-anything' ), '[subject]', '[message]', '[link]' ) );
 
+		$find = array(
+			'[subject]',
+			'[message]',
+			'[link]'
+		);
+
+		$replace = array(
+			$this->get_title(),
+			$this->get_question(),
+			get_permalink( $this->ID )
+		);
+
+		// Find and replace placeholders.
+		$message = str_replace( apply_filters( 'ask-me-anything/question/notify-email/placeholders', $find ), apply_filters( 'ask-me-anything/question/notify-email/placeholder-values', $replace ), $message );
+
 		return wp_mail( '', sanitize_text_field( $subject ), wp_strip_all_tags( $message ), $headers );
 
 	}
