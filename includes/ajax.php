@@ -196,6 +196,9 @@ function ask_me_anything_insert_question( $fields ) {
 		wp_send_json_error( $output );
 	}
 
+	$question->up_votes   = 0;
+	$question->down_votes = 0;
+
 	$result = $question->save();
 
 	if ( false === $result ) {
@@ -358,3 +361,46 @@ function ask_me_anything_submit_comment() {
 
 add_action( 'wp_ajax_ask_me_anything_submit_comment', 'ask_me_anything_submit_comment' );
 add_action( 'wp_ajax_nopriv_ask_me_anything_submit_comment', 'ask_me_anything_submit_comment' );
+
+/**
+ * Vote on a Question
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_vote() {
+
+	// Security check.
+	check_ajax_referer( 'ask_me_anything_nonce', 'nonce' );
+
+	$question_id = absint( $_POST['question_id'] );
+	$vote_type   = $_POST['vote_type'];
+	$vote_type   = ( $vote_type == 'up' ) ? 'up' : 'down';
+	$question    = new AMA_Question( $question_id );
+
+	if ( $question->ID == 0 ) {
+		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
+	}
+
+	if ( $vote_type == 'up' ) {
+		$existing_votes     = $question->get_up_votes();
+		$new_votes          = ( (int) $existing_votes + 1 );
+		$question->up_votes = $new_votes;
+	} else {
+		$existing_votes       = $question->get_down_votes();
+		$new_votes            = ( (int) $existing_votes + 1 );
+		$question->down_votes = $new_votes;
+	}
+
+	$result = $question->save();
+
+	if ( $result ) {
+		wp_send_json_success( $new_votes );
+	}
+
+	wp_send_json_error( __( 'Error saving vote.', 'ask-me-anything' ) );
+
+}
+
+add_action( 'wp_ajax_ask_me_anything_vote', 'ask_me_anything_vote' );
+add_action( 'wp_ajax_nopriv_ask_me_anything_vote', 'ask_me_anything_vote' );

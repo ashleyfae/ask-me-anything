@@ -9,9 +9,11 @@
  * @license   GPL2+
  */
 
+$show_questions = ask_me_anything_get_option( 'show_questions' );
+$modal_class    = $show_questions ? ' ask-me-anything-has-questions' : '';
 ?>
 
-<div id="ask-me-anything" class="ask-me-anything-layout ask-me-anything-modal">
+<div id="ask-me-anything" class="ask-me-anything-layout ask-me-anything-modal<?php echo esc_attr( $modal_class ); ?>">
 
 	<div class="ask-me-anything-modal-inner">
 
@@ -26,7 +28,7 @@
 		/*
 		 * List of questions on the right.
 		 */
-		if ( ask_me_anything_get_option( 'show_questions', true ) ) : ?>
+		if ( $show_questions ) : ?>
 			<div class="ask-me-anything-questions-list">
 				<?php
 				/*

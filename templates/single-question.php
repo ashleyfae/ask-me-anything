@@ -55,12 +55,14 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 				<span class="ama-question-voting">
 					<?php if ( $voting == 'all' || $voting == 'up' ) : ?>
 						<span class="ama-up-vote">
-							<i class="fa fa-thumbs-up"></i> {{ data.number_up }}
+							<i class="fa fa-thumbs-up"></i>
+							<span class="ama-vote-number">{{ data.number_up }}</span>
 						</span>
 					<?php endif; ?>
 					<?php if ( $voting == 'all' || $voting == 'down' ) : ?>
 						<span class="ama-down-vote">
-							<i class="fa fa-thumbs-down"></i> {{ data.number_down }}
+							<i class="fa fa-thumbs-down"></i>
+							<span class="ama-vote-number">{{ data.number_down }}</span>
 						</span>
 					<?php endif; ?>
 				</span>
@@ -69,7 +71,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	</div>
 
-	<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
+	<?php if ( ask_me_anything_get_option( 'comments_on_questions' ) ) : ?>
 		<div class="ama-single-question-comments">
 
 			<h3>{{ data.comments_title }}</h3>

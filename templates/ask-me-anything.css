@@ -211,14 +211,17 @@
   transform: translate(0, 0); }
   @media (min-width: 768px) {
     .ask-me-anything-modal-inner {
-      display: flex;
       max-width: 80%;
       margin: 30px auto; }
+      .ask-me-anything-has-questions .ask-me-anything-modal-inner {
+        display: flex; }
       .admin-bar .ask-me-anything-modal-inner {
         margin-top: 60px; } }
   @media (min-width: 1200px) {
     .ask-me-anything-modal-inner {
-      max-width: 1000px; } }
+      max-width: 700px; }
+      .ask-me-anything-has-questions .ask-me-anything-modal-inner {
+        max-width: 1000px; } }
 
 /*--------------------------------------------------------------
 # Questions
@@ -297,12 +300,14 @@
       margin-right: 3px; }
   .ama-single-question-wrap .ama-up-vote {
     background: #5cb85c; }
-    .ama-single-question-wrap .ama-up-vote:hover, .ama-single-question-wrap .ama-up-vote:active, .ama-single-question-wrap .ama-up-vote:focus {
+    .ama-single-question-wrap .ama-up-vote:hover, .ama-single-question-wrap .ama-up-vote:active, .ama-single-question-wrap .ama-up-vote:focus, .ama-single-question-wrap .ama-up-vote.ama-disabled {
       background: #449d44; }
   .ama-single-question-wrap .ama-down-vote {
     background: #d9534f; }
-    .ama-single-question-wrap .ama-down-vote:hover, .ama-single-question-wrap .ama-down-vote:active, .ama-single-question-wrap .ama-down-vote:focus {
+    .ama-single-question-wrap .ama-down-vote:hover, .ama-single-question-wrap .ama-down-vote:active, .ama-single-question-wrap .ama-down-vote:focus, .ama-single-question-wrap .ama-down-vote.ama-disabled {
       background: #c9302c; }
+  .ama-single-question-wrap .ama-disabled {
+    cursor: default !important; }
 
 .ama-load-question-form {
   display: inline-block;
@@ -358,7 +363,7 @@
   .ask-me-anything-submit-question textarea {
     height: 120px; }
   @media (min-width: 768px) {
-    .ask-me-anything-submit-question {
+    .ask-me-anything-has-questions .ask-me-anything-submit-question {
       width: 70%; } }
 
 /*# sourceMappingURL=ask-me-anything.css.map */

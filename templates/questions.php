@@ -14,7 +14,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<# _.each( data.questions, function( question ) { #>
 
-	<a href="{{ question.question_url }}" class="ama-question-item" data-postid="{{ question.question_id }}">
+	<a href="{{ question.question_url }}" id="ama-question-item-{{ question.question_id }}" class="ama-question-item" data-postid="{{ question.question_id }}">
 		<h3>
 			{{ question.question_title }}
 		</h3>
@@ -22,7 +22,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 		<span class="ama-question-status {{ question.question_status_class }}">{{ question.question_status }}</span>
 		
 		<span class="ama-question-actions">
-			<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
+			<?php if ( ask_me_anything_get_option( 'comments_on_questions' ) ) : ?>
 				<span class="ama-number-comments">
 					<i class="fa fa-comments"></i> {{ question.number_comments }}
 				</span>
@@ -32,12 +32,14 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 				<span class="ama-question-voting">
 					<?php if ( $voting == 'all' || $voting == 'up' ) : ?>
 						<span class="ama-up-vote">
-							<i class="fa fa-thumbs-up"></i> {{ question.number_up }}
+							<i class="fa fa-thumbs-up"></i>
+							<span class="ama-vote-number">{{ question.number_up }}</span>
 						</span>
 					<?php endif; ?>
 					<?php if ( $voting == 'all' || $voting == 'down' ) : ?>
 						<span class="ama-down-vote">
-							<i class="fa fa-thumbs-down"></i> {{ question.number_down }}
+							<i class="fa fa-thumbs-down"></i>
+							<span class="ama-vote-number">{{ question.number_down }}</span>
 						</span>
 					<?php endif; ?>
 				</span>

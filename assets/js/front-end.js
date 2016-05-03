@@ -199,7 +199,7 @@ jQuery(document).ready(function ($) {
                         questionArea.empty().append(amaQuestionTemplate(response.data));
 
                         // Initialize voting.
-                        Ask_Me_Anything.initializeVoting();
+                        Ask_Me_Anything.initializeVoting(questionID);
 
                         // Load comments.
                         Ask_Me_Anything.loadCommentsTemplate(questionID);
@@ -224,13 +224,54 @@ jQuery(document).ready(function ($) {
 
         /**
          * Initialize Voting
-         *
-         * @todo
          */
-        initializeVoting: function () {
+        initializeVoting: function (questionID) {
 
-            $('.ama-up-vote').click(function (e) {
-                console.log('clicked');
+            $('.ama-up-vote, .ama-down-vote').click(function (e) {
+                if ($(this).hasClass('ama-disabled')) {
+                    return false;
+                }
+
+                // Insert a spinner.
+                var votingParent = $(this).parent();
+                votingParent.prepend('<i class="fa fa-spinner fa-spin" style="margin-right: 7px"></i>');
+
+                var voteElement = $(this).find('.ama-vote-number');
+                var voteType = 'up';
+
+                if ($(this).hasClass('ama-down-vote')) {
+                    voteType = 'down';
+                }
+
+                $(this).addClass('ama-disabled');
+
+                var data = {
+                    action: 'ask_me_anything_vote',
+                    vote_type: voteType,
+                    question_id: questionID,
+                    nonce: ASK_ME_ANYTHING.nonce
+                };
+
+                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+
+                    votingParent.find('.fa-spinner').remove();
+
+                    if (response.success == true) {
+                        voteElement.text(response.data);
+
+                        // Increment the vote element on the left-hand side too.
+                        var voteElementLeft = $('.ask-me-anything-questions-list #ama-question-item-' + questionID).find('.ama-' + voteType + '-vote').find('.ama-vote-number');
+
+                        console.log(voteElementLeft);
+
+                        if (typeof voteElementLeft != 'undefined') {
+                            voteElementLeft.text(response.data);
+                        }
+                    } else {
+                        console.log(response); // @todo error
+                    }
+
+                });
             });
 
         },

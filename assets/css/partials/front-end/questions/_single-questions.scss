@@ -25,7 +25,7 @@
     .ama-up-vote {
         background: $color-up-vote;
 
-        &:hover, &:active, &:focus {
+        &:hover, &:active, &:focus, &.ama-disabled {
             background: darken($color-up-vote, 10);
         }
     }
@@ -33,9 +33,13 @@
     .ama-down-vote {
         background: $color-down-vote;
 
-        &:hover, &:active, &:focus {
+        &:hover, &:active, &:focus, &.ama-disabled {
             background: darken($color-down-vote, 10);
         }
+    }
+
+    .ama-disabled {
+        cursor: default !important;
     }
 
 }
