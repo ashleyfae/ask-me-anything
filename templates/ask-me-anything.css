@@ -63,14 +63,14 @@
   text-transform: none; }
 
 /* Trigger Button */
-.ask-me-anything-trigger-button {
+.ask-me-anything-positioned-button {
   position: fixed;
   bottom: 0;
   right: 75px; }
-  .ask-me-anything-trigger-button.ask-me-anything-button-bottom-left {
+  .ask-me-anything-positioned-button.ask-me-anything-button-bottom-left {
     right: auto;
     left: 75px; }
-  .ask-me-anything-trigger-button.ask-me-anything-button-left {
+  .ask-me-anything-positioned-button.ask-me-anything-button-left {
     bottom: 52%;
     right: auto;
     left: 0;
@@ -84,7 +84,7 @@
     -ms-transform: rotate(90deg) translate(50%, -50%);
     -o-transform: rotate(90deg) translate(50%, -50%);
     transform: rotate(90deg) translate(50%, -50%); }
-  .ask-me-anything-trigger-button.ask-me-anything-button-right {
+  .ask-me-anything-positioned-button.ask-me-anything-button-right {
     bottom: 52%;
     right: 0;
     -webkit-transform-origin: 100% 100%;
