@@ -224,7 +224,7 @@ jQuery(document).ready(function ($) {
                             Ask_Me_Anything.loadFormTemplate();
                         });
                     } else {
-                        console.log(response); // @todo error
+                        questionArea.empty().append(response.data);
                     }
 
                 });
@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
                     var amaCommentsTemplate = wp.template('ama-comments');
                     commentArea.empty().append(amaCommentsTemplate({comments: response.data}));
                 } else {
-                    console.log(response); // @todo error
+                    // @todo error
                 }
 
             });
