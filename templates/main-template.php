@@ -13,7 +13,7 @@ $show_questions = ask_me_anything_get_option( 'show_questions' );
 $modal_class    = $show_questions ? ' ask-me-anything-has-questions' : '';
 ?>
 
-<div id="ask-me-anything" class="ask-me-anything-layout ask-me-anything-modal<?php echo esc_attr( $modal_class ); ?>">
+<div id="ask-me-anything" class="ask-me-anything-layout ask-me-anything-popup ask-me-anything-modal<?php echo esc_attr( $modal_class ); ?>">
 
 	<div class="ask-me-anything-modal-inner">
 

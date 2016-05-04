@@ -18,6 +18,10 @@
             color: #333;
             text-decoration: none;
         }
+
+        &:first-child {
+            border-top: none !important;
+        }
     }
 
     h3 {

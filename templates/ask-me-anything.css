@@ -180,7 +180,7 @@
     opacity: .5; }
 
 /* Modal */
-.ask-me-anything-modal {
+.ask-me-anything-modal.ask-me-anything-popup {
   display: none;
   opacity: 0;
   outline: 0;
@@ -196,32 +196,41 @@
   -o-transition: opacity 2.15s linear;
   transition: opacity 2.15s linear;
   -webkit-overflow-scrolling: touch; }
-  .ask-me-anything-modal.ama-in {
-    opacity: 1; }
+.ask-me-anything-modal.ama-in {
+  opacity: 1; }
+
+.ask-me-anything-inline {
+  margin: 2em 0; }
 
 .ask-me-anything-modal-inner {
   background: white;
-  -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  margin-top: 50px;
-  position: relative;
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0); }
+  position: relative; }
+  .ask-me-anything-popup .ask-me-anything-modal-inner {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    margin-top: 50px;
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0); }
+    @media (min-width: 768px) {
+      .ask-me-anything-popup .ask-me-anything-modal-inner {
+        max-width: 80%;
+        margin: 30px auto; }
+        .admin-bar .ask-me-anything-popup .ask-me-anything-modal-inner {
+          margin-top: 60px; } }
+    @media (min-width: 1200px) {
+      .ask-me-anything-popup .ask-me-anything-modal-inner {
+        max-width: 700px; } }
   @media (min-width: 768px) {
-    .ask-me-anything-modal-inner {
-      max-width: 80%;
-      margin: 30px auto; }
-      .ask-me-anything-has-questions .ask-me-anything-modal-inner {
-        display: flex; }
-      .admin-bar .ask-me-anything-modal-inner {
-        margin-top: 60px; } }
+    .ask-me-anything-has-questions .ask-me-anything-modal-inner {
+      display: flex; } }
   @media (min-width: 1200px) {
-    .ask-me-anything-modal-inner {
-      max-width: 700px; }
-      .ask-me-anything-has-questions .ask-me-anything-modal-inner {
-        max-width: 1000px; } }
+    .ask-me-anything-has-questions.ask-me-anything-popup .ask-me-anything-modal-inner {
+      max-width: 1000px; } }
+
+.ask-me-anything-inline {
+  border: 1px solid #dcdcdc; }
 
 /*--------------------------------------------------------------
 # Questions
@@ -244,6 +253,8 @@
       border-top: 1px solid #dcdcdc;
       color: #333;
       text-decoration: none; }
+    .ask-me-anything-questions-list a:first-child {
+      border-top: none !important; }
   .ask-me-anything-questions-list h3 {
     font-size: 18px;
     letter-spacing: 0;

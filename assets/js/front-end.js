@@ -14,6 +14,9 @@ jQuery(document).ready(function ($) {
 
                 Ask_Me_Anything.launchModal(targetID);
             });
+
+            Ask_Me_Anything.loadFormTemplate();
+            Ask_Me_Anything.loadQuestions(1);
         },
 
         /**
@@ -43,11 +46,15 @@ jQuery(document).ready(function ($) {
          */
         closeModal: function () {
 
-            // Hide the modal
-            $('#ask-me-anything').hide();
+            var modalBox = $('#ask-me-anything');
 
-            // Remove the backdrop
-            $('#ask-me-anything-backdrop').remove();
+            if (modalBox.hasClass('ask-me-anything-popup')) {
+                // Hide the modal
+                modalBox.hide();
+
+                // Remove the backdrop
+                $('#ask-me-anything-backdrop').remove();
+            }
 
         },
 
