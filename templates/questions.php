@@ -14,12 +14,12 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<# _.each( data.questions, function( question ) { #>
 
-	<a href="{{ question.question_url }}" id="ama-question-item-{{ question.question_id }}" class="ama-question-item" data-postid="{{ question.question_id }}">
+	<a href="{{ question.question_url }}" id="ama-question-item-{{ question.question_id }}" class="ama-question-item {{ question.question_status_class }}" data-postid="{{ question.question_id }}">
 		<h3>
 			{{ question.question_title }}
 		</h3>
 
-		<span class="ama-question-status {{ question.question_status_class }}">{{ question.question_status }}</span>
+		<span class="ama-question-status">{{ question.question_status }}</span>
 		
 		<span class="ama-question-actions">
 			<?php if ( ask_me_anything_get_option( 'comments_on_questions' ) ) : ?>

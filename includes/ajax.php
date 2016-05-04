@@ -33,7 +33,7 @@ function ask_me_anything_get_questions() {
 	$question_query = new WP_Query( apply_filters( 'ask-me-anything/get-questions/query-args', $query_args, $page_number ) );
 
 	if ( ! $question_query->have_posts() ) {
-		wp_send_json_error( __( 'No more questions.', 'ask-me-anything' ) );
+		wp_send_json_error( '<div class="ama-no-questions">' . ask_me_anything_get_option( 'no_questions_message', __( 'No questions yet!', 'ask-me-anything' ) ) . '</div>' );
 	}
 
 	while ( $question_query->have_posts() ) : $question_query->the_post();

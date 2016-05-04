@@ -98,6 +98,11 @@ jQuery(document).ready(function ($) {
 
                     if (response.success == true) {
                         Ask_Me_Anything.loadFormTemplate(finalMessage);
+
+                        // Re-load the questions list.
+                        if (ASK_ME_ANYTHING.display_questions == true) {
+                            Ask_Me_Anything.loadQuestions(1);
+                        }
                     } else {
                         submitForm.find('button').attr('disabled', false);
                         submitForm.find('.fa-spin, .ama-error').remove();
@@ -128,16 +133,18 @@ jQuery(document).ready(function ($) {
             };
 
             $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                questionsList.empty();
+
                 if (response.success == true) {
                     var templateData = {
                         questions: response.data.questions,
                         nextpage: response.data.next_page,
                         previouspage: response.data.previous_page
                     };
-                    questionsList.empty().append(amaQuestionTemplate(templateData));
+                    questionsList.append(amaQuestionTemplate(templateData));
                     Ask_Me_Anything.renderQuestion();
                 } else {
-                    console.log(response); //@todo error
+                    questionsList.append(response.data);
                 }
 
                 // Load pagination

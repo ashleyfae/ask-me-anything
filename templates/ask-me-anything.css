@@ -250,6 +250,9 @@
     margin: 0 0 .5em;
     text-align: left;
     text-transform: none; }
+  .ask-me-anything-questions-list .ama-no-questions {
+    padding: 1em;
+    text-align: center; }
   .ask-me-anything-questions-list .ama-question-status {
     background: rgba(80, 80, 80, 0.1);
     color: rgba(0, 0, 0, 0.6);
