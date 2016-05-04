@@ -80,7 +80,7 @@ function ask_me_anything_load_question() {
 	$question    = new AMA_Question( $question_id );
 
 	if ( $question->ID === 0 ) {
-		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
+		wp_send_json_error( '<div class="ama-error ama-invalid-question"> ' . __( 'Error: Invalid question.', 'ask-me-anything' ) . '</div>' );
 	}
 
 	wp_send_json_success( $question->get_template_data() );
