@@ -75,13 +75,4 @@ x.x License Key
   display: inline-block;
   padding: 4px 8px; }
 
-.ama-status-pending a {
-  background: #0096dd; }
-
-.ama-status-inprogress a {
-  background: #EFA652; }
-
-.ama-status-completed a {
-  background: #3BB14D; }
-
 /*# sourceMappingURL=ask-me-anything-admin.css.map */

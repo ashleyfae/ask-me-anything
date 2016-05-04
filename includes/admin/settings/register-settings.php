@@ -433,18 +433,7 @@ function ask_me_anything_get_registered_settings() {
 					'desc' => __( 'Ttext colour for all Ask Me Anything buttons.', 'ask-me-anything' ),
 					'type' => 'color',
 					'std'  => '#ffffff'
-				),
-				'status_admin_css'     => array(
-					'id'   => 'status_admin_css',
-					'name' => __( 'Status Button CSS (Admin Area)', 'ask-me-anything' ),
-					'desc' => sprintf(
-						__( 'Use this box to add custom CSS for styling the status buttons in Questions > All Questions. Example CSS: %1$s For help on finding the right selector, read <a href="%2$s" target="_blank">this documentation article</a>.', 'ask-me-anything', 'ask-me-anything' ),
-						"<br><br>.ama-status-inprogress a {<br>&nbsp;&nbsp;&nbsp;&nbsp;background: #EFA652; <br>}<br><br>",
-						esc_url( '' )
-					),
-					'type' => 'textarea',
-					'std'  => ''
-				),
+				)
 			)
 		) ),
 		/* Licenses */
@@ -454,6 +443,58 @@ function ask_me_anything_get_registered_settings() {
 	return apply_filters( 'ask-me-anything/settings/registered-settings', $ask_me_anything_settings );
 
 }
+
+/**
+ * Status Colours
+ *
+ * Adds extra settings to the 'styles' tab containing colour pickers for customizing the
+ * status buttons.
+ *
+ * @param array $settings Style settings
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function ask_me_anything_status_colours( $settings = array() ) {
+	$statuses = ask_me_anything_get_statuses();
+
+	if ( ! is_array( $statuses ) ) {
+		return $settings;
+	}
+
+	$defaults = array(
+		'ama_pending'    => '#0096dd',
+		'ama_inprogress' => '#EFA652',
+		'ama_completed'  => '#3BB14D'
+	);
+
+	$settings['statuses']['status_colours_header'] = array(
+		'id'   => 'status_colours_header',
+		'name' => __( 'Status Labels', 'ask-me-anything' ),
+		'desc' => __( 'Customize the colours of the status labels. These settings will be applied to the front-end and the Questions > All Questions admin page.', 'ask-me-anything' ),
+		'type' => 'header'
+	);
+
+	foreach ( $statuses as $key => $name ) {
+		$settings['statuses'][ $key . '_bg_colour' ] = array(
+			'id'   => $key . '_bg_colour',
+			'name' => sprintf( __( '%s BG Colour', 'ask-me-anything' ), esc_html( $name ) ),
+			'type' => 'color',
+			'std'  => ( array_key_exists( $key, $defaults ) ) ? $defaults[ $key ] : $defaults['ama_pending']
+		);
+
+		$settings['statuses'][ $key . '_text_colour' ] = array(
+			'id'   => $key . '_text_colour',
+			'name' => sprintf( __( '%s Text Colour', 'ask-me-anything' ), esc_html( $name ) ),
+			'type' => 'color',
+			'std'  => '#ffffff'
+		);
+	}
+
+	return $settings;
+}
+
+add_filter( 'ask-me-anything/settings/styles', 'ask_me_anything_status_colours' );
 
 /**
  * Sanitize Settings
@@ -579,7 +620,8 @@ function ask_me_anything_get_registered_settings_sections() {
 			'notifications' => __( 'Notifications', 'ask-me-anything' )
 		) ),
 		'styles'    => apply_filters( 'ask-me-anything/settings/sections/styles', array(
-			'main' => __( 'Styles', 'ask-me-anything' )
+			'main'     => __( 'Styles', 'ask-me-anything' ),
+			'statuses' => __( 'Status Colours', 'ask-me-anything' )
 		) ),
 		'licenses'  => apply_filters( 'ask-me-anything/settings/sections/licenses', array(
 			'main' => __( 'Licenses', 'ask-me-anything' ),
@@ -690,6 +732,22 @@ function ask_me_anything_text_callback( $args ) {
 	<input type="<?php echo esc_attr( $type ); ?>" class="<?php echo sanitize_html_class( $size ); ?>-text" id="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" <?php echo $name; ?> value="<?php echo esc_attr( stripslashes( $value ) ); ?>"<?php echo $readonly; ?>>
 	<label for="ask_me_anything_settings[<?php echo ask_me_anything_sanitize_key( $args['id'] ); ?>]" class="desc"><?php echo wp_kses_post( $args['desc'] ); ?></label>
 	<?php
+}
+
+/**
+ * Header Callback
+ *
+ * Simply renders a title and description.
+ *
+ * @param array $args Arguments passed by the setting
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_header_callback( $args ) {
+	if ( array_key_exists( 'desc', $args ) ) {
+		echo '<div class="desc">' . wp_kses_post( $args['desc'] ) . '</div>';
+	}
 }
 
 /**

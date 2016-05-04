@@ -155,5 +155,20 @@ function ask_me_anything_generated_css() {
 		$css .= '.ask-me-anything-button { color: ' . esc_attr( $button_text ) . '; }';
 	}
 
+	// Generate colours for statuses.
+	$statuses = ask_me_anything_get_statuses();
+	if ( is_array( $statuses ) ) {
+		foreach ( $statuses as $key => $name ) {
+			$class_name  = 'ama-status-' . $name;
+			$class_name  = strtolower( sanitize_html_class( $class_name ) );
+			$button_bg   = ask_me_anything_get_option( $key . '_bg_colour' );
+			$text_colour = ask_me_anything_get_option( $key . '_text_colour' );
+
+			if ( $button_bg && $text_colour ) {
+				$css .= '.' . $class_name . ' .ama-question-status, .wp-admin .' . $class_name . ' a { background-color: ' . esc_attr( $button_bg ) . '; color: ' . esc_attr( $text_colour ) . '; }';
+			}
+		}
+	}
+
 	return $css;
 }

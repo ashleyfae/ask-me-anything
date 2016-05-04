@@ -102,7 +102,7 @@ function ask_me_anything_load_admin_scripts( $hook ) {
 	 * Stylesheets
 	 */
 	wp_enqueue_style( 'ask-me-anything-admin', $css_dir . 'ask-me-anything-admin' . $suffix . '.css', ASK_ME_ANYTHING_VERSION );
-	wp_add_inline_style( 'ask-me-anything-admin', ask_me_anything_get_option( 'status_admin_css', '' ) );
+	wp_add_inline_style( 'ask-me-anything-admin', ask_me_anything_generated_css() );
 	wp_enqueue_style( 'wp-color-picker' );
 }
 
