@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Ask Me Anything
- * Plugin URI: https://www.nosegraze.com
+ * Plugin URI: https://shop.nosegraze.com/product/ask-me-anything/
  * Description: Allow your readers to submit questions.
  * Version: 1.0
  * Author: Nose Graze
