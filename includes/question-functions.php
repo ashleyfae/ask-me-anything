@@ -83,3 +83,29 @@ add_filter( 'ask-me-anything/question/get/question', 'convert_chars' );
 add_filter( 'ask-me-anything/question/get/question', 'wpautop' );
 add_filter( 'ask-me-anything/question/get/question', 'shortcode_unautop' );
 add_filter( 'ask-me-anything/question/get/question', 'prepend_attachment' );
+
+/**
+ * Notify Subscribers
+ *
+ * Runs whenever a new comment is submitted. If the comment is on a 'question' then we
+ * notify the subscribers about it.
+ *
+ * @param int        $comment_id
+ * @param WP_Comment $comment_object
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function ask_me_anything_notify_subscribers( $comment_id, $comment_object ) {
+
+	$question = new AMA_Question( $comment_object->comment_post_ID );
+
+	if ( $question->ID === 0 ) {
+		return;
+	}
+
+	$question->notify_subscribers( array( $comment_object->comment_author_email ) );
+
+}
+
+add_action( 'wp_insert_comment', 'ask_me_anything_notify_subscribers', 99, 2 );

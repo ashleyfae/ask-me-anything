@@ -341,8 +341,9 @@ function ask_me_anything_submit_comment() {
 
 	$new_comment_data = $question->get_comment_data( $comment_id );
 
-	// Notify people.
-	$question->notify_subscribers( $new_comment_data['comment_author_email'] );
+	/**
+	 * @see ask_me_anything_notify_subscribers() for subscriber email notification.
+	 */
 
 	// Maybe update notify list to add this email.
 	if ( $notify_me === true ) {

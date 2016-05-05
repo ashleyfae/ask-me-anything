@@ -716,6 +716,7 @@ class AMA_Question {
 		);
 
 		// Find and replace placeholders.
+		$subject = str_replace( apply_filters( 'ask-me-anything/question/notify-email/placeholders', $find ), apply_filters( 'ask-me-anything/question/notify-email/placeholder-values', $replace ), $subject );
 		$message = str_replace( apply_filters( 'ask-me-anything/question/notify-email/placeholders', $find ), apply_filters( 'ask-me-anything/question/notify-email/placeholder-values', $replace ), $message );
 
 		return wp_mail( '', sanitize_text_field( $subject ), wp_strip_all_tags( $message ), $headers );

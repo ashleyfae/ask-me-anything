@@ -105,6 +105,28 @@ function ask_me_anything_remove_comments_support( $supports ) {
 add_filter( 'ask-me-anything/cpt/question-supports', 'ask_me_anything_remove_comments_support' );
 
 /**
+ * Make CPT Private
+ *
+ * If 'show questions on front-end' is disabled then we need to make the whole CPT private.
+ * This disables the single-question pages.
+ *
+ * @param array $args
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function ask_me_anything_make_cpt_private( $args ) {
+	if ( ! ask_me_anything_get_option( 'show_questions' ) ) {
+		$args['public']             = false;
+		$args['publicly_queryable'] = false;
+	}
+
+	return $args;
+}
+
+add_filter( 'ask-me-anything/cpt/question-args', 'ask_me_anything_make_cpt_private' );
+
+/**
  * Get Default Labels
  *
  * @since 1.0.0
