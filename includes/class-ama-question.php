@@ -882,7 +882,7 @@ class AMA_Question {
 
 		$data = array(
 			'ID'                   => $comment->comment_ID,
-			'avatar'               => get_avatar( $comment->comment_author, apply_filters( 'ask-me-anything/question/comments/avatar-size', 42 ), '', false, array( 'class' => 'ama-avatar' ) ),
+			'avatar'               => get_avatar( $comment->comment_author_email, apply_filters( 'ask-me-anything/question/comments/avatar-size', 42 ), '', false, array( 'class' => 'ama-avatar' ) ),
 			'comment_author'       => $comment->comment_author,
 			'comment_author_email' => $comment->comment_author_email,
 			'comment_author_url '  => $comment->comment_author_url,

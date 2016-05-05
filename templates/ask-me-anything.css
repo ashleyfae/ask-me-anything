@@ -113,6 +113,8 @@
   right: 5px;
   -webkit-appearance: none; }
   .ama-close-modal:hover {
+    background: none;
+    border: none;
     color: #909090; }
 
 /* Pagination */
@@ -208,7 +210,7 @@
   .ask-me-anything-popup .ask-me-anything-modal-inner {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    margin-top: 50px;
+    margin: 0;
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
