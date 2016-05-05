@@ -652,6 +652,9 @@ class AMA_Question {
 			);
 		}
 
+		$commenter    = wp_get_current_commenter();
+		$current_user = wp_get_current_user();
+
 		$question_data = array(
 			'question_url'          => get_permalink( $this->ID ),
 			'question_id'           => $this->ID,
@@ -664,7 +667,10 @@ class AMA_Question {
 			'number_up'             => $this->get_up_votes(),
 			'number_down'           => $this->get_down_votes(),
 			'question_edit_link'    => $this->get_edit_link(),
-			'comments_title'        => $comments_title
+			'comments_title'        => $comments_title,
+			'comment_author'        => is_user_logged_in() ? $current_user->user_firstname : $commenter['comment_author'],
+			'comment_author_email'  => is_user_logged_in() ? $current_user->user_email : $commenter['comment_author_email'],
+			'comment_author_url'    => is_user_logged_in() ? $current_user->user_url : $commenter['comment_author_url']
 		);
 
 		return apply_filters( 'ask-me-anything/question/get/template-data', $question_data, $this->ID, $this );

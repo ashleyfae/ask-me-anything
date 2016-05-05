@@ -20,6 +20,9 @@
  *  + data.number_down - Number of down votes.
  *  + data.question_edit_link - Link to the "Edit Question" page in the admin panl.
  *                              This is blank if the current user doesn't have permission to edit the question.
+ *  + data.comment_author - Name of the current commenter (or logged in user).
+ *  + data.comment_author_email - Email address of the current commenter (or logged in user).
+ *  + data.comment_author_url - URL of the current commenter (or logged in user).
  *
  * @package   ask-me-anything
  * @copyright Copyright (c) 2016, Nose Graze Ltd.
@@ -90,11 +93,11 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 			<form id="ama-submit-comment-form" method="POST">
 				<div class="ama-comment-name-field-wrap">
 					<label for="ama-comment-name-field" class="screen-reader-text"><?php _e( 'Your Name', 'ask-me-anything' ); ?></label>
-					<input type="text" id="ama-comment-name-field" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name (required)', 'ask-me-anything' ); ?>" required>
+					<input type="text" id="ama-comment-name-field" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name (required)', 'ask-me-anything' ); ?>" value="{{ data.comment_author }}" required>
 				</div>
 				<div class="ama-comment-email-field-wrap">
 					<label for="ama-comment-email-field" class="screen-reader-text"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
-					<input type="email" id="ama-comment-email-field" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email (required)', 'ask-me-anything' ); ?>" required>
+					<input type="email" id="ama-comment-email-field" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email (required)', 'ask-me-anything' ); ?>" value="{{ data.comment_author_email }}" required>
 				</div>
 				<div class="ama-comment-message-field-wrap">
 					<label for="ama-comment-message-field" class="screen-reader-text"><?php _e( 'Comment', 'ask-me-anything' ); ?></label>
