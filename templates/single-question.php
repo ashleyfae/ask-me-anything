@@ -3,6 +3,10 @@
  * Template for displaying a single question as well as any comments.
  * (Underscores JS Template)
  *
+ * Be sure to leave all class names and IDs in tact in order to ensure the plugin can function as normal.
+ * You can move them around, but don't delete or modify the class names or IDs - particularly with the
+ * comment submission form.
+ *
  * The following variables are available:
  *
  *  + data.question_id - ID number of the question.

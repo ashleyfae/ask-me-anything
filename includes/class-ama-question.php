@@ -887,7 +887,7 @@ class AMA_Question {
 			'comment_author_email' => $comment->comment_author_email,
 			'comment_author_url '  => $comment->comment_author_url,
 			'comment_date'         => $comment->comment_date,
-			'comment_content'      => $comment->comment_content
+			'comment_content'      => apply_filters( 'comment_text', $comment->comment_content )
 		);
 
 		return apply_filters( 'ask-me-anything/question/comment-data', $data, $comment, $this->ID );

@@ -44,6 +44,14 @@
 
 }
 
+.ama-question-edit-link {
+    background: #8c8c8c;
+
+    &:hover {
+        background: darken(#8c8c8c, 10);
+    }
+}
+
 .ama-load-question-form {
     display: inline-block;
     margin-bottom: .5em;

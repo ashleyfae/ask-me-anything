@@ -323,6 +323,11 @@
   .ama-single-question-wrap .ama-disabled {
     cursor: default !important; }
 
+.ama-question-edit-link {
+  background: #8c8c8c; }
+  .ama-question-edit-link:hover {
+    background: #737373; }
+
 .ama-load-question-form {
   display: inline-block;
   margin-bottom: .5em; }
