@@ -376,6 +376,9 @@ jQuery(document).ready(function ($) {
                     if (response.success == true) {
                         var amaCommentsTemplate = wp.template('ama-comments');
                         $('.ama-comments-list').append(amaCommentsTemplate({comments: response.data.comment_data}));
+
+                        // Delete the contents of the comment field.
+                        $('#ama-comment-message-field').val('');
                     }
 
                 });

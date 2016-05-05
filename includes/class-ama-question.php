@@ -747,8 +747,15 @@ class AMA_Question {
 			return false;
 		}
 
-		$subscribers       = $this->get_subscribers();
-		$subscribers       = is_array( $subscribers ) ? $subscribers : array();
+		$subscribers = $this->get_subscribers();
+		$subscribers = is_array( $subscribers ) ? $subscribers : array();
+
+		// Bail if they're already in the list.
+		if ( in_array( $email, $subscribers ) ) {
+			return false;
+		}
+
+		// Otherwise, let's add them.
 		$subscribers[]     = $email;
 		$this->subscribers = $subscribers;
 
