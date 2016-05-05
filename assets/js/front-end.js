@@ -72,7 +72,10 @@ jQuery(document).ready(function ($) {
                 form_description: ASK_ME_ANYTHING.form_description,
                 form_require_name: ASK_ME_ANYTHING.form_require_name,
                 form_require_email: ASK_ME_ANYTHING.form_require_email,
-                form_question_field_name: ASK_ME_ANYTHING.form_question_field_name
+                form_question_field_name: ASK_ME_ANYTHING.form_question_field_name,
+                comment_author: ASK_ME_ANYTHING.comment_author,
+                comment_author_email: ASK_ME_ANYTHING.comment_author_email,
+                comment_author_url: ASK_ME_ANYTHING.comment_author_url
             };
 
             $('.ask-me-anything-submit-question').empty().append(amaFormTemplate(amaSubmitData));

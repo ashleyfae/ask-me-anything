@@ -35,7 +35,9 @@ function ask_me_anything_load_scripts() {
 	), ASK_ME_ANYTHING_VERSION, true );
 	wp_enqueue_script( 'ask-me-anything' );
 
-	$description = ask_me_anything_get_option( 'form_desc', '' );
+	$description  = ask_me_anything_get_option( 'form_desc', '' );
+	$commenter    = wp_get_current_commenter();
+	$current_user = wp_get_current_user();
 
 	wp_localize_script( 'ask-me-anything', 'ASK_ME_ANYTHING', apply_filters( 'ask-me-anything/javascript-vars', array(
 		'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
@@ -45,7 +47,10 @@ function ask_me_anything_load_scripts() {
 		'form_description'         => $description ? wpautop( $description ) : '',
 		'form_require_name'        => ask_me_anything_get_option( 'require_name', false ),
 		'form_require_email'       => ask_me_anything_get_option( 'require_email', false ),
-		'form_question_field_name' => esc_html( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) )
+		'form_question_field_name' => esc_html( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) ),
+		'comment_author'           => is_user_logged_in() ? $current_user->user_firstname : $commenter['comment_author'],
+		'comment_author_email'     => is_user_logged_in() ? $current_user->user_email : $commenter['comment_author_email'],
+		'comment_author_url'       => is_user_logged_in() ? $current_user->user_url : $commenter['comment_author_url']
 	) ) );
 
 }

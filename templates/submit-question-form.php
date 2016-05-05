@@ -2,6 +2,8 @@
 /**
  * Submit Question Form (Underscores JS Template)
  *
+ * In order to ensure the submission form works properly, be sure not to change any class names or IDs.
+ *
  * Displays the form for submitting a question.
  *
  * The following JS variables are available:
@@ -10,6 +12,9 @@
  *      data.form_require_name (bool) -- Whether or not the name field is required.
  *      data.form_require_email (bool) -- Whether or not the email field is required.
  *      data.form_question_field_name -- The label for the main question textarea box.
+ *      data.comment_author - Name of the current commenter (or logged in user).
+ *      data.comment_author_email - Email address of the current commenter (or logged in user).
+ *      data.comment_author_url - URL of the current commenter (or logged in user).
  *
  * @package   ask-me-anything
  * @copyright Copyright (c) 2016, Nose Graze Ltd.
@@ -36,14 +41,14 @@
 
 		<div class="ask-me-anything-field">
 			<label for="ask-me-anything-name"><?php echo apply_filters( 'ask-me-anything/submit-form/label/name', __( 'Your Name', 'ask-me-anything' ) ); ?><# if (data.form_require_name) { #><span class="ask-me-anything-required">*</span><# } #></label>
-			<input type="text" id="ask-me-anything-name" name="ask-me-anything-name"<# if (data.form_require_name) { #> required<# } #>>
+			<input type="text" id="ask-me-anything-name" name="ask-me-anything-name" value="{{ data.comment_author }}"<# if (data.form_require_name) { #> required<# } #>>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-name-field' ); ?>
 
 		<div class="ask-me-anything-field">
 			<label for="ask-me-anything-email"><?php echo apply_filters( 'ask-me-anything/submit-form/label/email', __( 'Email Address', 'ask-me-anything' ) ); ?><# if (data.form_require_email) { #><span class="ask-me-anything-required">*</span><# } #></label>
-			<input type="email" id="ask-me-anything-email" name="ask-me-anything-email"<# if (data.form_require_email) { #> required<# } #>>
+			<input type="email" id="ask-me-anything-email" name="ask-me-anything-email" value="{{ data.comment_author_email }}"<# if (data.form_require_email) { #> required<# } #>>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-email-field' ); ?>
@@ -58,7 +63,7 @@
 		if ( $categories && ask_me_anything_get_option( 'allow_category_select' ) ) : ?>
 			<div class="ask-me-anything-field">
 				<label for="ask-me-anything-category"><?php echo apply_filters( 'ask-me-anything/submit-form/label/category', __( 'Category', 'ask-me-anything' ) ); ?></label>
-				<select name="ask-me-anything-category">
+				<select id="ask-me-anything-category" name="ask-me-anything-category">
 					<?php echo $categories; ?>
 				</select>
 			</div>
