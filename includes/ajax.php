@@ -275,6 +275,8 @@ function ask_me_anything_submit_comment() {
 		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
 	}
 
+	$update_question_status = false;
+
 	foreach ( $fields as $field_info ) {
 		if ( ! array_key_exists( 'name', $field_info ) || ! array_key_exists( 'value', $field_info ) ) {
 			continue;
@@ -318,6 +320,14 @@ function ask_me_anything_submit_comment() {
 				}
 				break;
 
+			// Question Status
+			case 'ama-comment-status-field' :
+				if ( ! empty( $field_info['value'] ) && current_user_can( 'edit_question', $question->ID ) ) {
+					$all_statuses           = ask_me_anything_get_statuses();
+					$update_question_status = array_key_exists( $field_info['value'], $all_statuses ) ? wp_strip_all_tags( $field_info['value'] ) : false;
+				}
+				break;
+
 		}
 	}
 
@@ -344,6 +354,12 @@ function ask_me_anything_submit_comment() {
 	/**
 	 * @see ask_me_anything_notify_subscribers() for subscriber email notification.
 	 */
+
+	// Maybe update the question status.
+	if ( $update_question_status !== false ) {
+		$question->status = $update_question_status;
+		$question->save();
+	}
 
 	// Maybe update notify list to add this email.
 	if ( $notify_me === true ) {

@@ -109,6 +109,18 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 						<?php _e( 'Notify me of new comments', 'ask-me-anything' ); ?>
 					</label>
 				</div>
+				<?php if ( current_user_can( 'edit_questions' ) ) : ?>
+					<?php $ama_statuses = ask_me_anything_get_statuses(); ?>
+					<div class="ama-comment-status-field-wrap">
+						<label for="ama-comment-status-field"><?php _e('Update question status', 'ask-me-anything'); ?></label>
+						<select id="ama-comment-status-field" name="ama-comment-status-field">
+							<option value="" selected><?php _e( 'No change', 'ask-me-anything' ); ?></option>
+							<?php foreach ( $ama_statuses as $key => $name ) : ?>
+								<option value="<?php echo esc_attr( $key ); ?>"><?php echo $name; ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+				<?php endif; ?>
 				<button type="submit" class="ask-me-anything-button ama-submit-comment-button"><?php _e( 'Submit Comment', 'ask-me-anything' ); ?></button>
 			</form>
 		</div>

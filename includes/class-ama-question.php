@@ -785,9 +785,13 @@ class AMA_Question {
 
 		if ( ( $key = array_search( $email, $subscribers ) ) !== false ) {
 			unset( $subscribers[ $key ] );
+		} else {
+			return false;
 		}
 
 		$this->subscribers = $subscribers;
+
+		update_post_meta( $this->ID, 'ama_subscribers', $this->subscribers );
 
 		return true;
 
