@@ -101,3 +101,4 @@ function ask_me_anything_inline_ui( $atts, $content = null ) {
 }
 
 add_shortcode( 'ama', 'ask_me_anything_inline_ui' );
+add_shortcode( 'ask-me-anything', 'ask_me_anything_inline_ui' );

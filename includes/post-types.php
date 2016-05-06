@@ -70,7 +70,7 @@ function ask_me_anything_setup_post_types() {
 		'map_meta_cap'       => true,
 		'menu_icon'          => 'dashicons-editor-help',
 		'has_archive'        => $archives,
-		'hierarchical'       => true,
+		'hierarchical'       => false,
 		'supports'           => apply_filters( 'ask-me-anything/cpt/question-supports', array(
 			'title',
 			'editor',

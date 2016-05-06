@@ -389,6 +389,12 @@ function ask_me_anything_get_registered_settings() {
 					'type' => 'text',
 					'std'  => get_option( 'admin_email' )
 				),
+				'notification_header'  => array(
+					'id'   => 'notification_header',
+					'name' => __( 'Comment Notifications', 'ask-me-anything' ),
+					'desc' => __( 'The below settings apply to comment notification emails. These get sent out when someone subscribes to a question and a new comment is posted.', 'ask-me-anything' ),
+					'type' => 'header'
+				),
 				'notification_subject' => array(
 					'id'   => 'notification_subject',
 					'name' => __( 'Subject', 'ask-me-anything' ),
