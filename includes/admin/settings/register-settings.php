@@ -127,17 +127,6 @@ function ask_me_anything_delete_option( $key = '' ) {
 function ask_me_anything_get_settings() {
 	$settings = get_option( 'ask_me_anything_settings' );
 
-	if ( empty( $settings ) ) {
-		// Update old settings with new single option
-		$general_settings  = is_array( get_option( 'ask_me_anything_settings_general' ) ) ? get_option( 'ask_me_anything_settings_general' ) : array();
-		$question_settings = is_array( get_option( 'ask_me_anything_settings_questions' ) ) ? get_option( 'ask_me_anything_settings_questions' ) : array();
-		$styles_settings   = is_array( get_option( 'ask_me_anything_settings_styles' ) ) ? get_option( 'ask_me_anything_settings_styles' ) : array();
-		$tools_settings    = is_array( get_option( 'ask_me_anything_settings_tools' ) ) ? get_option( 'ask_me_anything_settings_tools' ) : array();
-		$settings          = array_merge( $general_settings, $question_settings, $styles_settings, $tools_settings );
-
-		update_option( 'ask_me_anything_settings', $settings );
-	}
-
 	return apply_filters( 'ask-me-anything/get-settings', $settings );
 }
 
@@ -218,17 +207,6 @@ add_action( 'admin_init', 'ask_me_anything_register_settings' );
 function ask_me_anything_get_registered_settings() {
 
 	$ask_me_anything_settings = array(
-		/* General Settings */
-		'general'   => apply_filters( 'ask-me-anything/settings/general', array(
-			'main' => array(
-				'delete_on_uninstall' => array(
-					'id'   => 'delete_on_uninstall',
-					'name' => __( 'Remove Data on Uninstall', 'ask-me-anything' ),
-					'desc' => __( 'Check this box if you would like Ask Me Anything to completely erase all of its data when the plugin is deleted. If checked and the plugin is uninstalled, the data is gone forever!', 'ask-me-anything' ),
-					'type' => 'checkbox'
-				),
-			),
-		) ),
 		/* Question Settings */
 		'questions' => apply_filters( 'ask-me-anything/settings/questions', array(
 			'main'          => array(
@@ -442,6 +420,17 @@ function ask_me_anything_get_registered_settings() {
 				)
 			)
 		) ),
+		/* Misc Settings */
+		'misc'      => apply_filters( 'ask-me-anything/settings/misc', array(
+			'main' => array(
+				'delete_on_uninstall' => array(
+					'id'   => 'delete_on_uninstall',
+					'name' => __( 'Remove Data on Uninstall', 'ask-me-anything' ),
+					'desc' => __( 'Check this box if you would like Ask Me Anything to completely erase all of its data when the plugin is deleted. If checked and the plugin is uninstalled, the data is gone forever!', 'ask-me-anything' ),
+					'type' => 'checkbox'
+				),
+			),
+		) ),
 		/* Licenses */
 		'licenses'  => apply_filters( 'ask-me-anything/settings/licenses', array() )
 	);
@@ -573,9 +562,9 @@ function ask_me_anything_settings_sanitize( $input = array() ) {
  */
 function ask_me_anything_get_settings_tabs() {
 	$tabs              = array();
-	$tabs['general']   = __( 'General', 'ask-me-anything' );
 	$tabs['questions'] = __( 'Questions', 'ask-me-anything' );
 	$tabs['styles']    = __( 'Styles', 'ask-me-anything' );
+	$tabs['misc']      = __( 'Misc', 'ask-me-anything' );
 	$tabs['licenses']  = __( 'Licenses', 'ask-me-anything' );
 
 	return apply_filters( 'ask-me-anything/settings/tabs', $tabs );
@@ -616,9 +605,6 @@ function ask_me_anything_get_registered_settings_sections() {
 	}
 
 	$sections = array(
-		'general'   => apply_filters( 'ask-me-anything/settings/sections/general', array(
-			'main' => __( 'General', 'ask-me-anything' )
-		) ),
 		'questions' => apply_filters( 'ask-me-anything/settings/sections/questions', array(
 			'main'          => __( 'Questions', 'ask-me-anything' ),
 			'fields'        => __( 'Fields', 'ask-me-anything' ),
@@ -628,6 +614,9 @@ function ask_me_anything_get_registered_settings_sections() {
 		'styles'    => apply_filters( 'ask-me-anything/settings/sections/styles', array(
 			'main'     => __( 'Styles', 'ask-me-anything' ),
 			'statuses' => __( 'Status Colours', 'ask-me-anything' )
+		) ),
+		'misc'      => apply_filters( 'ask-me-anything/settings/sections/misc', array(
+			'main' => __( 'Misc', 'ask-me-anything' )
 		) ),
 		'licenses'  => apply_filters( 'ask-me-anything/settings/sections/licenses', array(
 			'main' => __( 'Licenses', 'ask-me-anything' ),
