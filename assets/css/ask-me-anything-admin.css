@@ -66,6 +66,10 @@ x.x License Key
       float: right;
       width: 80%; } }
 
+/* Quick Edit */
+.post-type-question .inline-edit-status {
+  display: none; }
+
 .ask-me-anything-status a {
   background: #A9A9A9;
   -webkit-border-radius: 2px;

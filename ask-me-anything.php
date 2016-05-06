@@ -184,6 +184,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/columns.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/meta-box.php';
+				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/quick-edit.php';
 				require_once ASK_ME_ANYTHING_PLUGIN_DIR . 'includes/admin/question/sanitize.php';
 			}
 
