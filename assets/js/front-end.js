@@ -16,7 +16,9 @@ jQuery(document).ready(function ($) {
             });
 
             Ask_Me_Anything.loadFormTemplate();
-            Ask_Me_Anything.loadQuestions(1);
+            if (ASK_ME_ANYTHING.display_questions == true) {
+                Ask_Me_Anything.loadQuestions(1);
+            }
         },
 
         /**
@@ -35,9 +37,9 @@ jQuery(document).ready(function ($) {
             Ask_Me_Anything.loadFormTemplate();
 
             // Insert the questions
-            if (ASK_ME_ANYTHING.display_questions == true) {
+            /*if (ASK_ME_ANYTHING.display_questions == true) {
                 Ask_Me_Anything.loadQuestions(1);
-            }
+            }*/
 
         },
 
@@ -96,29 +98,42 @@ jQuery(document).ready(function ($) {
                     nonce: ASK_ME_ANYTHING.nonce
                 };
 
-                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-                    document.body.style.cursor = 'default';
-                    var responseClass = 'ama-error';
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    url: ASK_ME_ANYTHING.ajaxurl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
 
-                    if (response.success == true) {
-                        responseClass = 'ama-success';
-                    }
+                        document.body.style.cursor = 'default';
+                        var responseClass = 'ama-error';
 
-                    var finalMessage = '<div class="' + responseClass + '">' + response.data + '</div>';
-
-                    if (response.success == true) {
-                        Ask_Me_Anything.loadFormTemplate(finalMessage);
-
-                        // Re-load the questions list.
-                        if (ASK_ME_ANYTHING.display_questions == true) {
-                            Ask_Me_Anything.loadQuestions(1);
+                        if (response.success == true) {
+                            responseClass = 'ama-success';
                         }
-                    } else {
-                        submitForm.find('button').attr('disabled', false);
-                        submitForm.find('.fa-spin, .ama-error').remove();
-                        submitForm.prepend(finalMessage);
-                    }
 
+                        var finalMessage = '<div class="' + responseClass + '">' + response.data + '</div>';
+
+                        if (response.success == true) {
+                            Ask_Me_Anything.loadFormTemplate(finalMessage);
+
+                            // Re-load the questions list.
+                            if (ASK_ME_ANYTHING.display_questions == true) {
+                                Ask_Me_Anything.loadQuestions(1);
+                            }
+                        } else {
+                            submitForm.find('button').attr('disabled', false);
+                            submitForm.find('.fa-spin, .ama-error').remove();
+                            submitForm.prepend(finalMessage);
+                        }
+
+                    }
+                }).fail(function (response) {
+                    if ( window.console && window.console.log ) {
+                        console.log( response );
+                    }
                 });
             });
 
@@ -142,23 +157,31 @@ jQuery(document).ready(function ($) {
                 nonce: ASK_ME_ANYTHING.nonce
             };
 
-            $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-                questionsList.empty();
+            $.ajax({
+                type: 'POST',
+                data: data,
+                url: ASK_ME_ANYTHING.ajaxurl,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (response) {
+                    questionsList.empty();
 
-                if (response.success == true) {
-                    var templateData = {
-                        questions: response.data.questions,
-                        nextpage: response.data.next_page,
-                        previouspage: response.data.previous_page
-                    };
-                    questionsList.append(amaQuestionTemplate(templateData));
-                    Ask_Me_Anything.renderQuestion();
-                } else {
-                    questionsList.append(response.data);
+                    if (response.success == true) {
+                        var templateData = {
+                            questions: response.data.questions,
+                            nextpage: response.data.next_page,
+                            previouspage: response.data.previous_page
+                        };
+                        questionsList.append(amaQuestionTemplate(templateData));
+                        Ask_Me_Anything.renderQuestion();
+                    } else {
+                        questionsList.append(response.data);
+                    }
+
+                    // Load pagination
+                    Ask_Me_Anything.pagination();
                 }
-
-                // Load pagination
-                Ask_Me_Anything.pagination();
             });
 
         },
@@ -208,35 +231,45 @@ jQuery(document).ready(function ($) {
                     question_id: questionID,
                     nonce: ASK_ME_ANYTHING.nonce
                 };
+                
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    url: ASK_ME_ANYTHING.ajaxurl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
+                        if (response.success == true) {
+                            var amaQuestionTemplate = wp.template('ama-single-question');
+                            questionArea.empty().append(amaQuestionTemplate(response.data));
 
-                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                            // Initialize voting.
+                            Ask_Me_Anything.initializeVoting(questionID);
 
-                    if (response.success == true) {
-                        var amaQuestionTemplate = wp.template('ama-single-question');
-                        questionArea.empty().append(amaQuestionTemplate(response.data));
+                            // Load comments.
+                            Ask_Me_Anything.loadCommentsTemplate(questionID);
 
-                        // Initialize voting.
-                        Ask_Me_Anything.initializeVoting(questionID);
+                            // Initialize comment submission.
+                            Ask_Me_Anything.submitComment();
 
-                        // Load comments.
-                        Ask_Me_Anything.loadCommentsTemplate(questionID);
-
-                        // Initialize comment submission.
-                        Ask_Me_Anything.submitComment();
-
-                        // Go back to form.
-                        $('.ama-load-question-form').click(function (e) {
-                            e.preventDefault();
-                            // Remove 'active' classes from all questions.
-                            $('.ama-question-item').each(function () {
-                                $(this).removeClass('ama-active');
+                            // Go back to form.
+                            $('.ama-load-question-form').click(function (e) {
+                                e.preventDefault();
+                                // Remove 'active' classes from all questions.
+                                $('.ama-question-item').each(function () {
+                                    $(this).removeClass('ama-active');
+                                });
+                                Ask_Me_Anything.loadFormTemplate();
                             });
-                            Ask_Me_Anything.loadFormTemplate();
-                        });
-                    } else {
-                        questionArea.empty().append(response.data);
+                        } else {
+                            questionArea.empty().append(response.data);
+                        }
                     }
-
+                }).fail(function (response) {
+                    if ( window.console && window.console.log ) {
+                        console.log( response );
+                    }
                 });
 
             });
@@ -273,25 +306,35 @@ jQuery(document).ready(function ($) {
                     nonce: ASK_ME_ANYTHING.nonce
                 };
 
-                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    url: ASK_ME_ANYTHING.ajaxurl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
+                        votingParent.find('.fa-spinner').remove();
 
-                    votingParent.find('.fa-spinner').remove();
+                        if (response.success == true) {
+                            voteElement.text(response.data);
 
-                    if (response.success == true) {
-                        voteElement.text(response.data);
+                            // Increment the vote element on the left-hand side too.
+                            var voteElementLeft = $('.ask-me-anything-questions-list #ama-question-item-' + questionID).find('.ama-' + voteType + '-vote').find('.ama-vote-number');
 
-                        // Increment the vote element on the left-hand side too.
-                        var voteElementLeft = $('.ask-me-anything-questions-list #ama-question-item-' + questionID).find('.ama-' + voteType + '-vote').find('.ama-vote-number');
-
-                        console.log(voteElementLeft);
-
-                        if (typeof voteElementLeft != 'undefined') {
-                            voteElementLeft.text(response.data);
+                            if (typeof voteElementLeft != 'undefined') {
+                                voteElementLeft.text(response.data);
+                            }
+                        } else {
+                            if ( window.console && window.console.log ) {
+                                console.log(response); // @todo error
+                            }
                         }
-                    } else {
-                        console.log(response); // @todo error
                     }
-
+                }).fail(function (response) {
+                    if ( window.console && window.console.log ) {
+                        console.log( response );
+                    }
                 });
             });
 
@@ -312,15 +355,27 @@ jQuery(document).ready(function ($) {
                 nonce: ASK_ME_ANYTHING.nonce
             };
 
-            $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-
-                if (response.success == true) {
-                    var amaCommentsTemplate = wp.template('ama-comments');
-                    commentArea.empty().append(amaCommentsTemplate({comments: response.data}));
-                } else {
-                    // @todo error
+            $.ajax({
+                type: 'POST',
+                data: data,
+                url: ASK_ME_ANYTHING.ajaxurl,
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        var amaCommentsTemplate = wp.template('ama-comments');
+                        commentArea.empty().append(amaCommentsTemplate({comments: response.data}));
+                    } else {
+                        if ( window.console && window.console.log ) {
+                            console.log(response);
+                        }
+                    }
                 }
-
+            }).fail(function (response) {
+                if ( window.console && window.console.log ) {
+                    console.log( response );
+                }
             });
 
         },
@@ -349,38 +404,51 @@ jQuery(document).ready(function ($) {
                     nonce: ASK_ME_ANYTHING.nonce
                 };
 
-                $.post(ASK_ME_ANYTHING.ajaxurl, data, function (response) {
-                    // Remove "waiting" stuff and old error messages.
-                    submitForm.find('button').attr('disabled', false);
-                    submitForm.find('.fa-spin, .ama-error, .ama-success').remove();
-                    document.body.style.cursor = 'default';
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    url: ASK_ME_ANYTHING.ajaxurl,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (response) {
 
-                    var responseClass = 'ama-error';
+                        // Remove "waiting" stuff and old error messages.
+                        submitForm.find('button').attr('disabled', false);
+                        submitForm.find('.fa-spin, .ama-error, .ama-success').remove();
+                        document.body.style.cursor = 'default';
 
-                    if (response.success == true) {
-                        responseClass = 'ama-success';
+                        var responseClass = 'ama-error';
+
+                        if (response.success == true) {
+                            responseClass = 'ama-success';
+                        }
+
+                        // Build response message.
+                        var responseMessage;
+                        if (response.success == true) {
+                            responseMessage = response.data.message;
+                        } else {
+                            responseMessage = response.data;
+                        }
+
+                        // Add success/error messages.
+                        var finalMessage = '<div class="' + responseClass + '">' + responseMessage + '</div>';
+                        submitForm.prepend(finalMessage);
+
+                        if (response.success == true) {
+                            var amaCommentsTemplate = wp.template('ama-comments');
+                            $('.ama-comments-list').append(amaCommentsTemplate({comments: response.data.comment_data}));
+
+                            // Delete the contents of the comment field.
+                            $('#ama-comment-message-field').val('');
+                        }
+
                     }
-
-                    // Build response message.
-                    var responseMessage;
-                    if (response.success == true) {
-                        responseMessage = response.data.message;
-                    } else {
-                        responseMessage = response.data;
+                }).fail(function (response) {
+                    if ( window.console && window.console.log ) {
+                        console.log( response );
                     }
-
-                    // Add success/error messages.
-                    var finalMessage = '<div class="' + responseClass + '">' + responseMessage + '</div>';
-                    submitForm.prepend(finalMessage);
-
-                    if (response.success == true) {
-                        var amaCommentsTemplate = wp.template('ama-comments');
-                        $('.ama-comments-list').append(amaCommentsTemplate({comments: response.data.comment_data}));
-
-                        // Delete the contents of the comment field.
-                        $('#ama-comment-message-field').val('');
-                    }
-
                 });
             });
 

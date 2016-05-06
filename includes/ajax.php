@@ -58,6 +58,8 @@ function ask_me_anything_get_questions() {
 
 	wp_send_json_success( $final_output );
 
+	exit;
+
 }
 
 add_action( 'wp_ajax_ask_me_anything_get_questions', 'ask_me_anything_get_questions' );

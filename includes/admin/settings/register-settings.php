@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function ask_me_anything_get_option( $key = '', $default = false ) {
 	global $ask_me_anything_options;
 
-	$value = ! empty( $ask_me_anything_options[ $key ] ) ? $ask_me_anything_options[ $key ] : $default;
+	$value = ( array_key_exists( $key, $ask_me_anything_options ) && ! empty( $ask_me_anything_options[ $key ] ) ) ? $ask_me_anything_options[ $key ] : $default;
 	$value = apply_filters( 'ask-me-anything/options/get', $value, $key, $default );
 
 	return apply_filters( 'ask-me-anything/options/get/' . $key, $value, $key, $default );
@@ -125,7 +125,11 @@ function ask_me_anything_delete_option( $key = '' ) {
  * @return array Ask Me Anything settings
  */
 function ask_me_anything_get_settings() {
-	$settings = get_option( 'ask_me_anything_settings' );
+	$settings = get_option( 'ask_me_anything_settings', array() );
+
+	if ( ! is_array( $settings ) ) {
+		$settings = array();
+	}
 
 	return apply_filters( 'ask-me-anything/get-settings', $settings );
 }
@@ -514,7 +518,7 @@ function ask_me_anything_settings_sanitize( $input = array() ) {
 	parse_str( $_POST['_wp_http_referer'], $referrer );
 
 	$settings = ask_me_anything_get_registered_settings();
-	$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'book';
+	$tab      = isset( $referrer['tab'] ) ? $referrer['tab'] : 'questions';
 	$section  = isset( $referrer['section'] ) ? $referrer['section'] : 'main';
 
 	$input = $input ? $input : array();
@@ -539,7 +543,7 @@ function ask_me_anything_settings_sanitize( $input = array() ) {
 
 	if ( ! empty( $found_settings ) ) {
 		foreach ( $found_settings as $key => $value ) {
-			if ( empty( $input[ $key ] ) ) {
+			if ( empty( $input[ $key ] ) && array_key_exists( $key, $ask_me_anything_options ) ) {
 				unset( $ask_me_anything_options[ $key ] );
 			}
 		}
