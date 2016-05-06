@@ -326,7 +326,8 @@
     cursor: default !important; }
 
 .ama-question-edit-link {
-  background: #8c8c8c; }
+  background: #8c8c8c;
+  text-decoration: none; }
   .ama-question-edit-link:hover {
     background: #737373; }
 
