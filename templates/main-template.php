@@ -2,7 +2,8 @@
 /**
  * Main Template
  *
- * General structure of the questions and submission form.
+ * General structure of the questions and submission form. This base template includes a variety
+ * of other files in certain places. (See below comments.)
  *
  * @package   ask-me-anything
  * @copyright Copyright (c) 2016, Nose Graze Ltd.

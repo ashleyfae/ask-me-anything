@@ -1,6 +1,7 @@
 <?php
 /**
- * Submit Question Form (Underscores JS Template)
+ * Submit Question Form
+ * (Underscores JS Template)
  *
  * In order to ensure the submission form works properly, be sure not to change any class names or IDs.
  *

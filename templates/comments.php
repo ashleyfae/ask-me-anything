@@ -1,7 +1,7 @@
 <?php
 /**
- * Comments Template (Underscores JS Template)
- * Each comment is given this layout.
+ * Comments Template - Each comment is given this layout.
+ * (Underscores JS Template)
  *
  * The following values are available for each comment:
  *

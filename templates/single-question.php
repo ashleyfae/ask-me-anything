@@ -13,7 +13,7 @@
  *  + data.question_title - Title (subject) of the question.
  *  + data.question_url - URL to the question.
  *  + data.question_status - Status (name) of the question.
- *  + data.question_status_class - Class for the sattus (to be used in a 'class' attribute).
+ *  + data.question_status_class - Class for the status (to be used in a 'class' attribute).
  *  + data.question_content - Actual content of the question.
  *  + data.question_submitter - Name of the person who submitted the content. Blank if anonymous.
  *  + data.number_comments - Number of comments on this question.

@@ -3,6 +3,28 @@
  * Template for a single question when displayed on the right-hand side.
  * (Underscores JS Template)
  *
+ * The following variables are available:
+ *
+ *  + data.questions - Array of questions. We use _.each to loop through this.
+ *                     The following variables are available for each question inside the _.each loop:
+ *      + question.question_id - ID number of the question.
+ *      + question.question_title - Title (subject) of the question.
+ *      + question.question_url - URL to the question.
+ *      + question.question_status - Name of the status
+ *      + question.question_status_class - Class for the status (to be used in a 'class' attribute).
+ *      + question.question_content - Actual content of the question.
+ *      + question.question_submitter - Name of the person who submitted the content. Blank if anonymous.
+ *      + question.number_comments - Number of comments on this question.
+ *      + question.comments_title - Text for the comments title, based on how many comments the question has. Will be
+ *                                  "Leave a Comment" for zero comments, "One Comment" for one comment, or "4 Comments"
+ *                                  for multiple comments.
+ *      + question.number_up - Number of up votes.
+ *      + question.number_down - Number of down votes.
+ *      + question.question_edit_link - Link to the "Edit Question" page in the admin panel.
+ *                                      This is blank if the current user doesn't have permission to edit the question.
+ *  + data.previouspage - Number for the previous page.
+ *  + data.nextpage - Number for the next page.
+ *
  * @package   ask-me-anything
  * @copyright Copyright (c) 2016, Nose Graze Ltd.
  * @license   GPL2+
