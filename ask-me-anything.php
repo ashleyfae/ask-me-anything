@@ -221,7 +221,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 				return;
 			}
 
-			$ama_license = new Ask_Me_Anything_License( __FILE__, 'Ask Me Anything', ASK_ME_ANYTHING_VERSION, 'Nose Graze', 'ask_me_anything_license_key' );
+			$ama_license = new Ask_Me_Anything_License( __FILE__, 'Ask Me Anything Plugin', ASK_ME_ANYTHING_VERSION, 'Nose Graze', 'ask_me_anything_license_key' );
 
 		}
 
