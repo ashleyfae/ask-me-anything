@@ -32,5 +32,9 @@ TK
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed an issue with license key activation.
+* Added some reset heading styles inside the AMA modal.
+
 = 1.0.0 =
 * Initial release.
