@@ -12,23 +12,25 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
-# Elements
-    ## Alerts
-    ## Buttons
-    ## Form Fields
-# Modal
-# Questions
-    ## Questions List
-    ## Single Questions
-    ## Comments
-    ## Submit Question
+1.0 Elements
+    1.1 Alerts
+    1.2 Buttons
+    1.3 Form Fields
+2.0 Typography
+    2.1 Headings
+3.0 Modal
+4.0 Questions
+    4.1 Questions List
+    4.2 Single Questions
+    4.3 Comments
+    4.4 Submit Question
 
 --------------------------------------------------------------*/
 /*--------------------------------------------------------------
-# Buttons
+1.0 Elements
 --------------------------------------------------------------*/
 /*--------------------------------------------------------------
-## Alerts
+1.1 Alerts
 --------------------------------------------------------------*/
 .ama-error {
   background: #d9534f;
@@ -47,7 +49,7 @@
     margin: 0; }
 
 /*--------------------------------------------------------------
-## Buttons
+1.2 Buttons
 --------------------------------------------------------------*/
 /* AMA Buttons */
 .ask-me-anything-button {
@@ -102,6 +104,9 @@
 .ama-close-modal {
   background: none;
   border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
   color: #C7C7C7;
   cursor: pointer;
   font-size: 27px;
@@ -136,7 +141,7 @@
         float: left; } }
 
 /*--------------------------------------------------------------
-## Form Fields
+1.3 Form Fields
 --------------------------------------------------------------*/
 #ask-me-anything input[type="email"],
 #ask-me-anything input[type="text"],
@@ -163,7 +168,18 @@
   margin-left: 3px; }
 
 /*--------------------------------------------------------------
-# Modal
+2.0 Typography
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+2.1 Headings
+--------------------------------------------------------------*/
+#ask-me-anything h1, #ask-me-anything h2, #ask-me-anything h3, #ask-me-anything h4, #ask-me-anything h5, #ask-me-anything h6 {
+  background: none;
+  border: none;
+  padding: 0; }
+
+/*--------------------------------------------------------------
+3.0 Modal
 --------------------------------------------------------------*/
 /* Modal Backdrop */
 #ask-me-anything-backdrop {
@@ -235,10 +251,10 @@
   border: 1px solid #dcdcdc; }
 
 /*--------------------------------------------------------------
-# Questions
+4.0 Questions
 --------------------------------------------------------------*/
 /*--------------------------------------------------------------
-## Questions List
+4.1 Questions List
 --------------------------------------------------------------*/
 .ask-me-anything-questions-list {
   background: #f4f4f4; }
@@ -294,7 +310,7 @@
         float: right; } }
 
 /*--------------------------------------------------------------
-## Single Questions
+4.2 Single Questions
 --------------------------------------------------------------*/
 .ama-single-question-wrap {
   border-bottom: 1px solid #dcdcdc;
@@ -340,7 +356,7 @@
   font-style: italic; }
 
 /*--------------------------------------------------------------
-## Comments
+4.3 Comments
 --------------------------------------------------------------*/
 /* Comment List */
 .ama-question-comment {
@@ -371,7 +387,7 @@
     width: 49%; } }
 
 /*--------------------------------------------------------------
-## Submit Question
+4.4 Submit Question
 --------------------------------------------------------------*/
 .ask-me-anything-submit-question {
   padding: 1em; }

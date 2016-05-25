@@ -13,32 +13,39 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
-# Elements
-    ## Alerts
-    ## Buttons
-    ## Form Fields
-# Modal
-# Questions
-    ## Questions List
-    ## Single Questions
-    ## Comments
-    ## Submit Question
+1.0 Elements
+    1.1 Alerts
+    1.2 Buttons
+    1.3 Form Fields
+2.0 Typography
+    2.1 Headings
+3.0 Modal
+4.0 Questions
+    4.1 Questions List
+    4.2 Single Questions
+    4.3 Comments
+    4.4 Submit Question
 
 --------------------------------------------------------------*/
 
 @import '../assets/css/partials/front-end/variables';
 
 /*--------------------------------------------------------------
-# Buttons
+1.0 Elements
 --------------------------------------------------------------*/
 @import '../assets/css/partials/front-end/elements/elements';
 
 /*--------------------------------------------------------------
-# Modal
+2.0 Typography
+--------------------------------------------------------------*/
+@import '../assets/css/partials/front-end/typography/typography';
+
+/*--------------------------------------------------------------
+3.0 Modal
 --------------------------------------------------------------*/
 @import '../assets/css/partials/front-end/modal';
 
 /*--------------------------------------------------------------
-# Questions
+4.0 Questions
 --------------------------------------------------------------*/
 @import '../assets/css/partials/front-end/questions/questions';
