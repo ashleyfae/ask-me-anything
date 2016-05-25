@@ -209,7 +209,7 @@ function ask_me_anything_insert_question( $fields ) {
 
 		if ( ! empty( $admin_email ) && is_email( $admin_email ) ) {
 			$subject = sprintf( __( 'New Question: %s', 'ask-me-anything' ), wp_strip_all_tags( $question->get_title() ) );
-			$message = sprintf( __( "A new question has been posted on your site.\n\nView: %s\nEdit: %s", 'ask-me-anything' ), get_permalink( $question->ID ), get_edit_post_link( $question->ID ) );
+			$message = sprintf( __( "A new question has been posted on your site.\n\nView: %s\nEdit: %s", 'ask-me-anything' ), get_permalink( $question->ID ), admin_url( 'post.php?post=' . $question->ID . '&action=edit' ) );
 
 			wp_mail( $admin_email, $subject, $message );
 		}
