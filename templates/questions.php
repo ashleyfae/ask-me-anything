@@ -38,7 +38,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<a href="{{ question.question_url }}" id="ama-question-item-{{ question.question_id }}" class="ama-question-item {{ question.question_status_class }}" data-postid="{{ question.question_id }}">
 		<h3>
-			{{ question.question_title }}
+			{{{ question.question_title }}}
 		</h3>
 
 		<span class="ama-question-status">{{ question.question_status }}</span>

@@ -41,7 +41,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 
 	<div id="question-{{ data.question_id }}" class="ama-single-question-wrap {{ data.question_status_class }}" data-question-id="{{ data.question_id }}">
 
-		<h2>{{ data.question_title }}</h2>
+		<h2>{{{ data.question_title }}}</h2>
 
 		{{{ data.question_content }}}
 
