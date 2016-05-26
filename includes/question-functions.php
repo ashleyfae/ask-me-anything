@@ -201,7 +201,7 @@ function ask_me_anything_change_spam_status( $data, $path = 'submit-spam' ) {
 		'blog_lang'       => get_locale(),
 		'blog_charset'    => get_option( 'blog_charset' ),
 		'comment_type'    => 'contact-form',
-		'is_test'         => true //@todo remove
+		//'is_test'         => true // uncomment to test
 	);
 
 	if ( current_user_can( 'manage_options' ) ) {

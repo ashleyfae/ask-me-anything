@@ -36,6 +36,7 @@ TK
 * Fixed question edit URL in admin notification emails.
 * Post titles now display curly quotes correctly.
 * Fixed new comment notification email - it was including the question content instead of the comment content.
+* Added Akismet integration for questions.
 
 = 1.0.1 =
 * Fixed an issue with license key activation.
