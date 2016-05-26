@@ -104,7 +104,7 @@ function ask_me_anything_notify_subscribers( $comment_id, $comment_object ) {
 		return;
 	}
 
-	$question->notify_subscribers( array( $comment_object->comment_author_email ) );
+	$question->notify_subscribers( $comment_object->comment_content, array( $comment_object->comment_author_email ) );
 
 }
 

@@ -32,6 +32,11 @@ TK
 
 == Changelog ==
 
+= 1.0.2 =
+* Fixed question edit URL in admin notification emails.
+* Post titles now display curly quotes correctly.
+* Fixed new comment notification email - it was including the question content instead of the comment content.
+
 = 1.0.1 =
 * Fixed an issue with license key activation.
 * Added some reset heading styles inside the AMA modal.

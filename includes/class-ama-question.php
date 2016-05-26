@@ -682,13 +682,14 @@ class AMA_Question {
 	 *
 	 * Emails subscribers to notify them of a new comment on the question.
 	 *
-	 * @param array $exclude Array of email addresses to exclude from the notification
+	 * @param string $comment New comment text, to be included in the email
+	 * @param array  $exclude Array of email addresses to exclude from the notification
 	 *
 	 * @access public
 	 * @since  1.0.0
 	 * @return bool Whether or not an email was sent
 	 */
-	public function notify_subscribers( $exclude = array() ) {
+	public function notify_subscribers( $comment = '', $exclude = array() ) {
 
 		$subscriber_array = $this->get_subscribers();
 
@@ -717,7 +718,7 @@ class AMA_Question {
 
 		$replace = array(
 			$this->get_title(),
-			$this->get_question(),
+			$comment,
 			get_permalink( $this->ID )
 		);
 
