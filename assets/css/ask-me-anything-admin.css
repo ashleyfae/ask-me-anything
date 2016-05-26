@@ -79,12 +79,12 @@ x.x License Key
   display: inline-block;
   padding: 4px 8px; }
 
-.ama-spam {
+.ama-submit-spam {
   color: #a00; }
-  .ama-spam:hover {
+  .ama-submit-spam:hover {
     color: red; }
 
-.ama-unspam, .ama-unspam:hover {
+.ama-submit-ham, .ama-submit-ham:hover {
   color: #d98500; }
 
 /*# sourceMappingURL=ask-me-anything-admin.css.map */

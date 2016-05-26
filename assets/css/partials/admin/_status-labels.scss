@@ -10,7 +10,7 @@
     }
 }
 
-.ama-spam {
+.ama-submit-spam {
     color: #a00;
 
     &:hover {
@@ -18,7 +18,7 @@
     }
 }
 
-.ama-unspam {
+.ama-submit-ham {
     &, &:hover {
         color: #d98500;
     }

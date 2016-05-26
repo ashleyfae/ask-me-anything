@@ -202,11 +202,11 @@ function ask_me_anything_insert_question( $fields ) {
 
 	// Check for spam.
 	$spam_args = array(
-		'comment_content' => $question->post_content,
-		'comment_author' => $question->get_submitter(),
+		'comment_content'      => $question->post_content,
+		'comment_author'       => $question->get_submitter(),
 		'comment_author_email' => $question->get_submitter_email()
 	);
-	$is_spam = ask_me_anything_is_spam( $spam_args );
+	$is_spam   = ask_me_anything_is_spam( $spam_args );
 	if ( $is_spam ) {
 		$question->status = 'ama_spam';
 	}
@@ -445,3 +445,59 @@ function ask_me_anything_vote() {
 
 add_action( 'wp_ajax_ask_me_anything_vote', 'ask_me_anything_vote' );
 add_action( 'wp_ajax_nopriv_ask_me_anything_vote', 'ask_me_anything_vote' );
+
+/**
+ * Adjust Spam Status
+ *
+ * Gets triggered on "All Questions" page when marking a question as spam or not spam.
+ * We send the update to Akismet then adjust the status.
+ *
+ * @since 1.0.2
+ * @return void
+ */
+function ask_me_anything_adjust_spam_status() {
+
+	// Security check.
+	check_ajax_referer( 'ask_me_anything_submit_spam', 'nonce' );
+
+	$question = new AMA_Question( absint( $_POST['question_id'] ) );
+
+	if ( $question->ID == 0 ) {
+		wp_send_json_error( __( 'Error: Invalid question.', 'ask-me-anything' ) );
+	}
+
+	// No permission - bail.
+	if ( ! current_user_can( 'edit_question', $question->ID ) ) {
+		wp_die( __( 'You don\'t have permission to edit this question.', 'ask-me-anything' ) );
+	}
+
+	// No Akismet - bail.
+	if ( ! class_exists( 'Akismet' ) ) {
+		wp_send_json_error( __( 'Error: Akismet is not activated.' ) );
+	}
+
+	$path = wp_strip_all_tags( $_POST['akismet_action'] );
+	$data = array(
+		'comment_content'      => $question->post_content,
+		'comment_author'       => $question->get_submitter(),
+		'comment_author_email' => $question->get_submitter_email()
+	);
+
+	$result = ask_me_anything_change_spam_status( $data, $path );
+
+	// Change the actual status.
+	if ( $path == 'submit-spam' ) {
+		$question->status = 'ama_spam';
+	} else {
+		$question->status = ask_me_anything_get_default_status();
+	}
+
+	$question->save();
+
+	wp_send_json_success();
+
+	exit;
+
+}
+
+add_action( 'wp_ajax_ask_me_anything_spam', 'ask_me_anything_adjust_spam_status' );

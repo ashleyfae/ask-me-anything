@@ -157,11 +157,62 @@ function ask_me_anything_is_spam( $data = array() ) {
 		$default_args['user_role'] = 'administrator';
 	}
 
-	$args = wp_parse_args( $data, apply_filters( 'ask-me-anything/check-spam/default-args', $default_args ) );
+	$args = wp_parse_args( $data, apply_filters( 'ask-me-anything/akismet/default-http-args', $default_args ) );
 
 	$query_string = Akismet::build_query( $args );
-	$response     = Akismet::http_post( apply_filters( 'ask-me-anything/check-spam/query-string', $query_string ), 'comment-check' );
+	$response     = Akismet::http_post( apply_filters( 'ask-me-anything/akismet/http-query-string', $query_string ), 'comment-check' );
 	$result       = ( is_array( $response ) && isset( $response[1] ) && $response[1] == 'true' ) ? true : false;
 
-	return apply_filters( 'ask-me-anything/check-spam/is-spam', $result, $response, $args );
+	return apply_filters( 'ask-me-anything/akismet/is-spam', $result, $response, $args );
+}
+
+/**
+ * Change Spam Status
+ *
+ * @param string $path Either 'submit-spam' or 'submit-ham'
+ *
+ * @since 1.0.2
+ * @return bool True on success, false on failure
+ */
+function ask_me_anything_change_spam_status( $data, $path = 'submit-spam' ) {
+	if ( ! class_exists( 'Akismet' ) ) {
+		return false;
+	}
+
+	if ( ! method_exists( 'Akismet', 'http_post' ) ) {
+		return false;
+	}
+
+	$allowed_paths = array(
+		'submit-spam',
+		'submit-ham'
+	);
+
+	if ( ! in_array( $path, $allowed_paths ) ) {
+		return false;
+	}
+
+	$default_args = array(
+		'comment_content' => '',
+		'user_ip'         => ask_me_anything_get_ip(),
+		'user_agent'      => isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : null,
+		'referrer'        => isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null,
+		'blog'            => get_option( 'home' ),
+		'blog_lang'       => get_locale(),
+		'blog_charset'    => get_option( 'blog_charset' ),
+		'comment_type'    => 'contact-form',
+		'is_test'         => true //@todo remove
+	);
+
+	if ( current_user_can( 'manage_options' ) ) {
+		$default_args['user_role'] = 'administrator';
+	}
+
+	$args = wp_parse_args( $data, apply_filters( 'ask-me-anything/akismet/change-spam-status/default-http-args', $default_args ) );
+
+	$query_string = Akismet::build_query( $args );
+	$response     = Akismet::http_post( apply_filters( 'ask-me-anything/akismet/change-spam-status/http-query-string', $query_string ), $path );
+	$result       = ( is_array( $response ) && isset( $response[1] ) && $response[1] == 'Thanks for making the web a better place.' ) ? true : false;
+
+	return apply_filters( 'ask-me-anything/akismet/change-spam-status/result', $result, $response, $args );
 }
