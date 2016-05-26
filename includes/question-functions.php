@@ -109,3 +109,59 @@ function ask_me_anything_notify_subscribers( $comment_id, $comment_object ) {
 }
 
 add_action( 'wp_insert_comment', 'ask_me_anything_notify_subscribers', 99, 2 );
+
+/**
+ * Get IP Address
+ *
+ * @since 1.0.2
+ * @return string
+ */
+function ask_me_anything_get_ip() {
+	$ip = $_SERVER['REMOTE_ADDR'] ?: ( $_SERVER['HTTP_X_FORWARDED_FOR'] ?: $_SERVER['HTTP_CLIENT_IP'] );
+
+	return apply_filters( 'ask-me-anything/get-ip', $ip );
+}
+
+/**
+ * Is Spam
+ *
+ * Integrates with Akismet to check for spam. If Akismet is not installed then
+ * we automatically assume it's NOT spam.
+ *
+ * @param array $data
+ *
+ * @since 1.0.2
+ * @return bool True if is spam
+ */
+function ask_me_anything_is_spam( $data = array() ) {
+	if ( ! class_exists( 'Akismet' ) ) {
+		return false;
+	}
+
+	if ( ! method_exists( 'Akismet', 'http_post' ) ) {
+		return false;
+	}
+
+	$default_args = array(
+		'comment_content' => '',
+		'user_ip'         => ask_me_anything_get_ip(),
+		'user_agent'      => isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : null,
+		'referrer'        => isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null,
+		'blog'            => get_option( 'home' ),
+		'blog_lang'       => get_locale(),
+		'blog_charset'    => get_option( 'blog_charset' ),
+		'comment_type'    => 'contact-form'
+	);
+
+	if ( current_user_can( 'manage_options' ) ) {
+		$default_args['user_role'] = 'administrator';
+	}
+
+	$args = wp_parse_args( $data, apply_filters( 'ask-me-anything/check-spam/default-args', $default_args ) );
+
+	$query_string = Akismet::build_query( $args );
+	$response     = Akismet::http_post( apply_filters( 'ask-me-anything/check-spam/query-string', $query_string ), 'comment-check' );
+	$result       = ( is_array( $response ) && isset( $response[1] ) && $response[1] == 'true' ) ? true : false;
+
+	return apply_filters( 'ask-me-anything/check-spam/is-spam', $result, $response, $args );
+}

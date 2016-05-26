@@ -101,6 +101,8 @@ function ask_me_anything_get_statuses() {
 		}
 	}
 
+	$final_array['ama_spam'] = esc_html__( 'Spam', 'ask-me-anything' );
+
 	return apply_filters( 'ask-me-anything/get-statuses', $final_array );
 }
 

@@ -175,8 +175,7 @@ function ask_me_anything_insert_question( $fields ) {
 				$question->notify_submitter = ! empty( $field_info['value'] ) ? true : false;
 				break;
 
-			case
-			'ask-me-anything-question' :
+			case 'ask-me-anything-question' :
 				if ( empty( $field_info['value'] ) ) {
 					$error->add( 'empty-message', sprintf( __( 'The %s field is required.', 'ask-me-anything' ), strtolower( ask_me_anything_get_option( 'question_field_name', __( 'Question', 'ask-me-anything' ) ) ) ) );
 				} else {
@@ -201,10 +200,21 @@ function ask_me_anything_insert_question( $fields ) {
 	$question->up_votes   = 0;
 	$question->down_votes = 0;
 
+	// Check for spam.
+	$spam_args = array(
+		'comment_content' => $question->post_content,
+		'comment_author' => $question->get_submitter(),
+		'comment_author_email' => $question->get_submitter_email()
+	);
+	$is_spam = ask_me_anything_is_spam( $spam_args );
+	if ( $is_spam ) {
+		$question->status = 'ama_spam';
+	}
+
 	$result = $question->save();
 
-	// Notify the administrator.
-	if ( ask_me_anything_get_option( 'admin_notifications' ) ) {
+	// Notify the administrator (only if the question isn't spam).
+	if ( ask_me_anything_get_option( 'admin_notifications' ) && ! $is_spam ) {
 		$admin_email = ask_me_anything_get_option( 'admin_email' );
 
 		if ( ! empty( $admin_email ) && is_email( $admin_email ) ) {

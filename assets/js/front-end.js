@@ -108,6 +108,7 @@ jQuery(document).ready(function ($) {
                     success: function (response) {
 
                         document.body.style.cursor = 'default';
+                        console.log(response);
                         var responseClass = 'ama-error';
 
                         if (response.success == true) {
