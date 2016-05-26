@@ -123,3 +123,18 @@ function ask_me_anything_query_sortable_columns( $query ) {
 }
 
 add_action( 'pre_get_posts', 'ask_me_anything_query_sortable_columns' );
+
+function ask_me_anything_row_actions( $actions, $post ) {
+	if ( $post->post_type != 'question' ) {
+		return $actions;
+	}
+
+	$spam_action = ( $post->post_status == 'ama_spam' ) ? 'unspam' : 'spam';
+	$spam_label  = ( $post->post_status == 'ama_spam' ) ? esc_html__( 'Not Spam', 'ask-me-anything' ) : esc_html__( 'Spam', 'ask-me-anything' );
+
+	$actions['ama_spam'] = '<a href="#" class="ama-mark-spam ama-' . sanitize_html_class( $spam_action ) . '" data-action="' . esc_attr( $spam_action ) . '" data-question-id="' . esc_attr( $post->ID ) . '">' . $spam_label . '</a>';
+
+	return $actions;
+}
+
+add_filter( 'post_row_actions', 'ask_me_anything_row_actions', 10, 2 );

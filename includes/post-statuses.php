@@ -34,6 +34,13 @@ function ask_me_anything_register_statuses() {
 			'label_count'            => _n_noop( $status . ' <span class="count">(%s)</span>', $status . ' <span class="count">(%s)</span>' ),
 		);
 
+		// The spam status should be private.
+		if ( $key == 'ama_spam' ) {
+			$args['public']                 = false;
+			$args['exclude_from_search']    = true;
+			$args['show_in_admin_all_list'] = false;
+		}
+
 		register_post_status( $key, apply_filters( 'ask-me-anything/post-status/register-args', $args, $status ) );
 	}
 }
@@ -104,6 +111,25 @@ function ask_me_anything_get_statuses() {
 	$final_array['ama_spam'] = esc_html__( 'Spam', 'ask-me-anything' );
 
 	return apply_filters( 'ask-me-anything/get-statuses', $final_array );
+}
+
+/**
+ * Get Public Statuses
+ *
+ * Returns an array of public statuses only. For use on the front-end.
+ * The 'ama_spam' status is excluded.
+ *
+ * @since 1.0.2
+ * @return array
+ */
+function ask_me_anything_get_public_statuses() {
+	$all_statuses = ask_me_anything_get_statuses();
+
+	if ( array_key_exists( 'ama_spam', $all_statuses ) ) {
+		unset( $all_statuses['ama_spam'] );
+	}
+
+	return $all_statuses;
 }
 
 /**

@@ -9,3 +9,17 @@
         padding: 4px 8px;
     }
 }
+
+.ama-spam {
+    color: #a00;
+
+    &:hover {
+        color: red;
+    }
+}
+
+.ama-unspam {
+    &, &:hover {
+        color: #d98500;
+    }
+}

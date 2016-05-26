@@ -27,7 +27,7 @@ function ask_me_anything_get_questions() {
 		'paged'          => $page_number,
 		'posts_per_page' => absint( ask_me_anything_get_option( 'questions_per_page', 5 ) ),
 		'post_type'      => 'question',
-		'post_status'    => array_keys( ask_me_anything_get_statuses() )
+		'post_status'    => array_keys( ask_me_anything_get_public_statuses() )
 	);
 
 	$question_query = new WP_Query( apply_filters( 'ask-me-anything/get-questions/query-args', $query_args, $page_number ) );
