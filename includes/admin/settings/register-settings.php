@@ -475,6 +475,10 @@ function ask_me_anything_status_colours( $settings = array() ) {
 	);
 
 	foreach ( $statuses as $key => $name ) {
+		if ( $key == 'ama_spam' ) {
+			continue;
+		}
+
 		$settings['statuses'][ $key . '_bg_colour' ] = array(
 			'id'   => $key . '_bg_colour',
 			'name' => sprintf( __( '%s BG Colour', 'ask-me-anything' ), esc_html( $name ) ),

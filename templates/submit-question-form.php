@@ -100,4 +100,6 @@
 		<button type="submit" class="ask-me-anything-button ask-me-anything-submit-question-button"><?php echo apply_filters( 'ask-me-anything/submit-form/label/submit', __( 'Submit', 'ask-me-anything' ) ); ?></button>
 
 	</form>
+
+	<?php do_action( 'ask-me-anything/submit-form/after-form' ); ?>
 </script>

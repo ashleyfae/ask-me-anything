@@ -129,5 +129,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 			</form>
 		</div>
 	<?php endif; ?>
+	
+	<?php do_action( 'ask-me-anything/single-question/after-comments' ); ?>
 
 </script>
