@@ -119,7 +119,7 @@ function ask_me_anything_get_statuses() {
  * Returns an array of public statuses only. For use on the front-end.
  * The 'ama_spam' status is excluded.
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return array
  */
 function ask_me_anything_get_public_statuses() {

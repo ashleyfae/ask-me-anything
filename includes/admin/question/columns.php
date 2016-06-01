@@ -132,11 +132,11 @@ add_action( 'pre_get_posts', 'ask_me_anything_query_sortable_columns' );
  * @param array   $actions Existing actions
  * @param WP_Post $post    Current post object
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return array
  */
 function ask_me_anything_row_actions( $actions, $post ) {
-	if ( $post->post_type != 'question' || ! class_exists( 'Akismet' ) ) {
+	if ( $post->post_type != 'question' || ! class_exists( 'Akismet' ) || apply_filters( 'ask-me-anything/disable-akismet', false ) ) {
 		return $actions;
 	}
 

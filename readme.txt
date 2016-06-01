@@ -32,11 +32,12 @@ TK
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.1.0 =
 * Fixed question edit URL in admin notification emails.
 * Post titles now display curly quotes correctly.
 * Fixed new comment notification email - it was including the question content instead of the comment content.
 * Added Akismet integration for questions.
+* Added some actions to template files.
 
 = 1.0.1 =
 * Fixed an issue with license key activation.

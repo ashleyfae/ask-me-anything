@@ -113,7 +113,7 @@ add_action( 'wp_insert_comment', 'ask_me_anything_notify_subscribers', 99, 2 );
 /**
  * Get IP Address
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return string
  */
 function ask_me_anything_get_ip() {
@@ -130,11 +130,11 @@ function ask_me_anything_get_ip() {
  *
  * @param array $data
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return bool True if is spam
  */
 function ask_me_anything_is_spam( $data = array() ) {
-	if ( ! class_exists( 'Akismet' ) ) {
+	if ( ! class_exists( 'Akismet' ) || apply_filters( 'ask-me-anything/disable-akismet', false ) ) {
 		return false;
 	}
 
@@ -171,7 +171,7 @@ function ask_me_anything_is_spam( $data = array() ) {
  *
  * @param string $path Either 'submit-spam' or 'submit-ham'
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return bool True on success, false on failure
  */
 function ask_me_anything_change_spam_status( $data, $path = 'submit-spam' ) {

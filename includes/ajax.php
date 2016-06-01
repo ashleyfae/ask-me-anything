@@ -452,7 +452,7 @@ add_action( 'wp_ajax_nopriv_ask_me_anything_vote', 'ask_me_anything_vote' );
  * Gets triggered on "All Questions" page when marking a question as spam or not spam.
  * We send the update to Akismet then adjust the status.
  *
- * @since 1.0.2
+ * @since 1.1.0
  * @return void
  */
 function ask_me_anything_adjust_spam_status() {
