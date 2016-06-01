@@ -473,7 +473,7 @@ function ask_me_anything_adjust_spam_status() {
 
 	// No Akismet - bail.
 	if ( ! class_exists( 'Akismet' ) ) {
-		wp_send_json_error( __( 'Error: Akismet is not activated.' ) );
+		wp_send_json_error( __( 'Error: Akismet is not activated.', 'ask-me-anything' ) );
 	}
 
 	$path = wp_strip_all_tags( $_POST['akismet_action'] );

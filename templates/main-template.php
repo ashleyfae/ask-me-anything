@@ -50,6 +50,8 @@ $modal_class    = $show_questions ? ' ask-me-anything-has-questions' : '';
 			 * @see submit-question-form.php
 			 * That template gets pulled inside here automatically.
 			 */
+
+			do_action( 'ask-me-anything/main-template/after-submit-question' );
 			?>
 		</div>
 
