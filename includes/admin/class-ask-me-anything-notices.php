@@ -82,7 +82,7 @@ class Ask_Me_Anything_Notices {
 	 * @return void
 	 */
 	public function dismiss_notices() {
-		if ( isset( $_GET['webinar_pages_notice'] ) ) {
+		if ( isset( $_GET['ask_me_anything_notice'] ) ) {
 			update_user_meta( get_current_user_id(), '_ask_me_anything_' . $_GET['ask_me_anything_notice'] . '_dismissed', 1 );
 			wp_redirect( remove_query_arg( array( 'ask_me_anything_action', 'ask_me_anything_notice' ) ) );
 			exit;

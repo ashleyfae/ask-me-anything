@@ -32,7 +32,7 @@ class Ask_Me_Anything_License {
 	private $api_url = 'https://shop.nosegraze.com/edd-sl-api/';
 
 	/**
-	 * Webinar_Pages_License constructor.
+	 * Ask_Me_Anything_License constructor.
 	 *
 	 * @param string     $_file    Location of add-on file
 	 * @param string|int $_item    Add-on name or ID number

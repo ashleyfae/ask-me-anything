@@ -184,7 +184,16 @@ function ask_me_anything_insert_question( $fields ) {
 				break;
 
 		}
+
+		$error    = apply_filters( 'ask-me-anything/ajax/submit-question/field/error', $error, $field_info );
+		$question = apply_filters( 'ask-me-anything/ajax/submit-question/field/question', $question, $field_info );
 	}
+
+	// Filter the error so plugins can check for them.
+	$error = apply_filters( 'ask-me-anything/ajax/submit-question/errors', $error, $fields );
+
+	// Filter the question so plugins can set extra values.
+	$question = apply_filters( 'ask-me-anything/ajax/submit-question/question', $question, $fields );
 
 	// Oops, we have errors. Bail.
 	if ( $error->get_error_codes() ) {
@@ -219,7 +228,12 @@ function ask_me_anything_insert_question( $fields ) {
 
 		if ( ! empty( $admin_email ) && is_email( $admin_email ) ) {
 			$subject = sprintf( __( 'New Question: %s', 'ask-me-anything' ), wp_strip_all_tags( $question->get_title() ) );
-			$message = sprintf( __( "A new question has been posted on your site.\n\nView: %s\nEdit: %s", 'ask-me-anything' ), get_permalink( $question->ID ), admin_url( 'post.php?post=' . $question->ID . '&action=edit' ) );
+			$message = sprintf(
+				__( "A new question has been posted on your site.\n\n%s\n\nView: %s\nEdit: %s", 'ask-me-anything' ),
+				$question->post_content,
+				get_permalink( $question->ID ),
+				admin_url( 'post.php?post=' . $question->ID . '&action=edit' )
+			);
 
 			wp_mail( $admin_email, $subject, $message );
 		}
