@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Returns the path to the Novelist templates directory
+ * Returns the path to the Ask Me Anything templates directory
  *
  * @since 1.0.0
  * @return string
@@ -23,7 +23,7 @@ function ask_me_anything_get_templates_dir() {
 }
 
 /**
- * Returns the URL to the Novelist templates directory
+ * Returns the URL to the Ask Me Anything templates directory
  *
  * @since 1.0.0
  * @return string

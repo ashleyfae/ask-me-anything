@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ask Me Anything\n"
-"POT-Creation-Date: 2016-05-06 15:34-0000\n"
-"PO-Revision-Date: 2016-05-06 15:34-0000\n"
+"POT-Creation-Date: 2016-07-05 10:01-0000\n"
+"PO-Revision-Date: 2016-07-05 10:01-0000\n"
 "Last-Translator: Nose Graze Ltd <support@nosegraze.com>\n"
 "Language-Team: Nose Graze Ltd <support@nosegraze.com>\n"
 "Language: en_GB\n"
@@ -69,7 +69,7 @@ msgid "The settings have been successfully imported."
 msgstr ""
 
 #: includes/admin/question/columns.php:28
-#: includes/admin/settings/register-settings.php:378
+#: includes/admin/settings/register-settings.php:382
 #: templates/submit-question-form.php:76
 msgid "Subject"
 msgstr ""
@@ -96,6 +96,14 @@ msgstr ""
 
 #: includes/admin/question/columns.php:33
 msgid "Date"
+msgstr ""
+
+#: includes/admin/question/columns.php:144
+msgid "Not Spam"
+msgstr ""
+
+#: includes/admin/question/columns.php:144 includes/post-statuses.php:111
+msgid "Spam"
 msgstr ""
 
 #: includes/admin/question/meta-box.php:21
@@ -143,11 +151,11 @@ msgstr ""
 msgid "&mdash; No Change &mdash;"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:215
+#: includes/admin/settings/register-settings.php:219
 msgid "Automatic Display"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:216
+#: includes/admin/settings/register-settings.php:220
 #, php-format
 msgid ""
 "Choose where to automatically display the question form. Choose \"Do Not "
@@ -155,262 +163,262 @@ msgid ""
 "display it manually using the shortcode %s"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:219
+#: includes/admin/settings/register-settings.php:223
 msgid "Left"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:220
+#: includes/admin/settings/register-settings.php:224
 msgid "Right"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:221
+#: includes/admin/settings/register-settings.php:225
 msgid "Bottom Left"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:222
+#: includes/admin/settings/register-settings.php:226
 msgid "Bottom Right"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:223
+#: includes/admin/settings/register-settings.php:227
 msgid "Do Not Display"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:229
+#: includes/admin/settings/register-settings.php:233
 msgid "Visibility"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:233
+#: includes/admin/settings/register-settings.php:237
 msgid "Everyone"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:234
+#: includes/admin/settings/register-settings.php:238
 msgid "Logged In Users Only"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:240
+#: includes/admin/settings/register-settings.php:244
 msgid "Show Questions on Front-End"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:241
+#: includes/admin/settings/register-settings.php:245
 msgid ""
 "Check this to display the questions publicly. This allows your viewers to "
 "read through questions submitted by others."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:247
+#: includes/admin/settings/register-settings.php:251
 msgid "Questions Per Page"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:248
+#: includes/admin/settings/register-settings.php:252
 msgid ""
 "Only applies on the front-end if questions are displayed. This number of "
 "questions will be shown on each page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:255
+#: includes/admin/settings/register-settings.php:259
 msgid "Allow Comments on Questions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:256
+#: includes/admin/settings/register-settings.php:260
 msgid "Check this to allow readers to post comments on questions."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:262
+#: includes/admin/settings/register-settings.php:266
 msgid "Voting"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:266
+#: includes/admin/settings/register-settings.php:270
 msgid "Allow Up Vote and Down Vote"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:267
+#: includes/admin/settings/register-settings.php:271
 msgid "Up Vote Only"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:268
+#: includes/admin/settings/register-settings.php:272
 msgid "Down Vote Only"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:269
+#: includes/admin/settings/register-settings.php:273
 msgid "No Voting"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:275
+#: includes/admin/settings/register-settings.php:279
 msgid "Default Category"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:276
+#: includes/admin/settings/register-settings.php:280
 msgid ""
 "This is the category all questions will be added to if no category is "
 "selected."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:283
+#: includes/admin/settings/register-settings.php:287
 msgid "Statuses"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:284
+#: includes/admin/settings/register-settings.php:288
 msgid ""
 "Insert the list of statuses you want made available for questions. Put each "
 "status on a new line. Your default status should be the first entry. That's "
 "the one that will be auto assigned to new questions."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:292
+#: includes/admin/settings/register-settings.php:296
 msgid "Require Name"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:293
+#: includes/admin/settings/register-settings.php:297
 msgid ""
 "Check this on to require that a name be entered when submitting a question."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:299
+#: includes/admin/settings/register-settings.php:303
 msgid "Require Email"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:300
+#: includes/admin/settings/register-settings.php:304
 msgid ""
 "Check this on to require that an email address be entered when submitting a "
 "question."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:306
+#: includes/admin/settings/register-settings.php:310
 msgid "Allow Category Selection"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:307
+#: includes/admin/settings/register-settings.php:311
 msgid ""
 "If checked, users will be able to choose a category when submitting their "
 "question. If unchecked, categories are only viewable by you."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:313
+#: includes/admin/settings/register-settings.php:317
 msgid "Question Field Name"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:314
+#: includes/admin/settings/register-settings.php:318
 msgid ""
 "By default, the main textarea box is called \"Question\". But you can change "
 "this to something else if you're using it for something other than questions "
 "(i.e. \"Request\", \"Message\", etc.)."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:316 includes/ajax.php:179
+#: includes/admin/settings/register-settings.php:320 includes/ajax.php:180
 #: includes/assets.php:50 includes/install.php:69 includes/post-types.php:137
 msgid "Question"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:322
+#: includes/admin/settings/register-settings.php:326
 msgid "Button Text"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:323
+#: includes/admin/settings/register-settings.php:327
 msgid "Text displayed on the floating button that opens the form."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:325
+#: includes/admin/settings/register-settings.php:329
 #: includes/shortcodes.php:23 templates/button.php:10
 msgid "Ask Me a Question"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:329
+#: includes/admin/settings/register-settings.php:333
 msgid "Form Title"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:330
+#: includes/admin/settings/register-settings.php:334
 msgid "Title text displayed above the submission form."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:332 includes/assets.php:46
+#: includes/admin/settings/register-settings.php:336 includes/assets.php:46
 msgid "Ask Me Anything"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:336
+#: includes/admin/settings/register-settings.php:340
 msgid "Form Description"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:337
+#: includes/admin/settings/register-settings.php:341
 msgid "Appears above the form submission fields."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:343
+#: includes/admin/settings/register-settings.php:347
 msgid "No Questions Message"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:344
+#: includes/admin/settings/register-settings.php:348
 msgid ""
 "This message appears in the modal if questions are set to display on the "
 "front-end, but there are no questions to load."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:346 includes/ajax.php:36
+#: includes/admin/settings/register-settings.php:350 includes/ajax.php:36
 msgid "No questions yet!"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:350
+#: includes/admin/settings/register-settings.php:354
 msgid "Success Message"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:351
+#: includes/admin/settings/register-settings.php:355
 msgid ""
 "This message will appear to the user after successfully submitting a "
 "question."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:353 includes/ajax.php:220
+#: includes/admin/settings/register-settings.php:357 includes/ajax.php:246
 msgid ""
 "Success! Your question has been submitted. I'll answer it as soon as I can!"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:359
+#: includes/admin/settings/register-settings.php:363
 msgid "Notify Admin"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:360
+#: includes/admin/settings/register-settings.php:364
 msgid ""
 "Check this to email the site administrator whenever a new question is "
 "submitted."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:365
+#: includes/admin/settings/register-settings.php:369
 msgid "Notify Email Addresses"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:366
+#: includes/admin/settings/register-settings.php:370
 msgid ""
 "Enter a comma-separated list of emails. These are the email addresses we'll "
 "notify when a new question is submitted."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:372
+#: includes/admin/settings/register-settings.php:376
 msgid "Comment Notifications"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:373
+#: includes/admin/settings/register-settings.php:377
 msgid ""
 "The below settings apply to comment notification emails. These get sent out "
 "when someone subscribes to a question and a new comment is posted."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:379
+#: includes/admin/settings/register-settings.php:383
 #, php-format
 msgid ""
 "Subject for the notification email. You can use the placeholder %s for the "
 "question's subject."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:381
-#: includes/class-ama-question.php:709
+#: includes/admin/settings/register-settings.php:385
+#: includes/class-ama-question.php:710
 #, php-format
 msgid "New comment on question \"%s\""
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:385
+#: includes/admin/settings/register-settings.php:389
 msgid "Message"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:386
+#: includes/admin/settings/register-settings.php:390
 #, php-format
 msgid ""
 "Message for the notification email. No HTML allowed. You can use the "
@@ -418,8 +426,8 @@ msgid ""
 "message <br>%3$s - Question link"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:388
-#: includes/class-ama-question.php:710
+#: includes/admin/settings/register-settings.php:392
+#: includes/class-ama-question.php:711
 #, php-format
 msgid ""
 "A new comment has been posted on \"%1$s\":\n"
@@ -429,135 +437,135 @@ msgid ""
 "Link: %3$s"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:397
+#: includes/admin/settings/register-settings.php:401
 msgid "Disable Styles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:398
+#: includes/admin/settings/register-settings.php:402
 msgid ""
 "Check this to disable the Ask Me Anything stylesheet from being added to "
 "your site."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:403
+#: includes/admin/settings/register-settings.php:407
 msgid "Disable Font Awesome"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:404
+#: includes/admin/settings/register-settings.php:408
 msgid ""
 "Check this to stop Ask Me Anything from loading Font Awesome. You only want "
 "to check this if Font Awesome is already being loaded by your theme or "
 "another plugin."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:409
+#: includes/admin/settings/register-settings.php:413
 msgid "Button BG Colour"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:410
+#: includes/admin/settings/register-settings.php:414
 msgid "Background colour for all Ask Me Anything buttons."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:416
+#: includes/admin/settings/register-settings.php:420
 msgid "Button Text Colour"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:417
+#: includes/admin/settings/register-settings.php:421
 msgid "Ttext colour for all Ask Me Anything buttons."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:428
+#: includes/admin/settings/register-settings.php:432
 msgid "Remove Data on Uninstall"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:429
+#: includes/admin/settings/register-settings.php:433
 msgid ""
 "Check this box if you would like Ask Me Anything to completely erase all of "
 "its data when the plugin is deleted. If checked and the plugin is "
 "uninstalled, the data is gone forever!"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:468
+#: includes/admin/settings/register-settings.php:472
 msgid "Status Labels"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:469
+#: includes/admin/settings/register-settings.php:473
 msgid ""
 "Customize the colours of the status labels. These settings will be applied "
 "to the front-end and the Questions > All Questions admin page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:476
+#: includes/admin/settings/register-settings.php:484
 #, php-format
 msgid "%s BG Colour"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:483
+#: includes/admin/settings/register-settings.php:491
 #, php-format
 msgid "%s Text Colour"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:551
+#: includes/admin/settings/register-settings.php:559
 msgid "Settings updated."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:565
-#: includes/admin/settings/register-settings.php:609
+#: includes/admin/settings/register-settings.php:573
+#: includes/admin/settings/register-settings.php:617
 #: includes/post-types.php:138
 msgid "Questions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:566
-#: includes/admin/settings/register-settings.php:615
+#: includes/admin/settings/register-settings.php:574
+#: includes/admin/settings/register-settings.php:623
 msgid "Styles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:567
-#: includes/admin/settings/register-settings.php:619
+#: includes/admin/settings/register-settings.php:575
+#: includes/admin/settings/register-settings.php:627
 msgid "Misc"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:568
-#: includes/admin/settings/register-settings.php:622
+#: includes/admin/settings/register-settings.php:576
+#: includes/admin/settings/register-settings.php:630
 msgid "Licenses"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:610
+#: includes/admin/settings/register-settings.php:618
 msgid "Fields"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:611
+#: includes/admin/settings/register-settings.php:619
 msgid "Labels"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:612
+#: includes/admin/settings/register-settings.php:620
 msgid "Notifications"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:616
+#: includes/admin/settings/register-settings.php:624
 msgid "Status Colours"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:688
+#: includes/admin/settings/register-settings.php:696
 #, php-format
 msgid "The callback function used for the %s setting is missing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:837
+#: includes/admin/settings/register-settings.php:845
 #, php-format
 msgid ""
 "Your license key expired on %1$s. Please <a href=\"%2$s\" target=\"_blank\" "
 "title=\"Renew your license key\">renew your license key</a>."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:850
+#: includes/admin/settings/register-settings.php:858
 #, php-format
 msgid ""
 "Invalid license. Please <a href=\"%s\" target=\"_blank\" title=\"Visit "
 "account page\">visit your account page</a> and verify it."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:863
+#: includes/admin/settings/register-settings.php:871
 #, php-format
 msgid ""
 "Your %1$s is not active for this URL. Please <a href=\"%2$s\" target=\"_blank"
@@ -565,23 +573,23 @@ msgid ""
 "license key URLs."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:876
+#: includes/admin/settings/register-settings.php:884
 #, php-format
 msgid "This is not a %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:888
+#: includes/admin/settings/register-settings.php:896
 #, php-format
 msgid ""
 "Your license key has reached its activation limit. <a href=\"%s\" target="
 "\"_blank\" title=\"View upgrades\">View possible upgrades.</a>"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:906
+#: includes/admin/settings/register-settings.php:914
 msgid "License key never expires."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:912
+#: includes/admin/settings/register-settings.php:920
 #, php-format
 msgid ""
 "Your license key is about to expire! It expires on %1$s. <a href=\"%2$s\" "
@@ -589,96 +597,106 @@ msgid ""
 "continue getting updates and support."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:922
+#: includes/admin/settings/register-settings.php:930
 #, php-format
 msgid "Your license key expires on %s."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:947
+#: includes/admin/settings/register-settings.php:955
 msgid "Deactivate License"
 msgstr ""
 
-#: includes/ajax.php:83 includes/ajax.php:243 includes/ajax.php:287
-#: includes/ajax.php:411
+#: includes/ajax.php:85 includes/ajax.php:269 includes/ajax.php:313
+#: includes/ajax.php:437 includes/ajax.php:480
 msgid "Error: Invalid question."
 msgstr ""
 
-#: includes/ajax.php:110
+#: includes/ajax.php:112
 msgid "Error: No field data."
 msgstr ""
 
-#: includes/ajax.php:142 includes/ajax.php:302
+#: includes/ajax.php:144 includes/ajax.php:328
 msgid "The name field is required."
 msgstr ""
 
-#: includes/ajax.php:150 includes/ajax.php:311
+#: includes/ajax.php:152 includes/ajax.php:337
 msgid "The email field is required."
 msgstr ""
 
-#: includes/ajax.php:152
+#: includes/ajax.php:154
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/ajax.php:166
+#: includes/ajax.php:168
 msgid "The subject field is required."
 msgstr ""
 
-#: includes/ajax.php:179
+#: includes/ajax.php:180
 #, php-format
 msgid "The %s field is required."
 msgstr ""
 
-#: includes/ajax.php:192 includes/ajax.php:350
+#: includes/ajax.php:202 includes/ajax.php:376
 msgid "Error:"
 msgstr ""
 
-#: includes/ajax.php:209
+#: includes/ajax.php:230
 #, php-format
 msgid "New Question: %s"
 msgstr ""
 
-#: includes/ajax.php:210
+#: includes/ajax.php:232
 #, php-format
 msgid ""
 "A new question has been posted on your site.\n"
+"\n"
+"%s\n"
 "\n"
 "View: %s\n"
 "Edit: %s"
 msgstr ""
 
-#: includes/ajax.php:217
+#: includes/ajax.php:243
 msgid "An unexpected error occurred."
 msgstr ""
 
-#: includes/ajax.php:252
+#: includes/ajax.php:278
 msgid "No comments."
 msgstr ""
 
-#: includes/ajax.php:283
+#: includes/ajax.php:309
 msgid "Error: No comment field data."
 msgstr ""
 
-#: includes/ajax.php:313
+#: includes/ajax.php:339
 msgid "Invalid email address."
 msgstr ""
 
-#: includes/ajax.php:322
+#: includes/ajax.php:348
 msgid "The comment field is required."
 msgstr ""
 
-#: includes/ajax.php:361
+#: includes/ajax.php:387
 msgid "Error inserting comment."
 msgstr ""
 
-#: includes/ajax.php:384
+#: includes/ajax.php:410
 msgid "Your comment has been added successfully!"
 msgstr ""
 
-#: includes/ajax.php:430
+#: includes/ajax.php:456
 msgid "Error saving vote."
 msgstr ""
 
-#: includes/class-ama-question.php:398 includes/post-statuses.php:94
+#: includes/ajax.php:485
+msgid "You don't have permission to edit this question."
+msgstr ""
+
+#: includes/ajax.php:490
+msgid "Error: Akismet is not activated."
+msgstr ""
+
+#: includes/class-ama-question.php:398 includes/post-statuses.php:101
 msgid "Pending"
 msgstr ""
 
