@@ -37,6 +37,7 @@ TK
 * When new comment is added, it is now prepended rather than appended.
 * Fixed issue where name and email were always required, despite choosing otherwise in the settings.
 * Avatar is now only displayed if it exists (added conditional check to comments.php template).
+* Added a new option to hide status labels on the front-end.
 
 **1.1.0 - 1 June 2016**
 

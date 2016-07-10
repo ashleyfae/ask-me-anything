@@ -289,6 +289,13 @@ function ask_me_anything_get_registered_settings() {
 					'type' => 'textarea',
 					'std'  => "Pending\nIn Progress\nCompleted"
 				),
+				'hide_statuses'         => array(
+					'id'   => 'hide_statuses',
+					'name' => __( 'Hide Status Labels', 'ask-me-anything' ),
+					'desc' => __( 'Check this on to hide the status on the front-end of the site.', 'ask-me-anything' ),
+					'type' => 'checkbox',
+					'std'  => false
+				),
 			),
 			'fields'        => array(
 				'require_name'          => array(

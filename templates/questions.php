@@ -30,7 +30,9 @@
  * @license   GPL2+
  */
 
-$voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
+$voting        = ask_me_anything_get_option( 'voting', 'all' );
+$hide_statuses = ask_me_anything_get_option( 'hide_statuses', false );
+?>
 
 <script id="tmpl-ama-question" type="text/html">
 
@@ -41,7 +43,9 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 			{{{ question.question_title }}}
 		</h3>
 
-		<span class="ama-question-status">{{ question.question_status }}</span>
+		<?php if ( $hide_statuses == false ) : ?>
+			<span class="ama-question-status">{{ question.question_status }}</span>
+		<?php endif; ?>
 		
 		<span class="ama-question-actions">
 			<?php if ( ask_me_anything_get_option( 'comments_on_questions' ) ) : ?>
