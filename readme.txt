@@ -32,16 +32,25 @@ TK
 
 == Changelog ==
 
-= 1.1.0 - 1 June 2016 =
+**1.1.1 - 10 July 2016**
+
+* When new comment is added, it is now prepended rather than appended.
+* Fixed issue where name and email were always required, despite choosing otherwise in the settings.
+* Avatar is now only displayed if it exists (added conditional check to comments.php template).
+
+**1.1.0 - 1 June 2016**
+
 * Fixed question edit URL in admin notification emails.
 * Post titles now display curly quotes correctly.
 * Fixed new comment notification email - it was including the question content instead of the comment content.
 * Added Akismet integration for questions.
 * Added some actions to template files.
 
-= 1.0.1 - 25 May 2016 =
+**1.0.1 - 25 May 2016**
+
 * Fixed an issue with license key activation.
 * Added some reset heading styles inside the AMA modal.
 
-= 1.0.0 - 24 May 2016 =
+**1.0.0 - 24 May 2016**
+
 * Initial release.

@@ -25,7 +25,9 @@
 
 	<div class="ama-question-comment">
 
-		{{{ comment.avatar }}}
+		<# if (comment.avatar) { #>
+			{{{ comment.avatar }}}
+		<# } #>
 
 		<div class="ama-question-comment-content">
 

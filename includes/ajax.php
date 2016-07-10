@@ -295,14 +295,16 @@ function ask_me_anything_submit_comment() {
 	// Security check.
 	check_ajax_referer( 'ask_me_anything_nonce', 'nonce' );
 
-	$question_id  = absint( $_POST['question_id'] );
-	$question     = new AMA_Question( $question_id );
-	$error        = new WP_Error();
-	$fields       = $_POST['formData'];
-	$comment_data = array(
+	$question_id   = absint( $_POST['question_id'] );
+	$question      = new AMA_Question( $question_id );
+	$error         = new WP_Error();
+	$fields        = $_POST['formData'];
+	$comment_data  = array(
 		'comment_post_ID' => $question->ID
 	);
-	$notify_me    = false;
+	$require_name  = ask_me_anything_get_option( 'require_name', false );
+	$require_email = ask_me_anything_get_option( 'require_email', false );
+	$notify_me     = false;
 
 	// No fields - bail.
 	if ( empty( $fields ) || ! is_array( $fields ) ) {
@@ -324,7 +326,7 @@ function ask_me_anything_submit_comment() {
 
 			// Name
 			case 'ama_comment_name' :
-				if ( empty( $field_info['value'] ) ) {
+				if ( empty( $field_info['value'] ) && $require_name ) {
 					$error->add( 'empty-name', __( 'The name field is required.', 'ask-me-anything' ) );
 				} else {
 					$comment_data['comment_author'] = sanitize_text_field( $field_info['value'] );
@@ -333,9 +335,9 @@ function ask_me_anything_submit_comment() {
 
 			// Email
 			case 'ama_comment_email' :
-				if ( empty( $field_info['value'] ) ) {
+				if ( empty( $field_info['value'] ) && $require_email ) {
 					$error->add( 'empty-email', __( 'The email field is required.', 'ask-me-anything' ) );
-				} elseif ( ! is_email( $field_info['value'] ) ) {
+				} elseif ( ! is_email( $field_info['value'] ) && $require_email ) {
 					$error->add( 'invalid-email', __( 'Invalid email address.', 'ask-me-anything' ) );
 				} else {
 					$comment_data['comment_author_email'] = sanitize_text_field( $field_info['value'] );

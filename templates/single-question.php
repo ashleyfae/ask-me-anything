@@ -33,7 +33,10 @@
  * @license   GPL2+
  */
 
-$voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
+$voting        = ask_me_anything_get_option( 'voting', 'all' );
+$require_name  = ask_me_anything_get_option( 'require_name', false );
+$require_email = ask_me_anything_get_option( 'require_email', false );
+?>
 
 <script id="tmpl-ama-single-question" type="text/html">
 
@@ -91,17 +94,20 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 				 * List of individual comments is inserted here.
 				 * @see comments.php
 				 */
+
+				$name_placeholder  = $require_name ? __( 'Your Name (required)', 'ask-me-anything' ) : __( 'Your Name', 'ask-me-anything' );
+				$email_placeholder = $require_email ? __( 'Your Email (required)', 'ask-me-anything' ) : __( 'Your Email', 'ask-me-anything' );
 				?>
 			</div>
 
 			<form id="ama-submit-comment-form" method="POST">
 				<div class="ama-comment-name-field-wrap">
 					<label for="ama-comment-name-field" class="screen-reader-text"><?php _e( 'Your Name', 'ask-me-anything' ); ?></label>
-					<input type="text" id="ama-comment-name-field" name="ama_comment_name" placeholder="<?php esc_attr_e( 'Your Name (required)', 'ask-me-anything' ); ?>" value="{{ data.comment_author }}" required>
+					<input type="text" id="ama-comment-name-field" name="ama_comment_name" placeholder="<?php echo esc_attr( $name_placeholder ); ?>" value="{{ data.comment_author }}" <?php echo $require_name ? 'required' : ''; ?>>
 				</div>
 				<div class="ama-comment-email-field-wrap">
 					<label for="ama-comment-email-field" class="screen-reader-text"><?php _e( 'Your Email Address', 'ask-me-anything' ); ?></label>
-					<input type="email" id="ama-comment-email-field" name="ama_comment_email" placeholder="<?php esc_attr_e( 'Your Email (required)', 'ask-me-anything' ); ?>" value="{{ data.comment_author_email }}" required>
+					<input type="email" id="ama-comment-email-field" name="ama_comment_email" placeholder="<?php echo esc_attr( $email_placeholder ); ?>" value="{{ data.comment_author_email }}" <?php echo $require_email ? 'required' : ''; ?>>
 				</div>
 				<div class="ama-comment-message-field-wrap">
 					<label for="ama-comment-message-field" class="screen-reader-text"><?php _e( 'Comment', 'ask-me-anything' ); ?></label>
@@ -129,7 +135,7 @@ $voting = ask_me_anything_get_option( 'voting', 'all' ); ?>
 			</form>
 		</div>
 	<?php endif; ?>
-	
+
 	<?php do_action( 'ask-me-anything/single-question/after-comments' ); ?>
 
 </script>
