@@ -32,6 +32,10 @@ TK
 
 == Changelog ==
 
+**1.1.2**
+
+* Increased z-index of modal to better ensure it appears above everything else.
+
 **1.1.1 - 10 July 2016**
 
 * When new comment is added, it is now prepended rather than appended.
