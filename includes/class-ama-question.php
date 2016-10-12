@@ -887,6 +887,7 @@ class AMA_Question {
 			'comment_author'       => $comment->comment_author,
 			'comment_author_email' => $comment->comment_author_email,
 			'comment_author_url '  => $comment->comment_author_url,
+			'comment_user_id'      => $comment->user_id,
 			'comment_date'         => $comment->comment_date,
 			'comment_content'      => apply_filters( 'comment_text', $comment->comment_content )
 		);
