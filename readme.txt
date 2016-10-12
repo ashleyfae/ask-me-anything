@@ -35,6 +35,7 @@ TK
 **1.1.2**
 
 * Increased z-index of modal to better ensure it appears above everything else.
+* Add extra class name with commenter's user ID to comment wrapper.
 
 **1.1.1 - 10 July 2016**
 
