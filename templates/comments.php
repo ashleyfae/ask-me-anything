@@ -23,7 +23,7 @@
 
 <# _.each( data.comments, function( comment ) { #>
 
-	<div class="ama-question-comment">
+	<div class="ama-question-comment ama-question-comment-user-{{ comment.comment_user_id }}">
 
 		<# if (comment.avatar) { #>
 			{{{ comment.avatar }}}
