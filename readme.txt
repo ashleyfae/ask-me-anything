@@ -32,6 +32,10 @@ TK
 
 == Changelog ==
 
+**1.1.3**
+
+* Added filter to `ask_me_anything_get_public_statuses()` function.
+
 **1.1.2 - 12 October 2016**
 
 * Increased z-index of modal to better ensure it appears above everything else.
