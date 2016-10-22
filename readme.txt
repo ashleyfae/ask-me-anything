@@ -32,7 +32,7 @@ TK
 
 == Changelog ==
 
-**1.1.2**
+**1.1.2 - 12 October 2016**
 
 * Increased z-index of modal to better ensure it appears above everything else.
 * Add extra class name with commenter's user ID to comment wrapper.

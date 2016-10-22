@@ -129,7 +129,7 @@ function ask_me_anything_get_public_statuses() {
 		unset( $all_statuses['ama_spam'] );
 	}
 
-	return $all_statuses;
+	return apply_filters( 'ask-me-anything/get-public-statuses', $all_statuses );
 }
 
 /**
