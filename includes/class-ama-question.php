@@ -882,7 +882,7 @@ class AMA_Question {
 			$comment = get_comment( $comment );
 		}
 
-		if ( empty( $comment ) || ! is_a( $comment, 'WP_Comment' ) ) {
+		if ( empty( $comment ) || ! is_object( $comment ) ) {
 			return false;
 		}
 
