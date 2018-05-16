@@ -3,7 +3,7 @@
  * Plugin Name: Ask Me Anything
  * Plugin URI: https://shop.nosegraze.com/product/ask-me-anything/
  * Description: Allow your readers to submit questions.
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author: Nose Graze
  * Author URI: https://www.nosegraze.com
  * License: GPL2
@@ -125,7 +125,7 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 
 			// Plugin version.
 			if ( ! defined( 'ASK_ME_ANYTHING_VERSION' ) ) {
-				define( 'ASK_ME_ANYTHING_VERSION', '1.1.2' );
+				define( 'ASK_ME_ANYTHING_VERSION', '1.1.3' );
 			}
 
 			// Plugin Folder Path.

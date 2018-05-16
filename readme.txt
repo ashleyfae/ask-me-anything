@@ -3,7 +3,7 @@ Contributors: NoseGraze
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=L2TL7ZBVUMG9C
 Tags:
 Requires at least: 4.0
-Tested up to: 4.6.1
+Tested up to: 4.9.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -32,9 +32,14 @@ TK
 
 == Changelog ==
 
-**1.1.3**
+**1.1.3 - 16 May 2018**
 
-* Added filter to `ask_me_anything_get_public_statuses()` function.
+* New: Add question data to WordPress personal information export.
+* New: Anonymize questions when using WordPress personal information eraser.
+* New: Added filter to `ask_me_anything_get_public_statuses()` function.
+* New: Add privacy policy agreement to question form (enabled in Questions > Settings > Questions > Fields).
+* Tweak: Don't check on notification checkboxes by default.
+* Fix: Default values not being passed into settings functions.
 
 **1.1.2 - 12 October 2016**
 
