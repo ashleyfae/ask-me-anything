@@ -115,7 +115,7 @@ $require_email = ask_me_anything_get_option( 'require_email', false );
 				</div>
 				<div class="ama-comment-notify-field-wrap">
 					<label for="ama-comment-notify-field">
-						<input type="checkbox" id="ama-comment-notify-field" name="ama_comment_notify" value="1" checked>
+						<input type="checkbox" id="ama-comment-notify-field" name="ama_comment_notify" value="1">
 						<?php _e( 'Notify me of new comments', 'ask-me-anything' ); ?>
 					</label>
 				</div>
