@@ -147,6 +147,15 @@ function ask_me_anything_render_details_meta_box( $post ) {
 
 	<?php do_action( 'ask-me-anything/meta-box/details/after-number-subscribers-field', $post ); ?>
 
+	<?php if ( ask_me_anything_get_option( 'privacy_policy_label' ) ) : ?>
+		<div class="ama-field">
+			<label for="ama_privacy_policy"><?php _e( 'Agreed to Privacy Policy', 'ask-me-anything' ); ?></label>
+			<div class="ama-input-wrapper">
+				<?php echo $question->get_privacy_policy( true ); ?>
+			</div>
+		</div>
+	<?php endif; ?>
+
 	<?php
 	wp_nonce_field( 'ama_save_details_meta', 'ask_me_anything_meta_nonce' );
 }

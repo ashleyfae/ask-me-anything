@@ -298,28 +298,35 @@ function ask_me_anything_get_registered_settings() {
 				),
 			),
 			'fields'        => array(
-				'require_name'          => array(
+				'require_name'              => array(
 					'id'   => 'require_name',
 					'name' => __( 'Require Name', 'ask-me-anything' ),
 					'desc' => __( 'Check this on to require that a name be entered when submitting a question.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => false
 				),
-				'require_email'         => array(
+				'require_email'             => array(
 					'id'   => 'require_email',
 					'name' => __( 'Require Email', 'ask-me-anything' ),
 					'desc' => __( 'Check this on to require that an email address be entered when submitting a question.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => false
 				),
-				'allow_category_select' => array(
+				'privacy_policy_label' => array(
+					'id'   => 'privacy_policy_label',
+					'name' => __( 'Privacy Policy Label', 'ask-me-anything' ),
+					'desc' => __( 'If filled out, a required privacy policy checkbox will be added to the question submission form.', 'ask-me-anything' ),
+					'type' => 'text',
+					'std'  => ''
+				),
+				'allow_category_select'     => array(
 					'id'   => 'allow_category_select',
 					'name' => __( 'Allow Category Selection', 'ask-me-anything' ),
 					'desc' => __( 'If checked, users will be able to choose a category when submitting their question. If unchecked, categories are only viewable by you.', 'ask-me-anything' ),
 					'type' => 'checkbox',
 					'std'  => '1'
 				),
-				'question_field_name'   => array(
+				'question_field_name'       => array(
 					'id'   => 'question_field_name',
 					'name' => __( 'Question Field Name', 'ask-me-anything' ),
 					'desc' => __( 'By default, the main textarea box is called "Question". But you can change this to something else if you\'re using it for something other than questions (i.e. "Request", "Message", etc.).', 'ask-me-anything' ),
@@ -1042,7 +1049,7 @@ function ask_me_anything_select_callback( $args ) {
 
 	foreach ( $args['options'] as $option => $name ) {
 		$selected = selected( $option, $value, false );
-		$html .= '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
+		$html     .= '<option value="' . esc_attr( $option ) . '" ' . $selected . '>' . esc_html( $name ) . '</option>';
 	}
 
 	$html .= '</select>';

@@ -25,31 +25,35 @@
 
 <script id="tmpl-ama-submit-form" type="text/html">
 	<# if ( data.form_title_text != '' ) { #>
-		<h2 class="ask-me-anything-submit-title">{{ data.form_title_text }}</h2>
+	<h2 class="ask-me-anything-submit-title">{{ data.form_title_text }}</h2>
 	<# } #>
 
 	<# if ( data.form_description != '' ) { #>
-		<div class="ask-me-anything-submit-description">
-			{{{ data.form_description }}}
-		</div>
+	<div class="ask-me-anything-submit-description">
+		{{{ data.form_description }}}
+	</div>
 	<# } #>
 
 	<# if ( data.message != '' ) { #>
-		{{{ data.message }}}
+	{{{ data.message }}}
 	<# } #>
 
 	<form class="ask-me-anything-submit-question-form" method="POST">
 
 		<div class="ask-me-anything-field">
-			<label for="ask-me-anything-name"><?php echo apply_filters( 'ask-me-anything/submit-form/label/name', __( 'Your Name', 'ask-me-anything' ) ); ?><# if (data.form_require_name) { #><span class="ask-me-anything-required">*</span><# } #></label>
-			<input type="text" id="ask-me-anything-name" name="ask-me-anything-name" value="{{ data.comment_author }}"<# if (data.form_require_name) { #> required<# } #>>
+			<label for="ask-me-anything-name"><?php echo apply_filters( 'ask-me-anything/submit-form/label/name', __( 'Your Name', 'ask-me-anything' ) ); ?>
+				<# if (data.form_require_name) { #><span class="ask-me-anything-required">*</span><# } #></label>
+			<input type="text" id="ask-me-anything-name" name="ask-me-anything-name" value="{{ data.comment_author }}"<#
+			if (data.form_require_name) { #> required<# } #>>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-name-field' ); ?>
 
 		<div class="ask-me-anything-field">
-			<label for="ask-me-anything-email"><?php echo apply_filters( 'ask-me-anything/submit-form/label/email', __( 'Email Address', 'ask-me-anything' ) ); ?><# if (data.form_require_email) { #><span class="ask-me-anything-required">*</span><# } #></label>
-			<input type="email" id="ask-me-anything-email" name="ask-me-anything-email" value="{{ data.comment_author_email }}"<# if (data.form_require_email) { #> required<# } #>>
+			<label for="ask-me-anything-email"><?php echo apply_filters( 'ask-me-anything/submit-form/label/email', __( 'Email Address', 'ask-me-anything' ) ); ?>
+				<# if (data.form_require_email) { #><span class="ask-me-anything-required">*</span><# } #></label>
+			<input type="email" id="ask-me-anything-email" name="ask-me-anything-email" value="{{ data.comment_author_email }}"<#
+			if (data.form_require_email) { #> required<# } #>>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-email-field' ); ?>
@@ -73,18 +77,29 @@
 		<?php endif; ?>
 
 		<div class="ask-me-anything-field">
-			<label for="ask-me-anything-subject"><?php echo apply_filters( 'ask-me-anything/submit-form/label/subject', __( 'Subject', 'ask-me-anything' ) ); ?><span class="ask-me-anything-required">*</span></label>
+			<label for="ask-me-anything-subject"><?php echo apply_filters( 'ask-me-anything/submit-form/label/subject', __( 'Subject', 'ask-me-anything' ) ); ?>
+				<span class="ask-me-anything-required">*</span></label>
 			<input type="text" id="ask-me-anything-subject" name="ask-me-anything-subject" required>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-subject-field' ); ?>
 
 		<div class="ask-me-anything-field">
-			<label for="ask-me-anything-question">{{ data.form_question_field_name }}<span class="ask-me-anything-required">*</span></label>
+			<label for="ask-me-anything-question">{{ data.form_question_field_name
+				}}<span class="ask-me-anything-required">*</span></label>
 			<textarea id="ask-me-anything-question" name="ask-me-anything-question" required></textarea>
 		</div>
 
 		<?php do_action( 'ask-me-anything/submit-form/after-question-field' ); ?>
+
+		<?php if ( ask_me_anything_get_option( 'privacy_policy_label' ) ) : ?>
+			<div class="ask-me-anything-field">
+				<label for="ask-me-anything-privacy-policy">
+					<input type="checkbox" id="ask-me-anything-privacy-policy" name="ask-me-anything-privacy-policy" value="1">
+					<?php echo ask_me_anything_get_option( 'privacy_policy_label' ); ?>
+				</label>
+			</div>
+		<?php endif; ?>
 
 		<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
 			<div class="ask-me-anything-field">
