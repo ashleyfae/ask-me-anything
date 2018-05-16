@@ -104,7 +104,7 @@
 		<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
 			<div class="ask-me-anything-field">
 				<label for="ask-me-anything-notify">
-					<input type="checkbox" id="ask-me-anything-notify" name="ask-me-anything-notify" value="1" checked>
+					<input type="checkbox" id="ask-me-anything-notify" name="ask-me-anything-notify" value="1">
 					<?php _e( 'Notify me of new responses to my question', 'ask-me-anything' ); ?>
 				</label>
 			</div>
