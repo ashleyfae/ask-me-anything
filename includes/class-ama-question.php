@@ -109,6 +109,14 @@ class AMA_Question {
 	private $down_votes;
 
 	/**
+	 * Unix timestamp for when the privacy policy was agreed
+	 *
+	 * @var string
+	 * @since 1.1.3
+	 */
+	private $privacy_policy;
+
+	/**
 	 * Array of items that have changed since the last save() was run
 	 * This is for internal use, to allow fewer update_payment_meta calls to be run
 	 *
@@ -322,6 +330,10 @@ class AMA_Question {
 						$question_args['post_content'] = $this->post_content;
 						break;
 
+					case 'privacy_policy' :
+						$this->update_meta( 'ama_privacy_policy', time() );
+						break;
+
 				}
 			}
 
@@ -515,6 +527,28 @@ class AMA_Question {
 		}
 
 		return apply_filters( 'ask-me-anything/question/get/notify_submitter', $this->notify_submitter, $this->ID, $this );
+
+	}
+
+	/**
+	 * Get privacy policy agreement date in UTC format
+	 *
+	 * @access public
+	 * @since  1.1.3
+	 * @return string|false
+	 */
+	public function get_privacy_policy( $format = false ) {
+
+		if ( ! isset( $this->privacy_policy ) ) {
+			$privacy_policy       = get_post_meta( $this->ID, 'ama_privacy_policy', true );
+			$this->privacy_policy = $privacy_policy;
+		}
+
+		if ( ! empty( $this->privacy_policy ) && $format ) {
+			$this->privacy_policy = date( 'Y-m-d H:i:s', $this->privacy_policy );
+		}
+
+		return $this->privacy_policy;
 
 	}
 

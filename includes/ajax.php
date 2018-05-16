@@ -183,10 +183,20 @@ function ask_me_anything_insert_question( $fields ) {
 				}
 				break;
 
+			case 'ask-me-anything-privacy-policy' :
+				if ( ! empty( $field_info['value'] ) ) {
+					$question->privacy_policy = time();
+				}
+				break;
+
 		}
 
 		$error    = apply_filters( 'ask-me-anything/ajax/submit-question/field/error', $error, $field_info );
 		$question = apply_filters( 'ask-me-anything/ajax/submit-question/field/question', $question, $field_info );
+	}
+
+	if ( ask_me_anything_get_option( 'privacy_policy_label' ) && false == $question->get_privacy_policy() ) {
+		$error->add( 'privacy-policy-not-agreed', __( 'You must agree to the privacy policy to submit a question.', 'ask-me-anything' ) );
 	}
 
 	// Filter the error so plugins can check for them.
