@@ -676,7 +676,8 @@ class AMA_Question {
 	public function get_template_data() {
 
 		// If we have zero comments then we prompt them to leave a comment.
-		$comments_title = __( 'Leave a Comment', 'ask-me-anything' );
+        // If they're not allowed to leave a comment, this is an empty string and no heading will appear.
+		$comments_title = ask_me_anything_current_user_can_post_comment() ? __( 'Leave a Comment', 'ask-me-anything' ) : '';
 
 		// If we have at least one comment then we change the title to show the number.
 		if ( $this->comment_count > 0 ) {

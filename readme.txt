@@ -32,6 +32,10 @@ TK
 
 == Changelog ==
 
+**1.2.1 - 10 December 2024**
+
+* Fix: Ensure the "Leave a Comment" text does not appear if the current user cannot leave a comment.
+
 **1.2.0 - 10 December 2024**
 
 * New: The "Allow Comments on Questions" setting has been switched to a dropdown to allow more fine-grain control.
