@@ -305,11 +305,16 @@ function ask_me_anything_submit_comment() {
 	// Security check.
 	check_ajax_referer( 'ask_me_anything_nonce', 'nonce' );
 
+    if (! ask_me_anything_current_user_can_post_comment()) {
+        wp_send_json_error(__('You do not have permission to perform this action.', 'ask-me-anything'));
+    }
+
 	$question_id   = absint( $_POST['question_id'] );
 	$question      = new AMA_Question( $question_id );
 	$error         = new WP_Error();
 	$fields        = $_POST['formData'];
 	$comment_data  = array(
+        'comment_author_url' => '',
 		'comment_post_ID' => $question->ID
 	);
 	$require_name  = ask_me_anything_get_option( 'require_name', false );

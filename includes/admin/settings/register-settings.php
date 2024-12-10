@@ -257,9 +257,14 @@ function ask_me_anything_get_registered_settings() {
 				'comments_on_questions' => array(
 					'id'   => 'comments_on_questions',
 					'name' => __( 'Allow Comments on Questions', 'ask-me-anything' ),
-					'desc' => __( 'Check this to allow readers to post comments on questions.', 'ask-me-anything' ),
-					'type' => 'checkbox',
-					'std'  => '1'
+					'desc' => __( 'Select who is allowed to post comments on questions.', 'ask-me-anything' ),
+					'type' => 'select',
+                    'options' => [
+                        'everyone' => __('Everyone', 'ask-me-anything'),
+                        'admins' => __('Admins Only', 'ask-me-anything'),
+                        'nobody' => __('Nobody', 'ask-me-anything'),
+                    ],
+					'std'  => 'everyone',
 				),
 				'voting'                => array(
 					'id'      => 'voting',

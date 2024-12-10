@@ -32,6 +32,10 @@ TK
 
 == Changelog ==
 
+**1.2.0 - 10 December 2024**
+
+* New: The "Allow Comments on Questions" setting has been switched to a dropdown to allow more fine-grain control.
+
 **1.1.3 - 16 May 2018**
 
 * New: Add question data to WordPress personal information export.

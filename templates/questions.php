@@ -48,7 +48,7 @@ $hide_statuses = ask_me_anything_get_option( 'hide_statuses', false );
 		<?php endif; ?>
 		
 		<span class="ama-question-actions">
-			<?php if ( ask_me_anything_get_option( 'comments_on_questions' ) ) : ?>
+			<?php if ( ask_me_anything_comments_are_possible() ) : ?>
 				<span class="ama-number-comments">
 					<i class="fa fa-comments"></i> {{ question.number_comments }}
 				</span>
