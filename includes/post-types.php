@@ -87,7 +87,7 @@ add_action( 'init', 'ask_me_anything_setup_post_types', 1 );
 /**
  * Remove 'comments' from array of supported features.
  *
- * This gets removed if the "Allow Comments" setting is unchecked.
+ * This gets removed if the "Allow Comments" setting is set to "nobody".
  *
  * @param array $supports
  *
@@ -95,7 +95,7 @@ add_action( 'init', 'ask_me_anything_setup_post_types', 1 );
  * @return array
  */
 function ask_me_anything_remove_comments_support( $supports ) {
-	if ( ! ask_me_anything_get_option( 'comments_on_questions' ) && ( $key = array_search( 'comments', $supports ) ) !== false ) {
+	if ( ! ask_me_anything_comments_are_possible() && ( $key = array_search( 'comments', $supports ) ) !== false ) {
 		unset( $supports[ $key ] );
 	}
 

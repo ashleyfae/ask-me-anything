@@ -101,7 +101,7 @@
 			</div>
 		<?php endif; ?>
 
-		<?php if ( ask_me_anything_get_option( 'comments_on_questions', true ) ) : ?>
+		<?php if ( ask_me_anything_comments_are_possible() ) : ?>
 			<div class="ask-me-anything-field">
 				<label for="ask-me-anything-notify">
 					<input type="checkbox" id="ask-me-anything-notify" name="ask-me-anything-notify" value="1">

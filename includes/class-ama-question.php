@@ -849,6 +849,7 @@ class AMA_Question {
 
 		// Add some extra parameters.
 		$comment_data['comment_post_ID'] = $this->ID;
+        $comment_data['comment_type'] = 'comment';
 
 		if ( is_user_logged_in() ) {
 			$current_user            = wp_get_current_user();

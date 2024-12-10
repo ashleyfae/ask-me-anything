@@ -216,3 +216,53 @@ function ask_me_anything_change_spam_status( $data, $path = 'submit-spam' ) {
 
 	return apply_filters( 'ask-me-anything/akismet/change-spam-status/result', $result, $response, $args );
 }
+
+/**
+ * Gets the value of the "Allow Comments on Questions" setting.
+ *
+ * @return string
+ */
+function ask_me_anything_get_comments_setting() {
+    $setting = ask_me_anything_get_option( 'comments_on_questions', 'everyone' );
+
+    // previously this option was a checkbox, so we convert the checkbox "on" value to "everyone"
+    if (in_array($setting, [1, '1', true], true)) {
+        $setting = 'everyone';
+    } elseif(empty($setting)) {
+        // and the checkbox "off" value to "nobody"
+        $setting = 'nobody';
+    }
+
+    return (string) $setting;
+}
+
+/**
+ * Determines whether comments are possible at all.
+ *
+ * @since 1.2.0
+ * @return bool
+ */
+function ask_me_anything_comments_are_possible() {
+    return ask_me_anything_get_comments_setting() !== 'nobody';
+}
+
+/**
+ * Determines whether the current user can post comments.
+ *
+ * @since 1.2.0
+ * @return bool
+ */
+function ask_me_anything_current_user_can_post_comment() {
+    $setting = ask_me_anything_get_comments_setting();
+
+    if ($setting === 'nobody') {
+        return false;
+    }
+
+    if ($setting === 'everyone') {
+        return true;
+    }
+
+    // admins only at this point
+    return current_user_can('manage_options');
+}
