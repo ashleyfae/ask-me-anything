@@ -84,7 +84,9 @@ $require_email = ask_me_anything_get_option( 'require_email', false );
 	<?php if ( ask_me_anything_comments_are_possible() ) : ?>
 		<div class="ama-single-question-comments">
 
-			<h3>{{ data.comments_title }}</h3>
+            <# if (data.comments_title) { #>
+			    <h3>{{ data.comments_title }}</h3>
+            <# } #>
 
 			<div class="ama-comments-list">
 				<?php
