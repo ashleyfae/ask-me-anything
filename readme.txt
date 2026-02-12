@@ -32,6 +32,8 @@ TK
 
 == Changelog ==
 
+**1.2.2-beta1**
+
 **1.2.1 - 10 December 2024**
 
 * Fix: Ensure the "Leave a Comment" text does not appear if the current user cannot leave a comment.
