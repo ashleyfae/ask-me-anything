@@ -2,6 +2,8 @@
 
 namespace AskMeAnything\Notifications;
 
+use AMA_Question;
+
 /**
  * AdminEmailer.php
  *
@@ -11,7 +13,12 @@ namespace AskMeAnything\Notifications;
  */
 class AdminEmailer
 {
-    public function send(\AMA_Question $question): bool
+    /**
+     * Sends an admin notification email to the configured addresses.
+     *
+     * @return bool whether an email was sent
+     */
+    public function send(AMA_Question $question): bool
     {
         $adminEmails = $this->getEmails();
         if (empty($adminEmails)) {
@@ -29,6 +36,11 @@ class AdminEmailer
         return wp_mail($adminEmails, $subject, $message);
     }
 
+    /**
+     * Gets the email addresses to send a notification to.
+     *
+     * @return string[]
+     */
     protected function getEmails(): array
     {
         $adminEmailString = ask_me_anything_get_option('admin_email');
