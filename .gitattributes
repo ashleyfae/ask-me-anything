@@ -5,6 +5,8 @@
 
 .phpstorm.meta.php export-ignore
 
+README.md
+
 composer.json export-ignore
 composer.lock export-ignore
 
