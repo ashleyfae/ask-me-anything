@@ -145,7 +145,7 @@ function ask_me_anything_insert_question( $fields ) {
 				if ( ask_me_anything_get_option( 'require_name', false ) && empty( $field_info['value'] ) ) {
 					$error->add( 'empty-name', __( 'The name field is required.', 'ask-me-anything' ) );
 				} else {
-					$question->submitter = sanitize_text_field( $field_info['value'] );
+					$question->submitter = sanitize_text_field( wp_unslash($field_info['value'] ));
 				}
 				break;
 
@@ -169,12 +169,12 @@ function ask_me_anything_insert_question( $fields ) {
 				if ( empty( $field_info['value'] ) ) {
 					$error->add( 'empty-subject', __( 'The subject field is required.', 'ask-me-anything' ) );
 				} else {
-					$question->title = sanitize_text_field( wp_strip_all_tags( $field_info['value'] ) );
+					$question->title = sanitize_text_field( wp_strip_all_tags( wp_unslash($field_info['value'] ) ));
 				}
 				break;
 
 			case 'ask-me-anything-notify' :
-				$question->notify_submitter = ! empty( $field_info['value'] ) ? true : false;
+				$question->notify_submitter = ! empty($field_info['value'] );
 				break;
 
 			case 'ask-me-anything-question' :
@@ -197,7 +197,7 @@ function ask_me_anything_insert_question( $fields ) {
 		$question = apply_filters( 'ask-me-anything/ajax/submit-question/field/question', $question, $field_info );
 	}
 
-	if ( ask_me_anything_get_option( 'privacy_policy_label' ) && false == $question->get_privacy_policy() ) {
+	if ( ask_me_anything_get_option( 'privacy_policy_label' ) && ! $question->get_privacy_policy()) {
 		$error->add( 'privacy-policy-not-agreed', __( 'You must agree to the privacy policy to submit a question.', 'ask-me-anything' ) );
 	}
 
