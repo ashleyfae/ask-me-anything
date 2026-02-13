@@ -1,0 +1,21 @@
+{
+    "name": "ashleyfae/ask-me-anything",
+    "description": "Allow your readers to submit questions.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "AskMeAnything\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AskMeAnything\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "^9.6.0",
+        "10up/wp_mock": "^1.1.0"
+    }
+}

@@ -7,6 +7,8 @@
  * @license   GPL2+
  */
 
+use AskMeAnything\Notifications\AdminEmailer;
+
 /**
  * Get Questions
  *
@@ -234,19 +236,7 @@ function ask_me_anything_insert_question( $fields ) {
 
 	// Notify the administrator (only if the question isn't spam).
 	if ( ask_me_anything_get_option( 'admin_notifications' ) && ! $is_spam ) {
-		$admin_email = ask_me_anything_get_option( 'admin_email' );
-
-		if ( ! empty( $admin_email ) && is_email( $admin_email ) ) {
-			$subject = sprintf( __( 'New Question: %s', 'ask-me-anything' ), wp_strip_all_tags( $question->get_title() ) );
-			$message = sprintf(
-				__( "A new question has been posted on your site.\n\n%s\n\nView: %s\nEdit: %s", 'ask-me-anything' ),
-				$question->post_content,
-				get_permalink( $question->ID ),
-				admin_url( 'post.php?post=' . $question->ID . '&action=edit' )
-			);
-
-			wp_mail( $admin_email, $subject, $message );
-		}
+        (new AdminEmailer())->send($question);
 	}
 
 	if ( false === $result ) {

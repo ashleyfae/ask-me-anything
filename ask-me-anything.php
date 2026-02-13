@@ -159,6 +159,8 @@ if ( ! class_exists( 'Ask_Me_Anything' ) ) :
 		 */
 		private function includes() {
 
+            require_once ASK_ME_ANYTHING_PLUGIN_DIR.'vendor/autoload.php';
+
 			global $ask_me_anything_options;
 
 			// Settings
