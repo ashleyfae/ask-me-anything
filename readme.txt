@@ -1,10 +1,9 @@
 === Ask Me Anything ===
 Contributors: NoseGraze
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=L2TL7ZBVUMG9C
-Tags:
 Requires at least: 4.0
+Requires PHP: 7.4
 Tested up to: 6.7.1
-Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,19 +19,9 @@ Allow your readers to submit questions.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Adjust the settings in Questions -> Settings
 
-== Frequently Asked Questions ==
-
-TK
-
-== Screenshots ==
-
-TK
-
-== Upgrade Notice ==
-
 == Changelog ==
 
-**1.2.2-beta1**
+**1.2.2 - 13 February 2026**
 
 * Fix: Support admin notifications to multiple email addresses (comma-separated)
 * Fix: Slashes before apostrophes in admin email notification subjects
