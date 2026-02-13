@@ -34,6 +34,8 @@ TK
 
 **1.2.2-beta1**
 
+* Fix: Support admin notifications to multiple email addresses (comma-separated)
+
 **1.2.1 - 10 December 2024**
 
 * Fix: Ensure the "Leave a Comment" text does not appear if the current user cannot leave a comment.

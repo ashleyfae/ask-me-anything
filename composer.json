@@ -1,0 +1,13 @@
+{
+    "name": "ashleyfae/ask-me-anything",
+    "description": "Allow your readers to submit questions.",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "AskMeAnything\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
