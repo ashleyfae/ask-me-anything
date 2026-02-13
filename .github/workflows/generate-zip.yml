@@ -1,0 +1,36 @@
+name: Generate Zip
+
+on:
+  workflow_dispatch:
+    inputs:
+      composer-install:
+        description: 'Install composer dependencies'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        if: ${{ inputs.composer-install }}
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Prepare build directory
+        run: |
+          mkdir -p build/${{ github.event.repository.name }}
+          git archive HEAD | tar -x -C build/${{ github.event.repository.name }}
+
+      - name: Move vendor files
+        if: ${{ inputs.composer-install }}
+        run: mv vendor/ build/${{ github.event.repository.name }}/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}
+          path: build

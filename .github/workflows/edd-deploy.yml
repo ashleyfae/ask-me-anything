@@ -1,0 +1,34 @@
+name: Deploy Release to EDD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build & Deploy Release
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Build and upload release zip
+        id: build-zip
+        uses: ashleyfae/action-build-release-zip@main
+        with:
+          composer-install: 'true'
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Publish release to EDD SL
+        uses: ashleyfae/action-publish-edd-sl-release@main
+        with:
+          asset-url: ${{ steps.build-zip.outputs.asset-url }}
+          file-name: ${{ steps.build-zip.outputs.file-name }}
+          pre-release: ${{ github.event.release.prerelease }}
+        env:
+          WORDPRESS_USER: ${{ secrets.WORDPRESS_USER }}
+          WORDPRESS_PASS: ${{ secrets.WORDPRESS_PASS }}
+          WORDPRESS_RELEASE_URL: ${{ vars.WORDPRESS_RELEASE_URL }}
