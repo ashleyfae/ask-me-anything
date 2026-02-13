@@ -35,6 +35,7 @@ TK
 **1.2.2-beta1**
 
 * Fix: Support admin notifications to multiple email addresses (comma-separated)
+* Fix: PHP deprecation errors
 
 **1.2.1 - 10 December 2024**
 
